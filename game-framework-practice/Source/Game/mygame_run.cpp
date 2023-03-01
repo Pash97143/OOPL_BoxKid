@@ -81,6 +81,8 @@ void CGameStateRun::OnInit() // 遊戲的初值及圖形設定
 
 	ball.LoadBitmapByString({"resources/ball-3.bmp", "resources/ball-2.bmp", "resources/ball-1.bmp", "resources/ball-ok.bmp"});
 	ball.SetTopLeft(150, 430);
+	ball.SetAnimation(1500, 1);
+	ball.ToggleAnimation();
 
 	for (int i = 0; i < 3; i++)
 	{
@@ -240,8 +242,6 @@ void CGameStateRun::show_image_by_phase()
 		}
 		if (phase == 6 && sub_phase == 1)
 		{
-			ball.ToggleAnimation();
-			ball.SetAnimation(20, 1);
 			ball.ShowBitmap();
 		}
 	}
