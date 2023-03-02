@@ -78,11 +78,13 @@ void CGameStateRun::OnInit() // 遊戲的初值及圖形設定
 
 	bee.LoadBitmapByString({"resources/bee_1.bmp", "resources/bee_2.bmp"});
 	bee.SetTopLeft(462, 265);
+	bee.SetAnimation(0, 0);
 
-	ball.LoadBitmapByString({"resources/ball-3.bmp", "resources/ball-2.bmp", "resources/ball-1.bmp", "resources/ball-ok.bmp"});
+	ball.LoadBitmapByString({"resources/ball-3.bmp", "resources/ball-3.bmp", "resources/ball-2.bmp", "resources/ball-1.bmp", "resources/ball-ok.bmp"});
 	ball.SetTopLeft(150, 430);
-	ball.SetAnimation(1500, 1);
 	ball.ToggleAnimation();
+	ball.SetAnimation(1000, 1);
+	
 
 	for (int i = 0; i < 3; i++)
 	{
@@ -231,7 +233,6 @@ void CGameStateRun::show_image_by_phase()
 		if (phase == 4 && sub_phase == 1)
 		{
 			bee.ShowBitmap();
-			bee.SetAnimation(0, 0);
 		}
 		if (phase == 5 && sub_phase == 1)
 		{
