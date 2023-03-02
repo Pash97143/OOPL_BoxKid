@@ -31,6 +31,7 @@ void CGameStateRun::OnMove() // 移動遊戲元素
 {
 	if (phase == 3 &&
 		character.Top() + character.Height() > chest_and_key.Top() &&
+		character.Top() < chest_and_key.Top() + chest_and_key.Height() &&
 		character.Left() + character.Width() > chest_and_key.Left() &&
 		character.Left() < chest_and_key.Left() + chest_and_key.Width())
 	{
@@ -84,7 +85,6 @@ void CGameStateRun::OnInit() // 遊戲的初值及圖形設定
 	ball.SetTopLeft(150, 430);
 	ball.ToggleAnimation();
 	ball.SetAnimation(1000, 1);
-	
 
 	for (int i = 0; i < 3; i++)
 	{
