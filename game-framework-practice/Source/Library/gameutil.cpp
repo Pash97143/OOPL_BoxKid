@@ -1,4 +1,4 @@
-//#define	 INITGUID
+// #define	 INITGUID
 #include "stdafx.h"
 #include "../Core/game.h"
 #include "../Core/MainFrm.h"
@@ -17,7 +17,8 @@
 #include <experimental/filesystem> // Header file for pre-standard implementation
 #include <comdef.h>
 
-namespace game_framework {
+namespace game_framework
+{
 
 	/////////////////////////////////////////////////////////////////////////////
 	// CMovingBitmap: Moving Bitmap class
@@ -53,7 +54,8 @@ namespace game_framework {
 		GAME_ASSERT(rval, "Load bitmap failed !!! Please check bitmap ID (IDB_XXX).");
 		BITMAP bitmapSize;
 		bitmap.GetBitmap(&bitmapSize);
-		location.left = nx; location.top = ny;
+		location.left = nx;
+		location.top = ny;
 		location.right = nx + bitmapSize.bmWidth;
 		location.bottom = ny + bitmapSize.bmHeight;
 		SurfaceID.push_back(CDDraw::RegisterBitmap(IDB_BITMAP, color));
@@ -65,10 +67,11 @@ namespace game_framework {
 		const int nx = 0;
 		const int ny = 0;
 
-		//GAME_ASSERT(!isBitmapLoaded, "A bitmap has been loaded. You can not load another bitmap !!!");
+		// GAME_ASSERT(!isBitmapLoaded, "A bitmap has been loaded. You can not load another bitmap !!!");
 
 		HBITMAP hbitmap = (HBITMAP)LoadImage(NULL, filename, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
-		if (hbitmap == NULL) {
+		if (hbitmap == NULL)
+		{
 			char error_msg[300];
 			sprintf(error_msg, "Loading bitmap	from file \"%s\" failed !!!", filename);
 			GAME_ASSERT(false, error_msg);
@@ -76,7 +79,8 @@ namespace game_framework {
 		CBitmap *bmp = CBitmap::FromHandle(hbitmap); // memory will be deleted automatically
 		BITMAP bitmapSize;
 		bmp->GetBitmap(&bitmapSize);
-		location.left = nx; location.top = ny;
+		location.left = nx;
+		location.top = ny;
 		location.right = nx + bitmapSize.bmWidth;
 		location.bottom = ny + bitmapSize.bmHeight;
 		SurfaceID.push_back(CDDraw::RegisterBitmap(filename, color));
@@ -87,9 +91,10 @@ namespace game_framework {
 		bmp->DeleteObject();
 	}
 
-	void CMovingBitmap::LoadBitmap(vector<char*> filename, COLORREF color)
+	void CMovingBitmap::LoadBitmap(vector<char *> filename, COLORREF color)
 	{
-		for (int i = 0; i < (int)filename.size(); i++) {
+		for (int i = 0; i < (int)filename.size(); i++)
+		{
 			LoadBitmap(filename[i], color);
 		}
 	}
@@ -97,8 +102,9 @@ namespace game_framework {
 	void CMovingBitmap::LoadBitmapByString(vector<string> filename, COLORREF color)
 	{
 
-		for (int i = 0; i < (int)filename.size(); i++) {
-			LoadBitmap((char*)filename[i].c_str(), color);
+		for (int i = 0; i < (int)filename.size(); i++)
+		{
+			LoadBitmap((char *)filename[i].c_str(), color);
 		}
 	}
 
@@ -120,8 +126,10 @@ namespace game_framework {
 		location.bottom -= dy;
 	}
 
-	void CMovingBitmap::SetAnimation(int delay, bool _once) {
-		if(!_once) isAnimation = true;
+	void CMovingBitmap::SetAnimation(int delay, bool _once)
+	{
+		if (!_once)
+			isAnimation = true;
 		once = _once;
 		delayCount = delay;
 	}
@@ -130,13 +138,16 @@ namespace game_framework {
 	{
 		GAME_ASSERT(isBitmapLoaded, "A bitmap must be loaded before ShowBitmap() is called !!!");
 		CDDraw::BltBitmapToBack(SurfaceID[selector], location.left, location.top);
-		if (isAnimation == true && clock() - last_time >= delayCount) {
+		if (isAnimation == true && clock() - last_time >= delayCount)
+		{
 			selector += 1;
 			last_time = clock();
-			if (selector == SurfaceID.size() && animationCount > 0) {
+			if (selector == SurfaceID.size() && animationCount > 0)
+			{
 				animationCount -= 1;
 			}
-			if (selector == SurfaceID.size() && (once || animationCount == 0)) {
+			if (selector == SurfaceID.size() && (once || animationCount == 0))
+			{
 				isAnimation = false;
 				isAnimationDone = true;
 				selector = SurfaceID.size() - 1;
@@ -150,13 +161,16 @@ namespace game_framework {
 	{
 		GAME_ASSERT(isBitmapLoaded, "A bitmap must be loaded before ShowBitmap() is called !!!");
 		CDDraw::BltBitmapToBack(SurfaceID[selector], location.left, location.top, factor);
-		if (isAnimation == true && clock() - last_time >= delayCount) {
+		if (isAnimation == true && clock() - last_time >= delayCount)
+		{
 			selector += 1;
 			last_time = clock();
-			if (selector == SurfaceID.size() && animationCount > 0) {
+			if (selector == SurfaceID.size() && animationCount > 0)
+			{
 				animationCount -= 1;
 			}
-			if (selector == SurfaceID.size() && (once || animationCount == 0)) {
+			if (selector == SurfaceID.size() && (once || animationCount == 0))
+			{
 				isAnimation = false;
 				isAnimationDone = true;
 				selector = SurfaceID.size() - 1;
@@ -166,12 +180,14 @@ namespace game_framework {
 		}
 	}
 
-	void CMovingBitmap::SelectShowBitmap(int _select) {
-		GAME_ASSERT(_select < (int) SurfaceID.size(), "選擇圖片時索引出界");
+	void CMovingBitmap::SelectShowBitmap(int _select)
+	{
+		GAME_ASSERT(_select < (int)SurfaceID.size(), "選擇圖片時索引出界");
 		selector = _select;
 	}
 
-	int CMovingBitmap::GetSelectShowBitmap() {
+	int CMovingBitmap::GetSelectShowBitmap()
+	{
 		return selector;
 	}
 
@@ -187,29 +203,35 @@ namespace game_framework {
 		return location.right - location.left;
 	}
 
-	void CMovingBitmap::ToggleAnimation() {
+	void CMovingBitmap::ToggleAnimation()
+	{
 		selector = 0;
 		isAnimation = true;
 		isAnimationDone = false;
 	}
 
-	bool CMovingBitmap::IsAnimationDone() {
+	bool CMovingBitmap::IsAnimationDone()
+	{
 		return isAnimationDone;
 	}
 
-	int CMovingBitmap::GetMovingBitmapFrame() {
-		return (int) SurfaceID.size();
+	int CMovingBitmap::GetMovingBitmapFrame()
+	{
+		return (int)SurfaceID.size();
 	}
 
-	string CMovingBitmap::GetImageFilename() {
+	string CMovingBitmap::GetImageFilename()
+	{
 		return image_filename;
 	}
 
-	COLORREF CMovingBitmap::GetFilterColor() {
+	COLORREF CMovingBitmap::GetFilterColor()
+	{
 		return filter_color;
 	}
 
-	bool CMovingBitmap::IsAnimation() {
+	bool CMovingBitmap::IsAnimation()
+	{
 		return isAnimation;
 	}
 
@@ -219,13 +241,15 @@ namespace game_framework {
 	// 要懂得怎麼呼叫(運用)其各種能力，但是可以不懂下列的程式是什麼意思
 	/////////////////////////////////////////////////////////////////////////////
 
-	void CTextDraw::Print(CDC *pDC, int x, int y, string str) {
+	void CTextDraw::Print(CDC *pDC, int x, int y, string str)
+	{
 		x = CDDraw::IsFullScreen() ? x + (RESOLUTION_X - SIZE_X) / 2 : x;
 		y = CDDraw::IsFullScreen() ? y + (RESOLUTION_Y - SIZE_Y) / 2 : y;
 		pDC->TextOut(x, y, str.c_str());
 	}
 
-	void CTextDraw::ChangeFontLog(CDC* pDC, CFont* &fp, int size, string fontName, COLORREF color, int weight) {
+	void CTextDraw::ChangeFontLog(CDC *pDC, CFont *&fp, int size, string fontName, COLORREF color, int weight)
+	{
 		pDC->SetBkMode(TRANSPARENT);
 		pDC->SetTextColor(color);
 		LOGFONT lf;
@@ -238,4 +262,4 @@ namespace game_framework {
 		fp = pDC->SelectObject(&f);
 	}
 
-}         
+}
