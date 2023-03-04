@@ -1,64 +1,54 @@
 # Leistungsstarkes Game Framework
 
-LGF (Leistungsstarkes Game Framework) 是一款基於陳偉凱老師的 Game Framework 加上些許功能的 Powerful Game Framework。
+LGF (Leistungsstarkes Game Framework) �� 臭 �� 甈曉 � 箸 � 潮 � 喳 ���� 梯 �� 撣怎 �� Game Framework ��� 銝 � 鈭 � 閮勗 ���� 賜 �� Powerful Game Framework���
 
-專案不保證長期維護，有任何問題或者任何其他想要的 feature，請丟 issue，祝使用愉快 :D
-
-
+撠 � 獢 � 銝 � 靽 � 霅 ��� 瑟 �� 蝬剛風嚗 ���� 隞颱 ����� 憿 ������� 隞颱 ���� 嗡 ���� 唾 ����� feature 嚗 � 隢 � 銝 � issue 嚗 � 蟡 � 雿輻 � 冽 �� 敹 � :D
 
 ## Installation
 
-1. 將此專案 clone 下來
-2. 替換原有的 Game Framework / 直接使用這個 Game Framework.
+1. 撠 � 甇文 �� 獢 � clone 銝 � 靘 �
+2. �� 踵 ����������� Game Framework / �� 湔 � 乩蝙 �� 券 ����� Game Framework.
 
-（基本上是相容於舊框架的，因為是基於舊框架新增更多的 feature 以及修正 bug）
-
-
+嚗 ��� 箸 � 砌 ���� 舐 � 詨捆 �� 潸 �� 獢 ��� 嗥 �� 嚗 ������ 箸 � 臬 � 箸 � 潸 �� 獢 ��� 嗆 � 啣 ���� 游 ����� feature 隞亙 �� 靽格迤 bug 嚗 �
 
 ## Feature
 
 ### 2022-03-06
 
-- 修正了 `CInteger` 的 Bug，現在可以正常呈現。
-- **半修正**了 `CMovingBitmap.showBitmap(double factor)` 的 Bug，當 `factor` 等於 `0` 時視為隱藏圖片。
-- 可以隱藏 `CMovingBitmap` 的圖片。
-- 可以讀入多個 `CMovingBitmap` 的圖片，並且選擇欲呈現的圖片。
-- 可以讀入多個 `CMovingBitmap` 的圖片，並且利用 `SetAnimation(int delay, bool once)` 來製作動畫。
-- 廢棄 `CAnimation` 的作法。
+-   靽格迤鈭 � `CInteger` ��� Bug 嚗 ��� 曉 � 典 � 臭誑甇 � 撣詨 ���� 整 ��
+-   **��� 靽格迤**鈭 � `CMovingBitmap.showBitmap(double factor)` ��� Bug 嚗 ���� `factor` 蝑 ���� `0` ��� 閬 ��� 粹 � 梯 �����������
+-   �� 臭誑 �� 梯 �� `CMovingBitmap` ������������
+-   �� 臭誑霈 ��� 亙 ����� `CMovingBitmap` ��������� 嚗 � 銝虫 ���� 豢 �� 甈脣 ���� 曄 �����������
+-   �� 臭誑霈 ��� 亙 ����� `CMovingBitmap` ��������� 嚗 � 銝虫 ���� 拍 �� `SetAnimation(int delay, bool once)` 靘 � 鋆賭 ������� 怒 ��
+-   撱Ｘ �� `CAnimation` ��� 雿 � 瘜 ����
 
 ### 2022-03-11
 
-- 讓 `CInteger` 可以自由顯示是否要顯示前導零。
-
-
+-   霈 � `CInteger` �� 臭誑 �� 芰 � 梢＊蝷箸 � 臬 � 西 �� 憿舐內 ��� 撠 ��� 嗚 ��
 
 ### 2022-06-17
 
-- 【New Feature】修正了全螢幕時的黑邊問題，並且會將遊戲視窗絕對置中。
-- 【New Feature】將動畫每幀的延遲加上精準時間。
-- 【New Feature】支援以 `vector<string>` 讀取每幀的畫面。
-- 【New Feature】新增了 `CTextDraw` 類別，**畫上文字時請使用這個類別的函式，全螢幕的字位移才會正確**
-- 【Bug】修正了 CMovngBitmap 在執行動畫時會出現的小 bug。
-
-
+-   ���New Feature��� 靽格迤鈭 ��� 刻 � Ｗ �������� 暺 ������� 憿 � 嚗 � 銝虫 ����� 撠 ������ 脰 �� 蝒 � 蝯 � 撠 � 蝵桐葉 ���
+-   ���New Feature��� 撠 ������ 急 �� 撟 ���� 撱園 � 脣 �� 銝 � 蝎暹 �����������
+-   ���New Feature����� 舀 � 港誑 `vector<string>` 霈 ���� 瘥 � 撟 ������ 恍 � Ｕ ��
+-   ���New Feature����� 啣 �� 鈭 � `CTextDraw` 憿 ��� 伐 ��**�� 思 ����� 摮 ���� 隢 � 雿輻 � 券 ����� 憿 ��� 亦 ���� 賢 �� 嚗 ��� 刻 � Ｗ ����� 摮 � 雿 � 蝘餅 ����� 甇 � 蝣 �**
+-   ���Bug��� 靽格迤鈭 � CMovngBitmap �� 典 � 瑁 ������� 急 ������� 箇 � 曄 �� 撠 � bug���
 
 ### 2023-02-22
 
-- 創立了純淨版（Purified）的 Leistungsstarkes Game Framework 專案，可直接建置方案並執行。
-- 修改了檔案架構，從原先將所有的 `.cpp` 放入 `Source` 資料夾，改為在 `Source` 建立一個資料夾架構來存放 `.cpp` 檔案。
-- 修改了檔案架構，將 `/RES` 重新命名為 `Resources` 來釐清名稱。
-- 創立 `GAME_TITLE` 的定義（`#define`），使框架使用者能夠變更遊戲標題。
-- 將 `mygame.cpp` 分割成三個不同的檔案，分別實作 `GameStateInit`、`GameStateRun` 與 `GameStateOver` 的類別。
-- 重構了部分的 code 使得重複的 code 出現的次數減少。
-- 抽離遊戲設定參數至 `config.cpp`，讓使用者不須也不應更改 `/Library` 與 `/Core` 的程式碼。
-
-
+-   �� 萇 �� 鈭 � 蝝 � 瘛函 �� 嚗 �Purified 嚗 ���� Leistungsstarkes Game Framework 撠 � 獢 � 嚗 ��� 舐 � 湔 � 亙遣蝵格 � 寞 �� 銝血 � 瑁 �����
+-   靽格 � 嫣 �� 瑼 � 獢 ��� 嗆 �� 嚗 � 敺 ������� 撠 ���������� `.cpp` �� 曉 �� `Source` 鞈 ���� 憭橘 ���� 寧 � 箏 �� `Source` 撱箇 �� 銝 ���� 鞈 ���� 憭暹 � 嗆 �� 靘 � 摮 ���� `.cpp` 瑼 � 獢 ����
+-   靽格 � 嫣 �� 瑼 � 獢 ��� 嗆 �� 嚗 � 撠 � `/RES` ����� 啣 � 賢 ����� `Resources` 靘 ���� 皜 ���� 蝔晞 ��
+-   �� 萇 �� `GAME_TITLE` ��� 摰 � 蝢抬 ��`#define`嚗 � 嚗 � 雿踵 ���� 嗡蝙 �� 刻 ���� 賢 �� 霈 ��� 湧 ���� 脫 �� 憿 ����
+-   撠 � `mygame.cpp` ����� 脫 �� 銝 ���� 銝 ������� 瑼 � 獢 � 嚗 ������ 亙祕雿 � `GameStateInit`���`GameStateRun` ��� `GameStateOver` ��� 憿 ��� 乓 ��
+-   ��� 瑽 � 鈭 ��� 典 ����� code 雿踹 ����� 銴 ���� code �� 箇 � 曄 �� 甈 ⊥� 豢 �� 撠 ����
+-   �� 賡 � ａ ���� 脰身摰 ������ 貉 �� `config.cpp`嚗 � 霈 � 雿輻 � 刻 �� 銝 ���� 銋 � 銝 ������ 湔 �� `/Library` ��� `/Core` ��� 蝔 � 撘 � 蝣潦 ��
 
 ## Documents
 
-### void CMovingBitmap::LoadBitmap(char* , COLORREF)
+### void CMovingBitmap::LoadBitmap(char\* , COLORREF)
 
-讀取一張圖片。
+霈 ���� 銝 � 撘萄 ��������
 
 ```c++
 CMovingBitmap bitmap;
@@ -70,11 +60,9 @@ bitmap.SetLeftRight(0, 0);
 bitmap.ShowBitmap();
 ```
 
+### void CMovingBitmap::LoadBitmap(vector<char\*>, COLORREF = CLR_INVALID);
 
-
-### void  CMovingBitmap::LoadBitmap(vector<char*>, COLORREF = CLR_INVALID);
-
-讀取多張圖片，索引值從 `0` 開始。
+霈 ���� 憭 � 撘萄 ����� 嚗 � 蝝Ｗ ���� 澆 �� `0` ��� 憪 ����
 
 ```cpp
 CMovingBitmap bitmap;
@@ -83,14 +71,12 @@ bitmap.SetLeftRight(0, 0);
 
 # -- on show --
 
-bitmap.ShowBitmap(); // 預設呈現第一張 (index = 0)。
+bitmap.ShowBitmap(); // ���閮剖����曄洵銝�撘� (index = 0)���
 ```
-
-
 
 ### void CMovingBitmap::UnshowBitmap()
 
-隱藏當前的 `CMovingBitmap`。
+�� 梯 ���� 嗅 ����� `CMovingBitmap`���
 
 ```cpp
 CMovingBitmap bitmap;
@@ -98,68 +84,60 @@ bitmap.LoadBitmap({"RES/bitmap1.bmp", "RES/bitmap2.bmp"});
 bitmap.setLeftRight(0, 0);
 
 # -- on show --
-bitmap.showBitmap(); // 預設呈現第一張 (index = 0)。
+bitmap.showBitmap(); // ���閮剖����曄洵銝�撘� (index = 0)���
 
 /* Do something... */
 
-bitmap.UnShowBitmap(); // 隱藏圖片。
+bitmap.UnShowBitmap(); // ��梯�����������
 ```
 
+### void CMovingBitmap::SelectShowBitmap(int select)
 
-
-### void  CMovingBitmap::SelectShowBitmap(int select)
-
-選擇要呈現的 `CMovingBitmap`。
+�� 豢 �� 閬 ������ 曄 �� `CMovingBitmap`���
 
 ```cpp
 CMovingBitmap bitmap;
 bitmap.LoadBitmap({"RES/bitmap1.bmp", "RES/bitmap2.bmp"});
 bitmap.SetLeftRight(0, 0);
-bitmap.SelectShowBitmap(1); // 設定呈現第二張圖片
+bitmap.SelectShowBitmap(1); // 閮剖�������曄洵鈭�撘萄�����
 
 # -- on show --
 
-bitmap.showBitmap(); // 呈現第二張圖片
+bitmap.showBitmap(); // �����曄洵鈭�撘萄�����
 ```
-
-
 
 ### void CMovingBitmap::SetAnimation(int delay, bool once)
 
-設定當前的 `CMovingBitmap` 為一個動畫。
+閮剖 ���� 嗅 ����� `CMovingBitmap` �� 箔 ���������� 怒 ��
 
 ```cpp
 CMovingBitmap bitmap;
 bitmap.LoadBitmap({"RES/bitmap1.bmp", "RES/bitmap2.bmp"});
 bitmap.SetLeftRight(0, 0);
-bitmap.SelectShowBitmap(1); // 設定呈現第二張圖片
-bitmap.SetAnimation(5, false); // 無限循環呈現
+bitmap.SelectShowBitmap(1); // 閮剖�������曄洵鈭�撘萄�����
+bitmap.SetAnimation(5, false); // ��⊿��敺芰�啣�����
 
 # -- on show --
 
-bitmap.showBitmap(); // 呈現第二張圖片
+bitmap.showBitmap(); // �����曄洵鈭�撘萄�����
 ```
-
-
 
 ### void CInteger::ShowBitmap(bool leadingZero)
 
-顯示 `CInteger` 是否出現前導零。
+憿舐內 `CInteger` �� 臬 � 血 � 箇 � 曉 �� 撠 ��� 嗚 ��
 
 ```cpp
-CInteger health = CInteger(4); //設定最大長度為 4，預設為 5。
+CInteger health = CInteger(4); //閮剖�����憭折�瑕漲��� 4嚗����閮剔�� 5���
 health.SetInteger(1000);
 health.SetTopLeft(312, 373);
 
 # -- on show --
-health.showBitmap(false); // 不顯示前導零
+health.showBitmap(false); // 銝�憿舐內���撠����
 ```
-
-
 
 ### void CMovingBitmap::LoadBitmapByString(vector\<string> filename, COLORREF color)
 
-利用 `vector<string>` 讀取多張圖片，索引值從 `0` 開始。
+�� 拍 �� `vector<string>` 霈 ���� 憭 � 撘萄 ����� 嚗 � 蝝Ｗ ���� 澆 �� `0` ��� 憪 ����
 
 ```cpp
 CMovingBitmap bitmap;
@@ -167,42 +145,32 @@ bitmap.LoadBitmap({"RES/bitmap1.bmp", "RES/bitmap2.bmp"});
 bitmap.setLeftRight(0, 0);
 
 # -- on show --
-bitmap.showBitmap(); // 預設呈現第一張 (index = 0)。
+bitmap.showBitmap(); // ���閮剖����曄洵銝�撘� (index = 0)���
 
 /* Do something... */
 
-bitmap.UnShowBitmap(); // 隱藏圖片。
+bitmap.UnShowBitmap(); // ��梯�����������
 ```
-
-
 
 ### int CMovingBitmap::GetSelectShowBitmap()
 
-獲得目前呈現的圖片索引值。
-
-
+�� 脣 ���� 桀 ������� 曄 �������� 蝝Ｗ ���� 潦 ��
 
 ### bool CMovingBitmap::IsAnimationDone()
 
-確認動畫是否正在執行，僅限於動畫正在執行 `ToggleAnimation()`。
+蝣箄 ������� 急 � 臬 � 行迤 �� 典 � 瑁 �� 嚗 ��������� 澆 ���� 急迤 �� 典 � 瑁 �� `ToggleAnimation()`���
 
+### void CMovingBitmap::ToggleAnimation()
 
-
-### void  CMovingBitmap::ToggleAnimation()
-
-運行動畫一次，並且使得 `IsAnimationDone()` 可用。
-
-
+��� 銵 ������ 思 �� 甈 ∴�� 銝虫 �� 雿踹 �� `IsAnimationDone()` �� 舐 � 具 ��
 
 ### int CMovingBitmap::GetMovingBitmapFrame()
 
-確認這個 `CMovingBitmap` 物件有多少幀動畫。
+蝣箄 �������� `CMovingBitmap` �� 拐辣 ��� 憭 � 撠 � 撟 ������ 怒 ��
 
+### void CTextDraw::ChangeFontLog(CDC \*pDC, int size, string fontName, int weight)
 
-
-### void CTextDraw::ChangeFontLog(CDC *pDC, int size, string fontName, int weight)
-
-更改文字的樣式、文字與粗體。
+�� 湔 � 寞 �� 摮 ���� 璅 � 撘 ������� 摮 ���� 蝎 � 擃 ����
 
 ```cpp
 CDC *pDC = CDDraw::GetBackCDC();
@@ -211,16 +179,14 @@ CFont *fp;
 pDC->SetBkMode(TRANSPARENT);
 pDC->SetTextColor(RGB(255, 255, 255));
 
-/* 變更字體，weight = 800 為粗體，500 為一般 */
+/* 霈���游��擃�嚗�weight = 800 ��箇��擃�嚗�500 ��箔����� */
 CTextDraw::ChangeFontLog(pDC, fp, 40, "Noto Sans TC", 800);
 CTextDraw::Print(pDC, 50, 50, "Hello World!");
 ```
 
+### void CTextDraw::Print(CDC \*pDC, int x, int y, string str)
 
-
-### void CTextDraw::Print(CDC *pDC, int x, int y, string str)
-
-將文字呈現在指定的座標上。
+撠 ���� 摮 ������ 曉 � 冽 �� 摰 ���� 摨扳 �� 銝 ����
 
 ```cpp
 CDC *pDC = CDDraw::GetBackCDC();
@@ -229,20 +195,14 @@ CFont *fp;
 pDC->SetBkMode(TRANSPARENT);
 pDC->SetTextColor(RGB(255, 255, 255));
 
-/* 變更字體 */
+/* 霈���游��擃� */
 CTextDraw::ChangeFontLog(pDC, fp, 40, "Noto Sans TC");
 CTextDraw::Print(pDC, 50, 50, "Hello World!");
 ```
 
-
-
-
-
-
-
 ## Example
 
-### 讓一個物件不停的動畫循環
+### 霈 � 銝 ������ 拐辣銝 ������������ 怠儐 ���
 
 ```cpp
 CMovingBitmap bitmap;
@@ -257,9 +217,7 @@ bitmap.SetAnimation(5, false);
 bitmap.showBitmap();
 ```
 
-
-
-### 碰到一個物件之後執行動畫
+### 蝣啣 � 唬 ������� 拐辣銋 � 敺 ��� 瑁 ��������
 
 ```cpp
 CMovingBitmap bitmap;
@@ -284,9 +242,7 @@ if(bitmap.IsAnimationDone()){
 }
 ```
 
-
-
-### 同一個物件呈現不同圖片
+### ��� 銝 ������ 拐辣 ����� 曆 �����������
 
 ```cpp
 CMovingBitmap bitmap;
@@ -303,12 +259,10 @@ bitmap.SelectShowBitmap(1)
 bitmap.showBitmap();
 ```
 
+## ��� 雓 �
 
+雓 � 雓 � ��� 蝡 ��� 箏 �� 蝘 ���� 憭批飛 �� 喳 ���� 望 ����� ����� 潔 ������������� 脫 �����
 
+銝虫 �� 雓 � 雓 � ��� 蝡 ��� 箏 �� 蝘 ���� 憭批飛 �� 喟 ◣ 瞍Ｘ ����� ������������ 獢 ��� 嗉 � 賢 ���� 祇 �� 雿輻 � 具 ��
 
-
-## 銘謝
-
-謝謝 國立臺北科技大學 陳偉凱教授 開發了這個遊戲框架
-
-並且謝謝 國立臺北科技大學 陳碩漢教授 同意這個框架能夠公開使用。
+123<br>
