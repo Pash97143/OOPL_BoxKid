@@ -1,54 +1,64 @@
 # Leistungsstarkes Game Framework
 
-LGF (Leistungsstarkes Game Framework) ¬O¤@´Ú°ò©ó³¯°¶³Í¦Ñ®vªº Game Framework ¥[¤W¨Ç³\¥\¯àªº Powerful Game Framework¡C
+LGF (Leistungsstarkes Game Framework) æ˜¯ä¸€æ¬¾åŸºæ–¼é™³å‰å‡±è€å¸«çš„ Game Framework åŠ ä¸Šäº›è¨±åŠŸèƒ½çš„ Powerful Game Frameworkã€‚
 
-±M®×¤£«OÃÒªø´ÁºûÅ@¡A¦³¥ô¦ó°İÃD©ÎªÌ¥ô¦ó¨ä¥L·Q­nªº feature¡A½Ğ¥á issue¡A¯¬¨Ï¥Î´r§Ö :D
+å°ˆæ¡ˆä¸ä¿è­‰é•·æœŸç¶­è­·ï¼Œæœ‰ä»»ä½•å•é¡Œæˆ–è€…ä»»ä½•å…¶ä»–æƒ³è¦çš„ featureï¼Œè«‹ä¸Ÿ issueï¼Œç¥ä½¿ç”¨æ„‰å¿« :D
+
+
 
 ## Installation
 
-1. ±N¦¹±M®× clone ¤U¨Ó
-2. ´À´«­ì¦³ªº Game Framework / ª½±µ¨Ï¥Î³o­Ó Game Framework.
+1. å°‡æ­¤å°ˆæ¡ˆ clone ä¸‹ä¾†
+2. æ›¿æ›åŸæœ‰çš„ Game Framework / ç›´æ¥ä½¿ç”¨é€™å€‹ Game Framework.
 
-¡]°ò¥»¤W¬O¬Û®e©óÂÂ®Ø¬[ªº¡A¦]¬°¬O°ò©óÂÂ®Ø¬[·s¼W§ó¦hªº feature ¥H¤Î­×¥¿ bug¡^
+ï¼ˆåŸºæœ¬ä¸Šæ˜¯ç›¸å®¹æ–¼èˆŠæ¡†æ¶çš„ï¼Œå› ç‚ºæ˜¯åŸºæ–¼èˆŠæ¡†æ¶æ–°å¢æ›´å¤šçš„ feature ä»¥åŠä¿®æ­£ bugï¼‰
+
+
 
 ## Feature
 
 ### 2022-03-06
 
--   ­×¥¿¤F `CInteger` ªº Bug¡A²{¦b¥i¥H¥¿±`§e²{¡C
--   **¥b­×¥¿**¤F `CMovingBitmap.showBitmap(double factor)` ªº Bug¡A·í `factor` µ¥©ó `0` ®Éµø¬°ÁôÂÃ¹Ï¤ù¡C
--   ¥i¥HÁôÂÃ `CMovingBitmap` ªº¹Ï¤ù¡C
--   ¥i¥HÅª¤J¦h­Ó `CMovingBitmap` ªº¹Ï¤ù¡A¨Ã¥B¿ï¾Ü±ı§e²{ªº¹Ï¤ù¡C
--   ¥i¥HÅª¤J¦h­Ó `CMovingBitmap` ªº¹Ï¤ù¡A¨Ã¥B§Q¥Î `SetAnimation(int delay, bool once)` ¨Ó»s§@°Êµe¡C
--   ¼o±ó `CAnimation` ªº§@ªk¡C
+- ä¿®æ­£äº† `CInteger` çš„ Bugï¼Œç¾åœ¨å¯ä»¥æ­£å¸¸å‘ˆç¾ã€‚
+- **åŠä¿®æ­£**äº† `CMovingBitmap.showBitmap(double factor)` çš„ Bugï¼Œç•¶ `factor` ç­‰æ–¼ `0` æ™‚è¦–ç‚ºéš±è—åœ–ç‰‡ã€‚
+- å¯ä»¥éš±è— `CMovingBitmap` çš„åœ–ç‰‡ã€‚
+- å¯ä»¥è®€å…¥å¤šå€‹ `CMovingBitmap` çš„åœ–ç‰‡ï¼Œä¸¦ä¸”é¸æ“‡æ¬²å‘ˆç¾çš„åœ–ç‰‡ã€‚
+- å¯ä»¥è®€å…¥å¤šå€‹ `CMovingBitmap` çš„åœ–ç‰‡ï¼Œä¸¦ä¸”åˆ©ç”¨ `SetAnimation(int delay, bool once)` ä¾†è£½ä½œå‹•ç•«ã€‚
+- å»¢æ£„ `CAnimation` çš„ä½œæ³•ã€‚
 
 ### 2022-03-11
 
--   Åı `CInteger` ¥i¥H¦Û¥ÑÅã¥Ü¬O§_­nÅã¥Ü«e¾É¹s¡C
+- è®“ `CInteger` å¯ä»¥è‡ªç”±é¡¯ç¤ºæ˜¯å¦è¦é¡¯ç¤ºå‰å°é›¶ã€‚
+
+
 
 ### 2022-06-17
 
--   ¡iNew Feature¡j­×¥¿¤F¥ş¿Ã¹õ®Éªº¶ÂÃä°İÃD¡A¨Ã¥B·|±N¹CÀ¸µøµ¡µ´¹ï¸m¤¤¡C
--   ¡iNew Feature¡j±N°Êµe¨C´Vªº©µ¿ğ¥[¤Wºë·Ç®É¶¡¡C
--   ¡iNew Feature¡j¤ä´©¥H `vector<string>` Åª¨ú¨C´Vªºµe­±¡C
--   ¡iNew Feature¡j·s¼W¤F `CTextDraw` Ãş§O¡A**µe¤W¤å¦r®É½Ğ¨Ï¥Î³o­ÓÃş§Oªº¨ç¦¡¡A¥ş¿Ã¹õªº¦r¦ì²¾¤~·|¥¿½T**
--   ¡iBug¡j­×¥¿¤F CMovngBitmap ¦b°õ¦æ°Êµe®É·|¥X²{ªº¤p bug¡C
+- ã€New Featureã€‘ä¿®æ­£äº†å…¨è¢å¹•æ™‚çš„é»‘é‚Šå•é¡Œï¼Œä¸¦ä¸”æœƒå°‡éŠæˆ²è¦–çª—çµ•å°ç½®ä¸­ã€‚
+- ã€New Featureã€‘å°‡å‹•ç•«æ¯å¹€çš„å»¶é²åŠ ä¸Šç²¾æº–æ™‚é–“ã€‚
+- ã€New Featureã€‘æ”¯æ´ä»¥ `vector<string>` è®€å–æ¯å¹€çš„ç•«é¢ã€‚
+- ã€New Featureã€‘æ–°å¢äº† `CTextDraw` é¡åˆ¥ï¼Œ**ç•«ä¸Šæ–‡å­—æ™‚è«‹ä½¿ç”¨é€™å€‹é¡åˆ¥çš„å‡½å¼ï¼Œå…¨è¢å¹•çš„å­—ä½ç§»æ‰æœƒæ­£ç¢º**
+- ã€Bugã€‘ä¿®æ­£äº† CMovngBitmap åœ¨åŸ·è¡Œå‹•ç•«æ™‚æœƒå‡ºç¾çš„å° bugã€‚
+
+
 
 ### 2023-02-22
 
--   ³Ğ¥ß¤F¯Â²bª©¡]Purified¡^ªº Leistungsstarkes Game Framework ±M®×¡A¥iª½±µ«Ø¸m¤è®×¨Ã°õ¦æ¡C
--   ­×§ï¤FÀÉ®×¬[ºc¡A±q­ì¥ı±N©Ò¦³ªº `.cpp` ©ñ¤J `Source` ¸ê®Æ§¨¡A§ï¬°¦b `Source` «Ø¥ß¤@­Ó¸ê®Æ§¨¬[ºc¨Ó¦s©ñ `.cpp` ÀÉ®×¡C
--   ­×§ï¤FÀÉ®×¬[ºc¡A±N `/RES` ­«·s©R¦W¬° `Resources` ¨ÓÂç²M¦WºÙ¡C
--   ³Ğ¥ß `GAME_TITLE` ªº©w¸q¡]`#define`¡^¡A¨Ï®Ø¬[¨Ï¥ÎªÌ¯à°÷ÅÜ§ó¹CÀ¸¼ĞÃD¡C
--   ±N `mygame.cpp` ¤À³Î¦¨¤T­Ó¤£¦PªºÀÉ®×¡A¤À§O¹ê§@ `GameStateInit`¡B`GameStateRun` »P `GameStateOver` ªºÃş§O¡C
--   ­«ºc¤F³¡¤Àªº code ¨Ï±o­«½Æªº code ¥X²{ªº¦¸¼Æ´î¤Ö¡C
--   ©âÂ÷¹CÀ¸³]©w°Ñ¼Æ¦Ü `config.cpp`¡AÅı¨Ï¥ÎªÌ¤£¶·¤]¤£À³§ó§ï `/Library` »P `/Core` ªºµ{¦¡½X¡C
+- å‰µç«‹äº†ç´”æ·¨ç‰ˆï¼ˆPurifiedï¼‰çš„ Leistungsstarkes Game Framework å°ˆæ¡ˆï¼Œå¯ç›´æ¥å»ºç½®æ–¹æ¡ˆä¸¦åŸ·è¡Œã€‚
+- ä¿®æ”¹äº†æª”æ¡ˆæ¶æ§‹ï¼Œå¾åŸå…ˆå°‡æ‰€æœ‰çš„ `.cpp` æ”¾å…¥ `Source` è³‡æ–™å¤¾ï¼Œæ”¹ç‚ºåœ¨ `Source` å»ºç«‹ä¸€å€‹è³‡æ–™å¤¾æ¶æ§‹ä¾†å­˜æ”¾ `.cpp` æª”æ¡ˆã€‚
+- ä¿®æ”¹äº†æª”æ¡ˆæ¶æ§‹ï¼Œå°‡ `/RES` é‡æ–°å‘½åç‚º `Resources` ä¾†é‡æ¸…åç¨±ã€‚
+- å‰µç«‹ `GAME_TITLE` çš„å®šç¾©ï¼ˆ`#define`ï¼‰ï¼Œä½¿æ¡†æ¶ä½¿ç”¨è€…èƒ½å¤ è®Šæ›´éŠæˆ²æ¨™é¡Œã€‚
+- å°‡ `mygame.cpp` åˆ†å‰²æˆä¸‰å€‹ä¸åŒçš„æª”æ¡ˆï¼Œåˆ†åˆ¥å¯¦ä½œ `GameStateInit`ã€`GameStateRun` èˆ‡ `GameStateOver` çš„é¡åˆ¥ã€‚
+- é‡æ§‹äº†éƒ¨åˆ†çš„ code ä½¿å¾—é‡è¤‡çš„ code å‡ºç¾çš„æ¬¡æ•¸æ¸›å°‘ã€‚
+- æŠ½é›¢éŠæˆ²è¨­å®šåƒæ•¸è‡³ `config.cpp`ï¼Œè®“ä½¿ç”¨è€…ä¸é ˆä¹Ÿä¸æ‡‰æ›´æ”¹ `/Library` èˆ‡ `/Core` çš„ç¨‹å¼ç¢¼ã€‚
+
+
 
 ## Documents
 
-### void CMovingBitmap::LoadBitmap(char\* , COLORREF)
+### void CMovingBitmap::LoadBitmap(char* , COLORREF)
 
-Åª¨ú¤@±i¹Ï¤ù¡C
+è®€å–ä¸€å¼µåœ–ç‰‡ã€‚
 
 ```c++
 CMovingBitmap bitmap;
@@ -60,9 +70,11 @@ bitmap.SetLeftRight(0, 0);
 bitmap.ShowBitmap();
 ```
 
-### void CMovingBitmap::LoadBitmap(vector<char\*>, COLORREF = CLR_INVALID);
 
-Åª¨ú¦h±i¹Ï¤ù¡A¯Á¤Ş­È±q `0` ¶}©l¡C
+
+### void  CMovingBitmap::LoadBitmap(vector<char*>, COLORREF = CLR_INVALID);
+
+è®€å–å¤šå¼µåœ–ç‰‡ï¼Œç´¢å¼•å€¼å¾ `0` é–‹å§‹ã€‚
 
 ```cpp
 CMovingBitmap bitmap;
@@ -71,12 +83,14 @@ bitmap.SetLeftRight(0, 0);
 
 # -- on show --
 
-bitmap.ShowBitmap(); // ¹w³]§e²{²Ä¤@±i (index = 0)¡C
+bitmap.ShowBitmap(); // é è¨­å‘ˆç¾ç¬¬ä¸€å¼µ (index = 0)ã€‚
 ```
+
+
 
 ### void CMovingBitmap::UnshowBitmap()
 
-ÁôÂÃ·í«eªº `CMovingBitmap`¡C
+éš±è—ç•¶å‰çš„ `CMovingBitmap`ã€‚
 
 ```cpp
 CMovingBitmap bitmap;
@@ -84,60 +98,68 @@ bitmap.LoadBitmap({"RES/bitmap1.bmp", "RES/bitmap2.bmp"});
 bitmap.setLeftRight(0, 0);
 
 # -- on show --
-bitmap.showBitmap(); // ¹w³]§e²{²Ä¤@±i (index = 0)¡C
+bitmap.showBitmap(); // é è¨­å‘ˆç¾ç¬¬ä¸€å¼µ (index = 0)ã€‚
 
 /* Do something... */
 
-bitmap.UnShowBitmap(); // ÁôÂÃ¹Ï¤ù¡C
+bitmap.UnShowBitmap(); // éš±è—åœ–ç‰‡ã€‚
 ```
 
-### void CMovingBitmap::SelectShowBitmap(int select)
 
-¿ï¾Ü­n§e²{ªº `CMovingBitmap`¡C
+
+### void  CMovingBitmap::SelectShowBitmap(int select)
+
+é¸æ“‡è¦å‘ˆç¾çš„ `CMovingBitmap`ã€‚
 
 ```cpp
 CMovingBitmap bitmap;
 bitmap.LoadBitmap({"RES/bitmap1.bmp", "RES/bitmap2.bmp"});
 bitmap.SetLeftRight(0, 0);
-bitmap.SelectShowBitmap(1); // ³]©w§e²{²Ä¤G±i¹Ï¤ù
+bitmap.SelectShowBitmap(1); // è¨­å®šå‘ˆç¾ç¬¬äºŒå¼µåœ–ç‰‡
 
 # -- on show --
 
-bitmap.showBitmap(); // §e²{²Ä¤G±i¹Ï¤ù
+bitmap.showBitmap(); // å‘ˆç¾ç¬¬äºŒå¼µåœ–ç‰‡
 ```
+
+
 
 ### void CMovingBitmap::SetAnimation(int delay, bool once)
 
-³]©w·í«eªº `CMovingBitmap` ¬°¤@­Ó°Êµe¡C
+è¨­å®šç•¶å‰çš„ `CMovingBitmap` ç‚ºä¸€å€‹å‹•ç•«ã€‚
 
 ```cpp
 CMovingBitmap bitmap;
 bitmap.LoadBitmap({"RES/bitmap1.bmp", "RES/bitmap2.bmp"});
 bitmap.SetLeftRight(0, 0);
-bitmap.SelectShowBitmap(1); // ³]©w§e²{²Ä¤G±i¹Ï¤ù
-bitmap.SetAnimation(5, false); // µL­­´`Àô§e²{
+bitmap.SelectShowBitmap(1); // è¨­å®šå‘ˆç¾ç¬¬äºŒå¼µåœ–ç‰‡
+bitmap.SetAnimation(5, false); // ç„¡é™å¾ªç’°å‘ˆç¾
 
 # -- on show --
 
-bitmap.showBitmap(); // §e²{²Ä¤G±i¹Ï¤ù
+bitmap.showBitmap(); // å‘ˆç¾ç¬¬äºŒå¼µåœ–ç‰‡
 ```
+
+
 
 ### void CInteger::ShowBitmap(bool leadingZero)
 
-Åã¥Ü `CInteger` ¬O§_¥X²{«e¾É¹s¡C
+é¡¯ç¤º `CInteger` æ˜¯å¦å‡ºç¾å‰å°é›¶ã€‚
 
 ```cpp
-CInteger health = CInteger(4); //³]©w³Ì¤jªø«×¬° 4¡A¹w³]¬° 5¡C
+CInteger health = CInteger(4); //è¨­å®šæœ€å¤§é•·åº¦ç‚º 4ï¼Œé è¨­ç‚º 5ã€‚
 health.SetInteger(1000);
 health.SetTopLeft(312, 373);
 
 # -- on show --
-health.showBitmap(false); // ¤£Åã¥Ü«e¾É¹s
+health.showBitmap(false); // ä¸é¡¯ç¤ºå‰å°é›¶
 ```
+
+
 
 ### void CMovingBitmap::LoadBitmapByString(vector\<string> filename, COLORREF color)
 
-§Q¥Î `vector<string>` Åª¨ú¦h±i¹Ï¤ù¡A¯Á¤Ş­È±q `0` ¶}©l¡C
+åˆ©ç”¨ `vector<string>` è®€å–å¤šå¼µåœ–ç‰‡ï¼Œç´¢å¼•å€¼å¾ `0` é–‹å§‹ã€‚
 
 ```cpp
 CMovingBitmap bitmap;
@@ -145,32 +167,42 @@ bitmap.LoadBitmap({"RES/bitmap1.bmp", "RES/bitmap2.bmp"});
 bitmap.setLeftRight(0, 0);
 
 # -- on show --
-bitmap.showBitmap(); // ¹w³]§e²{²Ä¤@±i (index = 0)¡C
+bitmap.showBitmap(); // é è¨­å‘ˆç¾ç¬¬ä¸€å¼µ (index = 0)ã€‚
 
 /* Do something... */
 
-bitmap.UnShowBitmap(); // ÁôÂÃ¹Ï¤ù¡C
+bitmap.UnShowBitmap(); // éš±è—åœ–ç‰‡ã€‚
 ```
+
+
 
 ### int CMovingBitmap::GetSelectShowBitmap()
 
-Àò±o¥Ø«e§e²{ªº¹Ï¤ù¯Á¤Ş­È¡C
+ç²å¾—ç›®å‰å‘ˆç¾çš„åœ–ç‰‡ç´¢å¼•å€¼ã€‚
+
+
 
 ### bool CMovingBitmap::IsAnimationDone()
 
-½T»{°Êµe¬O§_¥¿¦b°õ¦æ¡A¶È­­©ó°Êµe¥¿¦b°õ¦æ `ToggleAnimation()`¡C
+ç¢ºèªå‹•ç•«æ˜¯å¦æ­£åœ¨åŸ·è¡Œï¼Œåƒ…é™æ–¼å‹•ç•«æ­£åœ¨åŸ·è¡Œ `ToggleAnimation()`ã€‚
 
-### void CMovingBitmap::ToggleAnimation()
 
-¹B¦æ°Êµe¤@¦¸¡A¨Ã¥B¨Ï±o `IsAnimationDone()` ¥i¥Î¡C
+
+### void  CMovingBitmap::ToggleAnimation()
+
+é‹è¡Œå‹•ç•«ä¸€æ¬¡ï¼Œä¸¦ä¸”ä½¿å¾— `IsAnimationDone()` å¯ç”¨ã€‚
+
+
 
 ### int CMovingBitmap::GetMovingBitmapFrame()
 
-½T»{³o­Ó `CMovingBitmap` ª«¥ó¦³¦h¤Ö´V°Êµe¡C
+ç¢ºèªé€™å€‹ `CMovingBitmap` ç‰©ä»¶æœ‰å¤šå°‘å¹€å‹•ç•«ã€‚
 
-### void CTextDraw::ChangeFontLog(CDC \*pDC, int size, string fontName, int weight)
 
-§ó§ï¤å¦rªº¼Ë¦¡¡B¤å¦r»P²ÊÅé¡C
+
+### void CTextDraw::ChangeFontLog(CDC *pDC, int size, string fontName, int weight)
+
+æ›´æ”¹æ–‡å­—çš„æ¨£å¼ã€æ–‡å­—èˆ‡ç²—é«”ã€‚
 
 ```cpp
 CDC *pDC = CDDraw::GetBackCDC();
@@ -179,14 +211,16 @@ CFont *fp;
 pDC->SetBkMode(TRANSPARENT);
 pDC->SetTextColor(RGB(255, 255, 255));
 
-/* ÅÜ§ó¦rÅé¡Aweight = 800 ¬°²ÊÅé¡A500 ¬°¤@¯ë */
+/* è®Šæ›´å­—é«”ï¼Œweight = 800 ç‚ºç²—é«”ï¼Œ500 ç‚ºä¸€èˆ¬ */
 CTextDraw::ChangeFontLog(pDC, fp, 40, "Noto Sans TC", 800);
 CTextDraw::Print(pDC, 50, 50, "Hello World!");
 ```
 
-### void CTextDraw::Print(CDC \*pDC, int x, int y, string str)
 
-±N¤å¦r§e²{¦b«ü©wªº®y¼Ğ¤W¡C
+
+### void CTextDraw::Print(CDC *pDC, int x, int y, string str)
+
+å°‡æ–‡å­—å‘ˆç¾åœ¨æŒ‡å®šçš„åº§æ¨™ä¸Šã€‚
 
 ```cpp
 CDC *pDC = CDDraw::GetBackCDC();
@@ -195,14 +229,20 @@ CFont *fp;
 pDC->SetBkMode(TRANSPARENT);
 pDC->SetTextColor(RGB(255, 255, 255));
 
-/* ÅÜ§ó¦rÅé */
+/* è®Šæ›´å­—é«” */
 CTextDraw::ChangeFontLog(pDC, fp, 40, "Noto Sans TC");
 CTextDraw::Print(pDC, 50, 50, "Hello World!");
 ```
 
+
+
+
+
+
+
 ## Example
 
-### Åı¤@­Óª«¥ó¤£°±ªº°Êµe´`Àô
+### è®“ä¸€å€‹ç‰©ä»¶ä¸åœçš„å‹•ç•«å¾ªç’°
 
 ```cpp
 CMovingBitmap bitmap;
@@ -217,7 +257,9 @@ bitmap.SetAnimation(5, false);
 bitmap.showBitmap();
 ```
 
-### ¸I¨ì¤@­Óª«¥ó¤§«á°õ¦æ°Êµe
+
+
+### ç¢°åˆ°ä¸€å€‹ç‰©ä»¶ä¹‹å¾ŒåŸ·è¡Œå‹•ç•«
 
 ```cpp
 CMovingBitmap bitmap;
@@ -242,7 +284,9 @@ if(bitmap.IsAnimationDone()){
 }
 ```
 
-### ¦P¤@­Óª«¥ó§e²{¤£¦P¹Ï¤ù
+
+
+### åŒä¸€å€‹ç‰©ä»¶å‘ˆç¾ä¸åŒåœ–ç‰‡
 
 ```cpp
 CMovingBitmap bitmap;
@@ -259,8 +303,12 @@ bitmap.SelectShowBitmap(1)
 bitmap.showBitmap();
 ```
 
-## »ÊÁÂ
 
-ÁÂÁÂ °ê¥ß»O¥_¬ì§Ş¤j¾Ç ³¯°¶³Í±Ğ±Â ¶}µo¤F³o­Ó¹CÀ¸®Ø¬[
 
-¨Ã¥BÁÂÁÂ °ê¥ß»O¥_¬ì§Ş¤j¾Ç ³¯ºÓº~±Ğ±Â ¦P·N³o­Ó®Ø¬[¯à°÷¤½¶}¨Ï¥Î¡C
+
+
+## éŠ˜è¬
+
+è¬è¬ åœ‹ç«‹è‡ºåŒ—ç§‘æŠ€å¤§å­¸ é™³å‰å‡±æ•™æˆ é–‹ç™¼äº†é€™å€‹éŠæˆ²æ¡†æ¶
+
+ä¸¦ä¸”è¬è¬ åœ‹ç«‹è‡ºåŒ—ç§‘æŠ€å¤§å­¸ é™³ç¢©æ¼¢æ•™æˆ åŒæ„é€™å€‹æ¡†æ¶èƒ½å¤ å…¬é–‹ä½¿ç”¨ã€‚
