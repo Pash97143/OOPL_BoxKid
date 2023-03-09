@@ -36,18 +36,20 @@
  *      1. Add namespace game_framework.
  *      2. Replace the demonstration of animation as a new bouncing ball.
  *      3. Use ShowInitProgress(percent) to display loading progress.
-*/
+ */
+#include <vector>
 
-
-namespace game_framework {
+namespace game_framework
+{
 	/////////////////////////////////////////////////////////////////////////////
 	// Constants
 	/////////////////////////////////////////////////////////////////////////////
 
-	enum AUDIO_ID {				// 定義各種音效的編號
-		AUDIO_DING,				// 0
-		AUDIO_LAKE,				// 1
-		AUDIO_NTUT				// 2
+	enum AUDIO_ID
+	{				// 定義各種音效的編號
+		AUDIO_DING, // 0
+		AUDIO_LAKE, // 1
+		AUDIO_NTUT	// 2
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -55,17 +57,23 @@ namespace game_framework {
 	// 每個Member function的Implementation都要弄懂
 	/////////////////////////////////////////////////////////////////////////////
 
-	class CGameStateInit : public CGameState {
+	class CGameStateInit : public CGameState
+	{
 	public:
 		CGameStateInit(CGame *g);
-		void OnInit();  								// 遊戲的初值及圖形設定
-		void OnBeginState();							// 設定每次重玩所需的變數
-		void OnKeyUp(UINT, UINT, UINT); 				// 處理鍵盤Up的動作
-		void OnLButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
+		void OnInit();								   // 遊戲的初值及圖形設定
+		void OnBeginState();						   // 設定每次重玩所需的變數
+		void OnKeyUp(UINT, UINT, UINT);				   // 處理鍵盤Up的動作
+		void OnLButtonDown(UINT nFlags, CPoint point); // 處理滑鼠的動作
 	protected:
-		void OnShow();									// 顯示這個狀態的遊戲畫面
+		void OnShow(); // 顯示這個狀態的遊戲畫面
 	private:
-		CMovingBitmap logo;								// csie的logo
+		CMovingBitmap logo;		  // csie的logo
+		CMovingBitmap background; // 背景圖
+		void draw_text();		  // 顯示文字
+		CMovingBitmap playIcon;	  // 開始鈕
+		CMovingBitmap voice;	  // 音效開關
+		CMovingBitmap music;	  // 背景音樂開關
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -73,22 +81,31 @@ namespace game_framework {
 	// 每個Member function的Implementation都要弄懂
 	/////////////////////////////////////////////////////////////////////////////
 
-	class CGameStateRun : public CGameState {
+	class CGameStateRun : public CGameState
+	{
 	public:
 		CGameStateRun(CGame *g);
 		~CGameStateRun();
-		void OnBeginState();							// 設定每次重玩所需的變數
-		void OnInit();  								// 遊戲的初值及圖形設定
+		void OnBeginState(); // 設定每次重玩所需的變數
+		void OnInit();		 // 遊戲的初值及圖形設定
 		void OnKeyDown(UINT, UINT, UINT);
 		void OnKeyUp(UINT, UINT, UINT);
-		void OnLButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
-		void OnLButtonUp(UINT nFlags, CPoint point);	// 處理滑鼠的動作
-		void OnMouseMove(UINT nFlags, CPoint point);	// 處理滑鼠的動作 
-		void OnRButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
-		void OnRButtonUp(UINT nFlags, CPoint point);	// 處理滑鼠的動作
+		void OnLButtonDown(UINT nFlags, CPoint point); // 處理滑鼠的動作
+		void OnLButtonUp(UINT nFlags, CPoint point);   // 處理滑鼠的動作
+		void OnMouseMove(UINT nFlags, CPoint point);   // 處理滑鼠的動作
+		void OnRButtonDown(UINT nFlags, CPoint point); // 處理滑鼠的動作
+		void OnRButtonUp(UINT nFlags, CPoint point);   // 處理滑鼠的動作
 	protected:
-		void OnMove();									// 移動遊戲元素
-		void OnShow();									// 顯示這個狀態的遊戲畫面
+		void OnMove(); // 移動遊戲元素
+		void OnShow(); // 顯示這個狀態的遊戲畫面
+	private:
+		CMovingBitmap background; // 背景圖
+		CMovingBitmap playIcon;	  // 開始鈕
+		int level;				  // 遊戲關卡
+		void showByLevel();		  // 顯示不同關卡的畫面
+		vector<CMovingBitmap> walls;
+		vector<CMovingBitmap> boxes;
+		CMovingBitmap player;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -96,16 +113,18 @@ namespace game_framework {
 	// 每個Member function的Implementation都要弄懂
 	/////////////////////////////////////////////////////////////////////////////
 
-	class CGameStateOver : public CGameState {
+	class CGameStateOver : public CGameState
+	{
 	public:
 		CGameStateOver(CGame *g);
-		void OnBeginState();							// 設定每次重玩所需的變數
+		void OnBeginState(); // 設定每次重玩所需的變數
 		void OnInit();
+
 	protected:
-		void OnMove();									// 移動遊戲元素
-		void OnShow();									// 顯示這個狀態的遊戲畫面
+		void OnMove(); // 移動遊戲元素
+		void OnShow(); // 顯示這個狀態的遊戲畫面
 	private:
-		int counter;	// 倒數之計數器
+		int counter; // 倒數之計數器
 	};
 
 }
