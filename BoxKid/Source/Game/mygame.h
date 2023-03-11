@@ -104,6 +104,8 @@ namespace game_framework
 		int level;				  // 遊戲關卡
 		void showByLevel();		  // 顯示不同關卡的畫面
 		vector<CMovingBitmap> walls;
+		vector<CMovingBitmap> floors;
+		vector<CMovingBitmap> goals;
 		vector<CMovingBitmap> boxes;
 		CMovingBitmap player;
 	};

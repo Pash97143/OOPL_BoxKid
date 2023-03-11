@@ -24,8 +24,6 @@ CGameStateRun::~CGameStateRun()
 void CGameStateRun::OnBeginState()
 {
     level = 1;
-    background.LoadBitmapByString({"resources/background_level.bmp"}, RGB(0, 0, 0));
-    background.SetTopLeft(0, 0);
 }
 
 void CGameStateRun::OnMove() // 移動遊戲元素
@@ -34,10 +32,55 @@ void CGameStateRun::OnMove() // 移動遊戲元素
 
 void CGameStateRun::OnInit() // 遊戲的初值及圖形設定
 {
+    background.LoadBitmapByString({"resources/background_level.bmp"}, RGB(255, 255, 255));
+    background.SetTopLeft(0, 0);
+    player.LoadBitmapByString({"resources/player_down.bmp"}, RGB(255, 255, 255));
+    player.SetTopLeft(160, 515);
+    for (int i = 0; i < 20; i++)
+    {
+        CMovingBitmap wall;
+        wall.LoadBitmap("resources/wall.bmp", RGB(255, 255, 255));
+        walls.push_back(wall);
+    }
+    for (int i = 0; i < 8; i++)
+    {
+        CMovingBitmap floor;
+        floor.LoadBitmap("resources/floor.bmp", RGB(255, 255, 255));
+        floors.push_back(floor);
+    }
+    for (int i = 0; i < 1; i++)
+    {
+        CMovingBitmap goal;
+        goal.LoadBitmap("resources/goal.bmp", RGB(255, 255, 255));
+        goals.push_back(goal);
+    }
+
+    for (int i = 0; i < 1; i++)
+    {
+        CMovingBitmap box;
+        box.LoadBitmapByString({"resources/box.bmp", "resources/box_goal.bmp"}, RGB(255, 255, 255));
+        boxes.push_back(box);
+    }
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
+    if (nChar == 0x25)
+    {
+        player.SetTopLeft(player.Left() - 55, player.Top());
+    }
+    else if (nChar == 0x26)
+    {
+        player.SetTopLeft(player.Left(), player.Top() - 55);
+    }
+    else if (nChar == 0x27)
+    {
+        player.SetTopLeft(player.Left() + 55, player.Top());
+    }
+    else if (nChar == 0x28)
+    {
+        player.SetTopLeft(player.Left(), player.Top() + 55);
+    }
 }
 
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -71,37 +114,61 @@ void CGameStateRun::OnShow()
 
 void CGameStateRun::showByLevel()
 {
-    if (level == 1)
+    if (level != 0)
     {
         background.ShowBitmap();
-        for (int i = 0; i < 20; i++)
+        if (level == 1)
         {
-            CMovingBitmap wall;
-            wall.LoadBitmap("resources/wall.bmp", RGB(0, 0, 0));
-            walls.push_back(wall);
-        }
+            // player.SetTopLeft(160, 515);
 
-        for (int i = 0; i < 7; i++)
-        {
-            walls[i].SetTopLeft(50 + i * 55, 350);
-        }
-        walls[7].SetTopLeft(50, 407);
-        walls[8].SetTopLeft(50, 464);
-        walls[9].SetTopLeft(50, 521);
-        walls[10].SetTopLeft(50, 578);
-        walls[11].SetTopLeft(105, 578);
-        walls[12].SetTopLeft(160, 578);
-        walls[13].SetTopLeft(215, 578);
-        walls[14].SetTopLeft(215, 521);
-        walls[15].SetTopLeft(215, 464);
-        walls[16].SetTopLeft(270, 464);
-        walls[17].SetTopLeft(325, 464);
-        walls[18].SetTopLeft(380, 464);
-        walls[19].SetTopLeft(380, 407);
-        Sleep(200);
-        for (int i = 0; i < 20; i++)
-        {
-            walls[i].ShowBitmap();
+            for (int i = 0; i < 7; i++)
+            {
+                walls[i].SetTopLeft(50 + i * 55, 350);
+            }
+            walls[7].SetTopLeft(50, 405);
+            walls[8].SetTopLeft(50, 460);
+            walls[9].SetTopLeft(50, 515);
+            walls[10].SetTopLeft(50, 570);
+            walls[11].SetTopLeft(105, 570);
+            walls[12].SetTopLeft(160, 570);
+            walls[13].SetTopLeft(215, 570);
+            walls[14].SetTopLeft(215, 515);
+            walls[15].SetTopLeft(215, 460);
+            walls[16].SetTopLeft(270, 460);
+            walls[17].SetTopLeft(325, 460);
+            walls[18].SetTopLeft(380, 460);
+            walls[19].SetTopLeft(380, 405);
+
+            floors[0].SetTopLeft(105, 405);
+            floors[1].SetTopLeft(160, 405);
+            floors[2].SetTopLeft(215, 405);
+            floors[3].SetTopLeft(270, 405);
+            floors[4].SetTopLeft(105, 460);
+            floors[5].SetTopLeft(160, 460);
+            floors[6].SetTopLeft(105, 515);
+            floors[7].SetTopLeft(160, 515);
+
+            goals[0].SetTopLeft(325, 405);
+
+            boxes[0].SetTopLeft(215, 405);
+
+            for (int i = 0; i < 20; i++)
+            {
+                walls[i].ShowBitmap();
+            }
+            for (int i = 0; i < 8; i++)
+            {
+                floors[i].ShowBitmap();
+            }
+            for (int i = 0; i < 1; i++)
+            {
+                goals[i].ShowBitmap();
+            }
+            for (int i = 0; i < 1; i++)
+            {
+                boxes[i].ShowBitmap();
+            }
+            player.ShowBitmap();
         }
     }
 }
