@@ -28,58 +28,168 @@ void CGameStateRun::OnBeginState()
 
 void CGameStateRun::OnMove() // 移動遊戲元素
 {
+    for (int i = 0; i < boxes_amount; i++)
+    {
+        if (boxes[i].Top() == goals[i].Top() && boxes[i].Left() == goals[i].Left())
+        {
+            boxes[i].SelectShowBitmap(1);
+        }
+    }
 }
 
 void CGameStateRun::OnInit() // 遊戲的初值及圖形設定
 {
-    background.LoadBitmapByString({"resources/background_level.bmp"}, RGB(255, 255, 255));
+    background.LoadBitmapByString({"resources/background_level.bmp"}, RGB(0, 0, 0));
     background.SetTopLeft(0, 0);
-    player.LoadBitmapByString({"resources/player_down.bmp"}, RGB(255, 255, 255));
-    player.SetTopLeft(160, 515);
+    player.LoadBitmapByString({"resources/player_left.bmp", "resources/player_up.bmp", "resources/player_right.bmp", "resources/player_down.bmp"}, RGB(0, 0, 0));
+    player.SelectShowBitmap(3);
+    player.SetTopLeft(160, 460);
+
     for (int i = 0; i < 20; i++)
     {
         CMovingBitmap wall;
-        wall.LoadBitmap("resources/wall.bmp", RGB(255, 255, 255));
+        wall.LoadBitmap("resources/wall.bmp", RGB(0, 0, 0));
         walls.push_back(wall);
     }
     for (int i = 0; i < 8; i++)
     {
         CMovingBitmap floor;
-        floor.LoadBitmap("resources/floor.bmp", RGB(255, 255, 255));
+        floor.LoadBitmap("resources/floor.bmp", RGB(0, 0, 0));
         floors.push_back(floor);
     }
     for (int i = 0; i < 1; i++)
     {
         CMovingBitmap goal;
-        goal.LoadBitmap("resources/goal.bmp", RGB(255, 255, 255));
+        goal.LoadBitmap("resources/goal.bmp", RGB(0, 0, 0));
         goals.push_back(goal);
     }
 
     for (int i = 0; i < 1; i++)
     {
         CMovingBitmap box;
-        box.LoadBitmapByString({"resources/box.bmp", "resources/box_goal.bmp"}, RGB(255, 255, 255));
+        box.LoadBitmapByString({"resources/box.bmp", "resources/box_goal.bmp"}, RGB(0, 0, 0));
         boxes.push_back(box);
     }
+
+    //------
+    boxes[0].SetTopLeft(215, 350);
+    //------
+    Sleep(500);
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-    if (nChar == 0x25)
+    if (nChar == VK_LEFT)
     {
+        for (int i = 0; i < walls_amount; i++)
+        {
+            if (player.Top() == walls[i].Top() && player.Left() == walls[i].Left() + 55)
+                return;
+        }
+        for (int i = 0; i < boxes_amount; i++)
+        {
+            if (player.Top() == boxes[i].Top() && player.Left() == boxes[i].Left() + 55)
+            {
+                for (int j = 0; j < walls_amount; j++)
+                {
+                    if (boxes[i].Top() == walls[j].Top() && boxes[i].Left() == walls[j].Left() + 55)
+                        return;
+                }
+                for (int j = 0; j < boxes_amount; j++)
+                {
+                    if (boxes[i].Top() == boxes[j].Top() && boxes[i].Left() == boxes[j].Left() + 55)
+                        return;
+                }
+                boxes[i].SetTopLeft(boxes[i].Left() - 55, boxes[i].Top());
+            }
+        }
+        Sleep(150);
         player.SetTopLeft(player.Left() - 55, player.Top());
+        player.SelectShowBitmap(0);
     }
-    else if (nChar == 0x26)
+    else if (nChar == VK_UP)
     {
+        for (int i = 0; i < walls_amount; i++)
+        {
+            if (player.Top() == walls[i].Top() + 55 && player.Left() == walls[i].Left())
+                return;
+        }
+        for (int i = 0; i < boxes_amount; i++)
+        {
+            if (player.Top() == boxes[i].Top() + 55 && player.Left() == boxes[i].Left())
+            {
+                for (int j = 0; j < walls_amount; j++)
+                {
+                    if (boxes[i].Top() == walls[j].Top() + 55 && boxes[i].Left() == walls[j].Left())
+                        return;
+                }
+                for (int j = 0; j < boxes_amount; j++)
+                {
+                    if (boxes[i].Top() == boxes[j].Top() + 55 && boxes[i].Left() == boxes[j].Left())
+                        return;
+                }
+                boxes[i].SetTopLeft(boxes[i].Left(), boxes[i].Top() - 55);
+            }
+        }
+        Sleep(150);
         player.SetTopLeft(player.Left(), player.Top() - 55);
+        player.SelectShowBitmap(1);
     }
-    else if (nChar == 0x27)
+    else if (nChar == VK_RIGHT)
     {
+        for (int i = 0; i < walls_amount; i++)
+        {
+            if (player.Top() == walls[i].Top() && player.Left() + 55 == walls[i].Left())
+                return;
+        }
+        for (int i = 0; i < boxes_amount; i++)
+        {
+            if (player.Top() == boxes[i].Top() && player.Left() + 55 == boxes[i].Left())
+            {
+                for (int j = 0; j < walls_amount; j++)
+                {
+                    if (boxes[i].Top() == walls[j].Top() && boxes[i].Left() == walls[j].Left() - 55)
+                        return;
+                }
+                for (int j = 0; j < boxes_amount; j++)
+                {
+                    if (boxes[i].Top() == boxes[j].Top() && boxes[i].Left() == boxes[j].Left() - 55)
+                        return;
+                }
+                boxes[i].SetTopLeft(boxes[i].Left() + 55, boxes[i].Top());
+            }
+        }
+        Sleep(150);
         player.SetTopLeft(player.Left() + 55, player.Top());
+        player.SelectShowBitmap(2);
     }
-    else if (nChar == 0x28)
+    else if (nChar == VK_DOWN)
     {
+        for (int i = 0; i < walls_amount; i++)
+        {
+            if (player.Top() + 55 == walls[i].Top() && player.Left() == walls[i].Left())
+                return;
+        }
+        for (int i = 0; i < boxes_amount; i++)
+        {
+            if (player.Top() + 55 == boxes[i].Top() && player.Left() == boxes[i].Left())
+            {
+                for (int j = 0; j < walls_amount; j++)
+                {
+                    if (boxes[i].Top() == walls[j].Top() - 55 && boxes[i].Left() == walls[j].Left())
+                        return;
+                }
+                for (int j = 0; j < boxes_amount; j++)
+                {
+                    if (boxes[i].Top() == boxes[j].Top() - 55 && boxes[i].Left() == boxes[j].Left())
+                        return;
+                }
+                boxes[i].SetTopLeft(boxes[i].Left(), boxes[i].Top() + 55);
+            }
+        }
+        Sleep(150);
         player.SetTopLeft(player.Left(), player.Top() + 55);
+        player.SelectShowBitmap(3);
     }
 }
 
@@ -116,41 +226,41 @@ void CGameStateRun::showByLevel()
 {
     if (level != 0)
     {
+        // Sleep(300);
         background.ShowBitmap();
         if (level == 1)
         {
-            // player.SetTopLeft(160, 515);
+            walls_amount = 20;
+            boxes_amount = 1;
 
             for (int i = 0; i < 7; i++)
             {
-                walls[i].SetTopLeft(50 + i * 55, 350);
+                walls[i].SetTopLeft(50 + i * 55, 295);
             }
-            walls[7].SetTopLeft(50, 405);
-            walls[8].SetTopLeft(50, 460);
-            walls[9].SetTopLeft(50, 515);
-            walls[10].SetTopLeft(50, 570);
-            walls[11].SetTopLeft(105, 570);
-            walls[12].SetTopLeft(160, 570);
-            walls[13].SetTopLeft(215, 570);
-            walls[14].SetTopLeft(215, 515);
-            walls[15].SetTopLeft(215, 460);
-            walls[16].SetTopLeft(270, 460);
-            walls[17].SetTopLeft(325, 460);
-            walls[18].SetTopLeft(380, 460);
-            walls[19].SetTopLeft(380, 405);
+            walls[7].SetTopLeft(50, 350);
+            walls[8].SetTopLeft(50, 405);
+            walls[9].SetTopLeft(50, 460);
+            walls[10].SetTopLeft(50, 515);
+            walls[11].SetTopLeft(105, 515);
+            walls[12].SetTopLeft(160, 515);
+            walls[13].SetTopLeft(215, 515);
+            walls[14].SetTopLeft(215, 460);
+            walls[15].SetTopLeft(215, 405);
+            walls[16].SetTopLeft(270, 405);
+            walls[17].SetTopLeft(325, 405);
+            walls[18].SetTopLeft(380, 405);
+            walls[19].SetTopLeft(380, 350);
 
-            floors[0].SetTopLeft(105, 405);
-            floors[1].SetTopLeft(160, 405);
-            floors[2].SetTopLeft(215, 405);
-            floors[3].SetTopLeft(270, 405);
-            floors[4].SetTopLeft(105, 460);
-            floors[5].SetTopLeft(160, 460);
-            floors[6].SetTopLeft(105, 515);
-            floors[7].SetTopLeft(160, 515);
+            floors[0].SetTopLeft(105, 350);
+            floors[1].SetTopLeft(160, 350);
+            floors[2].SetTopLeft(215, 350);
+            floors[3].SetTopLeft(270, 350);
+            floors[4].SetTopLeft(105, 405);
+            floors[5].SetTopLeft(160, 405);
+            floors[6].SetTopLeft(105, 460);
+            floors[7].SetTopLeft(160, 460);
 
-            goals[0].SetTopLeft(325, 405);
-
-            boxes[0].SetTopLeft(215, 405);
+            goals[0].SetTopLeft(325, 350);
 
             for (int i = 0; i < 20; i++)
             {

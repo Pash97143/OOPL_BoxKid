@@ -134,6 +134,9 @@ namespace game_framework
 
 	void CMovingBitmap::ShowBitmap()
 	{
+		// string str1 = "A bitmap must be loaded before ShowBitmap() is called !!!   ";
+		// str1 += to_string(Left());
+		// GAME_ASSERT(isBitmapLoaded, str1);
 		GAME_ASSERT(isBitmapLoaded, "A bitmap must be loaded before ShowBitmap() is called !!!");
 		CDDraw::BltBitmapToBack(SurfaceID[selector], location.left, location.top);
 		if (isAnimation == true && clock() - last_time >= delayCount)

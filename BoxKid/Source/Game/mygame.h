@@ -108,7 +108,9 @@ namespace game_framework
 		vector<CMovingBitmap> goals;
 		vector<CMovingBitmap> boxes;
 		CMovingBitmap player;
-	};
+		int walls_amount;
+		int boxes_amount;
+		};
 
 	/////////////////////////////////////////////////////////////////////////////
 	// 這個class為遊戲的結束狀態(Game Over)

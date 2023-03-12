@@ -28,7 +28,7 @@ void CGameStateInit::OnInit()
 	background.SetTopLeft(0, 0);
 
 	playIcon.LoadBitmap("resources/play.bmp", RGB(0, 0, 0));
-	playIcon.SetTopLeft(152, 500);
+	playIcon.SetTopLeft(160, 385);
 	Sleep(200);
 	//
 	// Sleep(1000); // 放慢，以便看清楚進度，實際遊戲請刪除此Sleep
@@ -50,7 +50,7 @@ void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	if (nFlags == MK_LBUTTON)
 	{
-		if (point.x >= 152 && point.x <= 152 + 174 && point.y >= 500 && point.y <= 500 + 77)
+		if (point.x >= 160 && point.x <= 160 + 153 && point.y >= 385 && point.y <= 385 + 67)
 		{
 			GotoGameState(GAME_STATE_RUN); // 切換至GAME_STATE_RUN
 		}
