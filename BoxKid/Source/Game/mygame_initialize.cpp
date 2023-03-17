@@ -24,11 +24,11 @@ void CGameStateInit::OnInit()
 	ShowInitProgress(0, "Start Initialize..."); // 一開始的loading進度為0%
 	//
 	Sleep(200);
-	background.LoadBitmap("resources/background_main.bmp", RGB(0, 0, 0));
+	background.LoadBitmap("resources/bg_main.bmp", RGB(0, 0, 0));
 	background.SetTopLeft(0, 0);
 
 	playIcon.LoadBitmap("resources/play.bmp", RGB(0, 0, 0));
-	playIcon.SetTopLeft(160, 385);
+	playIcon.SetTopLeft(190, 450);
 	Sleep(200);
 	//
 	// Sleep(1000); // 放慢，以便看清楚進度，實際遊戲請刪除此Sleep
@@ -50,7 +50,7 @@ void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	if (nFlags == MK_LBUTTON)
 	{
-		if (point.x >= 160 && point.x <= 160 + 153 && point.y >= 385 && point.y <= 385 + 67)
+		if (point.x >= 190 && point.x <= 190 + 168 && point.y >= 450 && point.y <= 450 + 73)
 		{
 			GotoGameState(GAME_STATE_RUN); // 切換至GAME_STATE_RUN
 		}

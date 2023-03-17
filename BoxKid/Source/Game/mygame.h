@@ -101,7 +101,8 @@ namespace game_framework
 	private:
 		CMovingBitmap background; // 背景圖
 		CMovingBitmap playIcon;	  // 開始鈕
-		int level;				  // 遊戲關卡
+		int level = 0;			  // 遊戲關卡
+		int prelevel = 0;		  // 上一關的關卡
 		void showByLevel();		  // 顯示不同關卡的畫面
 		vector<CMovingBitmap> walls;
 		vector<CMovingBitmap> floors;
@@ -110,7 +111,7 @@ namespace game_framework
 		CMovingBitmap player;
 		int walls_amount;
 		int boxes_amount;
-		};
+	};
 
 	/////////////////////////////////////////////////////////////////////////////
 	// 這個class為遊戲的結束狀態(Game Over)
