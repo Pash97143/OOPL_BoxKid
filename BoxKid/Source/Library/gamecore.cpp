@@ -1,4 +1,4 @@
-//#define	 INITGUID
+// #define	 INITGUID
 #include "stdafx.h"
 #include "../Core/Game.h"
 #include "../Core/MainFrm.h"
@@ -18,8 +18,8 @@
 #include <comdef.h>
 using namespace std::experimental::filesystem::v1;
 
-
-namespace game_framework {
+namespace game_framework
+{
 
 	/////////////////////////////////////////////////////////////////////////////
 	// CGame: Game Class
@@ -58,9 +58,10 @@ namespace game_framework {
 
 	void CGame::OnDraw()
 	{
-		CDDraw::BltBackColor(DEFAULT_BG_COLOR);	// 將 Back Plain 塗黑
+		CDDraw::BltBackColor(DEFAULT_BG_COLOR); // 將 Back Plain 塗黑
 		gameState->OnDraw();					// 顯示遊戲中的每個元素
-		if (!running) {
+		if (!running)
+		{
 			//
 			// 如果在暫停狀態，則顯示Ctrl-Q...
 			//
@@ -69,27 +70,30 @@ namespace game_framework {
 			// bmp.SetTopLeft(0, 0);
 			// bmp.ShowBitmap();
 		}
-		CDDraw::BltBackToPrimary();				// 將 Back Plain 貼到螢幕
+		CDDraw::BltBackToPrimary(); // 將 Back Plain 貼到螢幕
 	}
 
-	void  CGame::OnFilePause()
+	void CGame::OnFilePause()
 	{
-		if (ENABLE_GAME_PAUSE) {
+		if (ENABLE_GAME_PAUSE)
+		{
 			if (running)
 				CAudio::Instance()->Pause();
 			else
 				CAudio::Instance()->Resume();
 			running = !running;
 		}
-		else {
+		else
+		{
 			CAudio::Instance()->Resume();
 			running = true;
 		}
 	}
 
-	bool CGame::OnIdle()  // 修改功能不要修改OnIdle()，而應修改OnMove()及OnShow()
+	bool CGame::OnIdle() // 修改功能不要修改OnIdle()，而應修改OnMove()及OnShow()
 	{
-		if (suspended) {
+		if (suspended)
+		{
 			running = false;
 			suspended = false;
 		}
@@ -101,9 +105,9 @@ namespace game_framework {
 		//
 		// 以下是遊戲的主迴圈
 		//
-		CDDraw::BltBackColor(DEFAULT_BG_COLOR);	// 將 Back Plain 塗上預設的顏色
+		CDDraw::BltBackColor(DEFAULT_BG_COLOR); // 將 Back Plain 塗上預設的顏色
 		gameState->OnCycle();
-		CDDraw::BltBackToPrimary();				// 將 Back Plain 貼到螢幕
+		CDDraw::BltBackToPrimary(); // 將 Back Plain 貼到螢幕
 		//
 		// 以下的程式控制遊戲進行的速度，注意事項：
 		// 1. 用Debug mode可以檢視每一次迴圈花掉的時間，令此時間為t。
@@ -112,11 +116,11 @@ namespace game_framework {
 		if (SHOW_GAME_CYCLE_TIME)
 			TRACE("Ellipse time for the %d th cycle=%d \n", CSpecialEffect::GetCurrentTimeCount(), CSpecialEffect::GetEllipseTime());
 		CSpecialEffect::DelayFromSetCurrentTime(GAME_CYCLE_TIME);
-		CSpecialEffect::SetCurrentTime();	// 設定離開OnIdle()的時間
+		CSpecialEffect::SetCurrentTime(); // 設定離開OnIdle()的時間
 		return true;
 	}
 
-	void CGame::OnInit()	// OnInit() 只在程式一開始時執行一次
+	void CGame::OnInit() // OnInit() 只在程式一開始時執行一次
 	{
 		//
 		// 啟動亂數
@@ -125,12 +129,12 @@ namespace game_framework {
 		//
 		// 開啟DirectX繪圖介面
 		//
-		CDDraw::Init(SIZE_X, SIZE_Y);							// 設定遊戲解析度
+		CDDraw::Init(SIZE_X, SIZE_Y); // 設定遊戲解析度
 		//
 		// 開啟DirectX音效介面
 		//
-		if (!CAudio::Instance()->Open())						// 開啟音效介面
-			AfxMessageBox("Audio Interface Failed (muted)");	// 無音效介面
+		if (!CAudio::Instance()->Open())					 // 開啟音效介面
+			AfxMessageBox("Audio Interface Failed (muted)"); // 無音效介面
 		//
 		// Switch to the first state
 		//
@@ -154,7 +158,7 @@ namespace game_framework {
 		if (running)
 			if ((nFlags & 0x4000) == 0) // 去除auto repeat
 				gameState->OnKeyDown(nChar, nRepCnt, nFlags);
-#ifdef _UNITTEST					// invike unit test if _UNITTEST is defined
+#ifdef _UNITTEST // invike unit test if _UNITTEST is defined
 		void runTest();
 		if (nChar == 'T')
 			runTest();
@@ -178,7 +182,8 @@ namespace game_framework {
 
 	void CGame::OnLButtonDown(UINT nFlags, CPoint point)
 	{
-		if (running) {
+		if (running)
+		{
 			gameState->OnLButtonDown(nFlags, point);
 		}
 	}
@@ -216,7 +221,8 @@ namespace game_framework {
 
 	void CGame::OnSetFocus()
 	{
-		if (!ENABLE_GAME_PAUSE) {
+		if (!ENABLE_GAME_PAUSE)
+		{
 			CAudio::Instance()->Resume();
 			running = true;
 		}
@@ -247,7 +253,7 @@ namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
 
 	DWORD CSpecialEffect::ctime = 0;
-	int   CSpecialEffect::ctimeCount = 0;
+	int CSpecialEffect::ctimeCount = 0;
 
 	void CSpecialEffect::Delay(DWORD ms)
 	{
@@ -288,23 +294,23 @@ namespace game_framework {
 	// 這個class的全部程式都是低階的繪圖介面，可以全部略過不看
 	/////////////////////////////////////////////////////////////////////////////
 
-	HDC							CDDraw::hdc;
-	CDC							CDDraw::cdc;
-	CView						*CDDraw::pCView;
-	LPDIRECTDRAW2				CDDraw::lpDD;
-	LPDIRECTDRAWCLIPPER			CDDraw::lpClipperPrimary;
-	LPDIRECTDRAWCLIPPER			CDDraw::lpClipperBack;
-	LPDIRECTDRAWSURFACE			CDDraw::lpDDSPrimary;
-	LPDIRECTDRAWSURFACE			CDDraw::lpDDSBack;
-	HRESULT						CDDraw::ddrval;
-	bool						CDDraw::fullscreen;
-	int							CDDraw::size_x, CDDraw::size_y;
-	CDDraw						CDDraw::ddraw;
-	vector<int>					CDDraw::BitmapID;
-	vector<string>				CDDraw::BitmapName;
-	vector<CRect>				CDDraw::BitmapRect;
-	vector<COLORREF>			CDDraw::BitmapColorKey;
-	vector<LPDIRECTDRAWSURFACE>	CDDraw::lpDDS;
+	HDC CDDraw::hdc;
+	CDC CDDraw::cdc;
+	CView *CDDraw::pCView;
+	LPDIRECTDRAW2 CDDraw::lpDD;
+	LPDIRECTDRAWCLIPPER CDDraw::lpClipperPrimary;
+	LPDIRECTDRAWCLIPPER CDDraw::lpClipperBack;
+	LPDIRECTDRAWSURFACE CDDraw::lpDDSPrimary;
+	LPDIRECTDRAWSURFACE CDDraw::lpDDSBack;
+	HRESULT CDDraw::ddrval;
+	bool CDDraw::fullscreen;
+	int CDDraw::size_x, CDDraw::size_y;
+	CDDraw CDDraw::ddraw;
+	vector<int> CDDraw::BitmapID;
+	vector<string> CDDraw::BitmapName;
+	vector<CRect> CDDraw::BitmapRect;
+	vector<COLORREF> CDDraw::BitmapColorKey;
+	vector<LPDIRECTDRAWSURFACE> CDDraw::lpDDS;
 
 	CDDraw::CDDraw()
 	{
@@ -320,7 +326,8 @@ namespace game_framework {
 		ReleaseSurface();
 		if (lpDD)
 			lpDD->Release();
-		pCView = NULL; lpDD = NULL;
+		pCView = NULL;
+		lpDD = NULL;
 		lpClipperPrimary = lpClipperBack = NULL;
 		lpDDSPrimary = lpDDSBack = NULL;
 		TRACE("~CDDraw()\n");
@@ -328,7 +335,8 @@ namespace game_framework {
 
 	void CDDraw::BltBackColor(DWORD color)
 	{
-		if (lpDDSBack) {
+		if (lpDDSBack)
+		{
 			if (lpDDSBack->IsLost())
 				RestoreSurface();
 			DDBLTFX ddbltfx;
@@ -343,7 +351,8 @@ namespace game_framework {
 	{
 		if (!pCView || !lpDDSPrimary || !lpDDSBack)
 			return;
-		if (fullscreen) {
+		if (fullscreen)
+		{
 			CRect ClientRect;
 			GetClientRect(ClientRect);
 			if (lpDDSBack->IsLost())
@@ -353,7 +362,8 @@ namespace game_framework {
 			ddrval = lpDDSPrimary->Blt(ClientRect, lpDDSBack, ClientRect, DDBLTFAST_WAIT, NULL);
 			CheckDDFail("Blt Back to primary failed");
 		}
-		else {
+		else
+		{
 			if (lpDDSBack->IsLost())
 				RestoreSurface();
 			if (lpDDSPrimary->IsLost())
@@ -399,11 +409,11 @@ namespace game_framework {
 		CRect TargetRect;
 		TargetRect.left = x;
 		TargetRect.top = y;
-		TargetRect.right = x + (int)((BitmapRect[SurfaceID].right - BitmapRect[SurfaceID].left)*factor);
-		TargetRect.bottom = y + (int)((BitmapRect[SurfaceID].bottom - BitmapRect[SurfaceID].top)*factor);
+		TargetRect.right = x + (int)((BitmapRect[SurfaceID].right - BitmapRect[SurfaceID].left) * factor);
+		TargetRect.bottom = y + (int)((BitmapRect[SurfaceID].bottom - BitmapRect[SurfaceID].top) * factor);
 
-
-		if (factor == 0) {
+		if (factor == 0)
+		{
 			return;
 		}
 
@@ -443,15 +453,18 @@ namespace game_framework {
 		//
 		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_WAIT));
 		ReleaseSurface();
-		if (fullscreen) {
+		if (fullscreen)
+		{
 			if (!CreateSurfaceFullScreen())
 				return false;
 		}
-		else {
+		else
+		{
 			if (!CreateSurfaceWindowed())
 				return false;
 		}
-		for (unsigned i = 0; i < lpDDS.size(); i++) {
+		for (unsigned i = 0; i < lpDDS.size(); i++)
+		{
 			if (BitmapID[i] != -1) // from resource
 				LoadBitmap(i, BitmapID[i]);
 			else
@@ -470,7 +483,8 @@ namespace game_framework {
 
 		ddrval = lpDD->SetDisplayMode(RESOLUTION_X, RESOLUTION_Y, 32, 0, 0);
 
-		if (ddrval != DD_OK) {
+		if (ddrval != DD_OK)
+		{
 			ddrval = lpDD->SetCooperativeLevel(AfxGetMainWnd()->m_hWnd, DDSCL_NORMAL);
 			CheckDDFail("Can not SetCooperativeLevel Normal");
 			return false;
@@ -487,15 +501,16 @@ namespace game_framework {
 
 		// Create clippers for the primary and back surfaces
 		// ddrval = lpDD->CreateClipper(0, &lpClipperPrimary, NULL);
-		// CheckDDFail("Create Primay Surface Clipper FAILED"); 
+		// CheckDDFail("Create Primay Surface Clipper FAILED");
 		ddrval = lpDD->CreateClipper(0, &lpClipperBack, NULL);
 		CheckDDFail("Create Back Surface Clipper FAILED");
 
-		typedef struct {
+		typedef struct
+		{
 			RGNDATAHEADER hdr;
 			RECT rgndata[4];
 		} CLIPLIST, *LPCLIPLIST;
-		CLIPLIST    ClipList;
+		CLIPLIST ClipList;
 		RECT rc;
 		SetRect(&rc, 0, 0, size_x, size_y);
 		ClipList.hdr.dwSize = sizeof(RGNDATAHEADER);
@@ -510,7 +525,8 @@ namespace game_framework {
 		// Create Back (Secondary) Surface
 		ddsd.dwFlags = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH;
 		ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN;
-		ddsd.dwHeight = size_y; ddsd.dwWidth = size_x;
+		ddsd.dwHeight = size_y;
+		ddsd.dwWidth = size_x;
 		ddrval = lpDD->CreateSurface(&ddsd, &lpDDSBack, NULL);
 		CheckDDFail("Can not create back plain");
 
@@ -550,11 +566,12 @@ namespace game_framework {
 		ddrval = lpClipperPrimary->SetHWnd(0, AfxGetMainWnd()->m_hWnd);
 		CheckDDFail("Primary Surface SetHWnd FAILED");
 
-		typedef struct {
+		typedef struct
+		{
 			RGNDATAHEADER hdr;
 			RECT rgndata[4];
 		} CLIPLIST, *LPCLIPLIST;
-		CLIPLIST    ClipList;
+		CLIPLIST ClipList;
 		RECT rc;
 		SetRect(&rc, 0, 0, size_x, size_y);
 		ClipList.hdr.dwSize = sizeof(RGNDATAHEADER);
@@ -569,7 +586,8 @@ namespace game_framework {
 		// Create Back (Secondary) Surface
 		ddsd.dwFlags = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH;
 		ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN;
-		ddsd.dwHeight = size_y; ddsd.dwWidth = size_x;
+		ddsd.dwHeight = size_y;
+		ddsd.dwWidth = size_x;
 		ddrval = lpDD->CreateSurface(&ddsd, &lpDDSBack, NULL);
 		CheckDDFail("Can not create back plain");
 
@@ -624,7 +642,7 @@ namespace game_framework {
 		bitmap.LoadBitmap(IDB_BITMAP);
 		CDC mDC;
 		mDC.CreateCompatibleDC(NULL);
-		CBitmap* pOldBitmap = mDC.SelectObject(&bitmap);
+		CBitmap *pOldBitmap = mDC.SelectObject(&bitmap);
 		BITMAP bitmapSize;
 		bitmap.GetBitmap(&bitmapSize);
 		DDSURFACEDESC ddsd;
@@ -660,7 +678,7 @@ namespace game_framework {
 		CBitmap *bmp = CBitmap::FromHandle(hbitmap); // will be deleted automatically
 		CDC mDC;
 		mDC.CreateCompatibleDC(NULL);
-		CBitmap* pOldBitmap = mDC.SelectObject(bmp);
+		CBitmap *pOldBitmap = mDC.SelectObject(bmp);
 		BITMAP bitmapSize;
 		bmp->GetBitmap(&bitmapSize);
 		DDSURFACEDESC ddsd;
@@ -695,30 +713,35 @@ namespace game_framework {
 		HRESULT hres;
 		COLORREF rgbT = CLR_INVALID;
 		DWORD dw = CLR_INVALID, mask = (DWORD)~0;
-		if (lpDDSurface && color != CLR_INVALID) {
-			if (lpDDSurface->GetDC(&hdc) == DD_OK) {
-				rgbT = GetPixel(hdc, 0, 0);             // save (0,0) pixel value
-				SetPixel(hdc, 0, 0, color);             // set our value
+		if (lpDDSurface && color != CLR_INVALID)
+		{
+			if (lpDDSurface->GetDC(&hdc) == DD_OK)
+			{
+				rgbT = GetPixel(hdc, 0, 0); // save (0,0) pixel value
+				SetPixel(hdc, 0, 0, color); // set our value
 				lpDDSurface->ReleaseDC(hdc);
 			}
 			ddsd.dwSize = sizeof(ddsd);
-			while ((hres = lpDDSurface->Lock(NULL, &ddsd, 0, NULL)) == DDERR_WASSTILLDRAWING);
-			if (hres == DD_OK) {
-				dw = *(DWORD *)ddsd.lpSurface;          // get (0,0) data
+			while ((hres = lpDDSurface->Lock(NULL, &ddsd, 0, NULL)) == DDERR_WASSTILLDRAWING)
+				;
+			if (hres == DD_OK)
+			{
+				dw = *(DWORD *)ddsd.lpSurface; // get (0,0) data
 				if (ddsd.ddpfPixelFormat.dwRGBBitCount < 32)
 					mask = (1 << ddsd.ddpfPixelFormat.dwRGBBitCount) - 1;
-				dw &= mask;								// mask it to bpp
+				dw &= mask; // mask it to bpp
 				lpDDSurface->Unlock(NULL);
 			}
-			if (lpDDSurface->GetDC(&hdc) == DD_OK) {
-				SetPixel(hdc, 0, 0, rgbT);				// restore (0,0) pixel value
+			if (lpDDSurface->GetDC(&hdc) == DD_OK)
+			{
+				SetPixel(hdc, 0, 0, rgbT); // restore (0,0) pixel value
 				lpDDSurface->ReleaseDC(hdc);
 			}
 		}
 		return dw;
 	}
 
-	CDC* CDDraw::GetBackCDC()
+	CDC *CDDraw::GetBackCDC()
 	{
 		if (lpDDSBack->IsLost())
 			RestoreSurface();
@@ -778,7 +801,8 @@ namespace game_framework {
 		if (lpDD)
 		{
 			for (unsigned i = 0; i < lpDDS.size(); i++)
-				if (lpDDS[i]) {
+				if (lpDDS[i])
+				{
 					lpDDS[i]->Release();
 					lpDDS[i] = NULL;
 				}
@@ -804,7 +828,8 @@ namespace game_framework {
 		if (lpDD != NULL)
 		{
 			CreateSurface();
-			while (lpDDSBack->IsLost() || lpDDSPrimary->IsLost()) {
+			while (lpDDSBack->IsLost() || lpDDSPrimary->IsLost())
+			{
 				Sleep(100);
 				CreateSurface();
 			}
@@ -813,7 +838,8 @@ namespace game_framework {
 
 	void CDDraw::SetColorKey(unsigned SurfaceID, COLORREF color)
 	{
-		if (color != CLR_INVALID) {
+		if (color != CLR_INVALID)
+		{
 			DDCOLORKEY ddck;
 			ddck.dwColorSpaceLowValue = MatchColorKey(lpDDS[SurfaceID], color);
 			ddck.dwColorSpaceHighValue = ddck.dwColorSpaceLowValue;
@@ -830,7 +856,8 @@ namespace game_framework {
 
 	void CDDraw::CheckDDFail(char *s)
 	{
-		if (ddrval != DD_OK) {
+		if (ddrval != DD_OK)
+		{
 			TRACE("Error Code: %d (%s)\n", ddrval, s);
 			//
 			// For some unknown reason, in Win98, ddrval can be changed
@@ -839,59 +866,57 @@ namespace game_framework {
 			//
 			AfxMessageBox(s);
 			static int ErrorCode[] = {
-				DDERR_ALREADYINITIALIZED          ,DDERR_BLTFASTCANTCLIP             ,DDERR_CANNOTATTACHSURFACE         ,DDERR_CANNOTDETACHSURFACE         ,
-				DDERR_CANTCREATEDC                ,DDERR_CANTDUPLICATE               ,DDERR_CANTLOCKSURFACE             ,DDERR_CANTPAGELOCK                ,
-				DDERR_CANTPAGEUNLOCK              ,DDERR_CLIPPERISUSINGHWND          ,DDERR_COLORKEYNOTSET              ,DDERR_CURRENTLYNOTAVAIL           ,
-				DDERR_DCALREADYCREATED            ,DDERR_DIRECTDRAWALREADYCREATED    ,DDERR_EXCEPTION                   ,DDERR_EXCLUSIVEMODEALREADYSET     ,
-				DDERR_GENERIC                     ,DDERR_HEIGHTALIGN                 ,DDERR_HWNDALREADYSET              ,DDERR_HWNDSUBCLASSED              ,
-				DDERR_IMPLICITLYCREATED           ,DDERR_INCOMPATIBLEPRIMARY         ,DDERR_INVALIDCAPS                 ,DDERR_INVALIDCLIPLIST             ,
-				DDERR_INVALIDDIRECTDRAWGUID       ,DDERR_INVALIDMODE                 ,DDERR_INVALIDOBJECT               ,DDERR_INVALIDPARAMS               ,
-				DDERR_INVALIDPIXELFORMAT          ,DDERR_INVALIDPOSITION             ,DDERR_INVALIDRECT                 ,DDERR_INVALIDSURFACETYPE          ,
-				DDERR_LOCKEDSURFACES              ,DDERR_NO3D                        ,DDERR_NOALPHAHW                   ,DDERR_NOBLTHW                     ,
-				DDERR_NOCLIPLIST                  ,DDERR_NOCLIPPERATTACHED           ,DDERR_NOCOLORCONVHW               ,DDERR_NOCOLORKEY                  ,
-				DDERR_NOCOLORKEYHW                ,DDERR_NOCOOPERATIVELEVELSET       ,DDERR_NODC                        ,DDERR_NODDROPSHW                  ,
-				DDERR_NODIRECTDRAWHW              ,DDERR_NODIRECTDRAWSUPPORT         ,DDERR_NOEMULATION                 ,DDERR_NOEXCLUSIVEMODE             ,
-				DDERR_NOFLIPHW                    ,DDERR_NOGDI                       ,DDERR_NOHWND                      ,DDERR_NOMIPMAPHW                  ,
-				DDERR_NOMIRRORHW                  ,DDERR_NOOVERLAYDEST               ,DDERR_NOOVERLAYHW                 ,DDERR_NOPALETTEATTACHED           ,
-				DDERR_NOPALETTEHW                 ,DDERR_NORASTEROPHW                ,DDERR_NOROTATIONHW                ,DDERR_NOSTRETCHHW                 ,
-				DDERR_NOT4BITCOLOR                ,DDERR_NOT4BITCOLORINDEX           ,DDERR_NOT8BITCOLOR                ,DDERR_NOTAOVERLAYSURFACE          ,
-				DDERR_NOTEXTUREHW                 ,DDERR_NOTFLIPPABLE                ,DDERR_NOTFOUND                    ,DDERR_NOTINITIALIZED              ,
-				DDERR_NOTLOCKED                   ,DDERR_NOTPAGELOCKED               ,DDERR_NOTPALETTIZED               ,DDERR_NOVSYNCHW                   ,
-				DDERR_NOZBUFFERHW                 ,DDERR_NOZOVERLAYHW                ,DDERR_OUTOFCAPS                   ,DDERR_OUTOFMEMORY                 ,
-				DDERR_OUTOFVIDEOMEMORY            ,DDERR_OVERLAYCANTCLIP             ,DDERR_OVERLAYCOLORKEYONLYONEACTIVE,DDERR_OVERLAYNOTVISIBLE           ,
-				DDERR_PALETTEBUSY                 ,DDERR_PRIMARYSURFACEALREADYEXISTS ,DDERR_REGIONTOOSMALL              ,DDERR_SURFACEALREADYATTACHED      ,
-				DDERR_SURFACEALREADYDEPENDENT     ,DDERR_SURFACEBUSY                 ,DDERR_SURFACEISOBSCURED           ,DDERR_SURFACELOST                 ,
-				DDERR_SURFACENOTATTACHED          ,DDERR_TOOBIGHEIGHT                ,DDERR_TOOBIGSIZE                  ,DDERR_TOOBIGWIDTH                 ,
-				DDERR_UNSUPPORTED                 ,DDERR_UNSUPPORTEDFORMAT           ,DDERR_UNSUPPORTEDMASK             ,DDERR_UNSUPPORTEDMODE             ,
-				DDERR_VERTICALBLANKINPROGRESS     ,DDERR_WASSTILLDRAWING             ,DDERR_WRONGMODE                   ,DDERR_XALIGN
-			};
+				DDERR_ALREADYINITIALIZED, DDERR_BLTFASTCANTCLIP, DDERR_CANNOTATTACHSURFACE, DDERR_CANNOTDETACHSURFACE,
+				DDERR_CANTCREATEDC, DDERR_CANTDUPLICATE, DDERR_CANTLOCKSURFACE, DDERR_CANTPAGELOCK,
+				DDERR_CANTPAGEUNLOCK, DDERR_CLIPPERISUSINGHWND, DDERR_COLORKEYNOTSET, DDERR_CURRENTLYNOTAVAIL,
+				DDERR_DCALREADYCREATED, DDERR_DIRECTDRAWALREADYCREATED, DDERR_EXCEPTION, DDERR_EXCLUSIVEMODEALREADYSET,
+				DDERR_GENERIC, DDERR_HEIGHTALIGN, DDERR_HWNDALREADYSET, DDERR_HWNDSUBCLASSED,
+				DDERR_IMPLICITLYCREATED, DDERR_INCOMPATIBLEPRIMARY, DDERR_INVALIDCAPS, DDERR_INVALIDCLIPLIST,
+				DDERR_INVALIDDIRECTDRAWGUID, DDERR_INVALIDMODE, DDERR_INVALIDOBJECT, DDERR_INVALIDPARAMS,
+				DDERR_INVALIDPIXELFORMAT, DDERR_INVALIDPOSITION, DDERR_INVALIDRECT, DDERR_INVALIDSURFACETYPE,
+				DDERR_LOCKEDSURFACES, DDERR_NO3D, DDERR_NOALPHAHW, DDERR_NOBLTHW,
+				DDERR_NOCLIPLIST, DDERR_NOCLIPPERATTACHED, DDERR_NOCOLORCONVHW, DDERR_NOCOLORKEY,
+				DDERR_NOCOLORKEYHW, DDERR_NOCOOPERATIVELEVELSET, DDERR_NODC, DDERR_NODDROPSHW,
+				DDERR_NODIRECTDRAWHW, DDERR_NODIRECTDRAWSUPPORT, DDERR_NOEMULATION, DDERR_NOEXCLUSIVEMODE,
+				DDERR_NOFLIPHW, DDERR_NOGDI, DDERR_NOHWND, DDERR_NOMIPMAPHW,
+				DDERR_NOMIRRORHW, DDERR_NOOVERLAYDEST, DDERR_NOOVERLAYHW, DDERR_NOPALETTEATTACHED,
+				DDERR_NOPALETTEHW, DDERR_NORASTEROPHW, DDERR_NOROTATIONHW, DDERR_NOSTRETCHHW,
+				DDERR_NOT4BITCOLOR, DDERR_NOT4BITCOLORINDEX, DDERR_NOT8BITCOLOR, DDERR_NOTAOVERLAYSURFACE,
+				DDERR_NOTEXTUREHW, DDERR_NOTFLIPPABLE, DDERR_NOTFOUND, DDERR_NOTINITIALIZED,
+				DDERR_NOTLOCKED, DDERR_NOTPAGELOCKED, DDERR_NOTPALETTIZED, DDERR_NOVSYNCHW,
+				DDERR_NOZBUFFERHW, DDERR_NOZOVERLAYHW, DDERR_OUTOFCAPS, DDERR_OUTOFMEMORY,
+				DDERR_OUTOFVIDEOMEMORY, DDERR_OVERLAYCANTCLIP, DDERR_OVERLAYCOLORKEYONLYONEACTIVE, DDERR_OVERLAYNOTVISIBLE,
+				DDERR_PALETTEBUSY, DDERR_PRIMARYSURFACEALREADYEXISTS, DDERR_REGIONTOOSMALL, DDERR_SURFACEALREADYATTACHED,
+				DDERR_SURFACEALREADYDEPENDENT, DDERR_SURFACEBUSY, DDERR_SURFACEISOBSCURED, DDERR_SURFACELOST,
+				DDERR_SURFACENOTATTACHED, DDERR_TOOBIGHEIGHT, DDERR_TOOBIGSIZE, DDERR_TOOBIGWIDTH,
+				DDERR_UNSUPPORTED, DDERR_UNSUPPORTEDFORMAT, DDERR_UNSUPPORTEDMASK, DDERR_UNSUPPORTEDMODE,
+				DDERR_VERTICALBLANKINPROGRESS, DDERR_WASSTILLDRAWING, DDERR_WRONGMODE, DDERR_XALIGN};
 			static char *ErrorMsg[] = {
-				"DDERR_ALREADYINITIALIZED          ","DDERR_BLTFASTCANTCLIP             ","DDERR_CANNOTATTACHSURFACE         ","DDERR_CANNOTDETACHSURFACE         ",
-				"DDERR_CANTCREATEDC                ","DDERR_CANTDUPLICATE               ","DDERR_CANTLOCKSURFACE             ","DDERR_CANTPAGELOCK                ",
-				"DDERR_CANTPAGEUNLOCK              ","DDERR_CLIPPERISUSINGHWND          ","DDERR_COLORKEYNOTSET              ","DDERR_CURRENTLYNOTAVAIL           ",
-				"DDERR_DCALREADYCREATED            ","DDERR_DIRECTDRAWALREADYCREATED    ","DDERR_EXCEPTION                   ","DDERR_EXCLUSIVEMODEALREADYSET     ",
-				"DDERR_GENERIC                     ","DDERR_HEIGHTALIGN                 ","DDERR_HWNDALREADYSET              ","DDERR_HWNDSUBCLASSED              ",
-				"DDERR_IMPLICITLYCREATED           ","DDERR_INCOMPATIBLEPRIMARY         ","DDERR_INVALIDCAPS                 ","DDERR_INVALIDCLIPLIST             ",
-				"DDERR_INVALIDDIRECTDRAWGUID       ","DDERR_INVALIDMODE                 ","DDERR_INVALIDOBJECT               ","DDERR_INVALIDPARAMS               ",
-				"DDERR_INVALIDPIXELFORMAT          ","DDERR_INVALIDPOSITION             ","DDERR_INVALIDRECT                 ","DDERR_INVALIDSURFACETYPE          ",
-				"DDERR_LOCKEDSURFACES              ","DDERR_NO3D                        ","DDERR_NOALPHAHW                   ","DDERR_NOBLTHW                     ",
-				"DDERR_NOCLIPLIST                  ","DDERR_NOCLIPPERATTACHED           ","DDERR_NOCOLORCONVHW               ","DDERR_NOCOLORKEY                  ",
-				"DDERR_NOCOLORKEYHW                ","DDERR_NOCOOPERATIVELEVELSET       ","DDERR_NODC                        ","DDERR_NODDROPSHW                  ",
-				"DDERR_NODIRECTDRAWHW              ","DDERR_NODIRECTDRAWSUPPORT         ","DDERR_NOEMULATION                 ","DDERR_NOEXCLUSIVEMODE             ",
-				"DDERR_NOFLIPHW                    ","DDERR_NOGDI                       ","DDERR_NOHWND                      ","DDERR_NOMIPMAPHW                  ",
-				"DDERR_NOMIRRORHW                  ","DDERR_NOOVERLAYDEST               ","DDERR_NOOVERLAYHW                 ","DDERR_NOPALETTEATTACHED           ",
-				"DDERR_NOPALETTEHW                 ","DDERR_NORASTEROPHW                ","DDERR_NOROTATIONHW                ","DDERR_NOSTRETCHHW                 ",
-				"DDERR_NOT4BITCOLOR                ","DDERR_NOT4BITCOLORINDEX           ","DDERR_NOT8BITCOLOR                ","DDERR_NOTAOVERLAYSURFACE          ",
-				"DDERR_NOTEXTUREHW                 ","DDERR_NOTFLIPPABLE                ","DDERR_NOTFOUND                    ","DDERR_NOTINITIALIZED              ",
-				"DDERR_NOTLOCKED                   ","DDERR_NOTPAGELOCKED               ","DDERR_NOTPALETTIZED               ","DDERR_NOVSYNCHW                   ",
-				"DDERR_NOZBUFFERHW                 ","DDERR_NOZOVERLAYHW                ","DDERR_OUTOFCAPS                   ","DDERR_OUTOFMEMORY                 ",
-				"DDERR_OUTOFVIDEOMEMORY            ","DDERR_OVERLAYCANTCLIP             ","DDERR_OVERLAYCOLORKEYONLYONEACTIVE","DDERR_OVERLAYNOTVISIBLE           ",
-				"DDERR_PALETTEBUSY                 ","DDERR_PRIMARYSURFACEALREADYEXISTS ","DDERR_REGIONTOOSMALL              ","DDERR_SURFACEALREADYATTACHED      ",
-				"DDERR_SURFACEALREADYDEPENDENT     ","DDERR_SURFACEBUSY                 ","DDERR_SURFACEISOBSCURED           ","DDERR_SURFACELOST                 ",
-				"DDERR_SURFACENOTATTACHED          ","DDERR_TOOBIGHEIGHT                ","DDERR_TOOBIGSIZE                  ","DDERR_TOOBIGWIDTH                 ",
-				"DDERR_UNSUPPORTED                 ","DDERR_UNSUPPORTEDFORMAT           ","DDERR_UNSUPPORTEDMASK             ","DDERR_UNSUPPORTEDMODE             ",
-				"DDERR_VERTICALBLANKINPROGRESS     ","DDERR_WASSTILLDRAWING             ","DDERR_WRONGMODE                   ","DDERR_XALIGN                      "
-			};
+				"DDERR_ALREADYINITIALIZED          ", "DDERR_BLTFASTCANTCLIP             ", "DDERR_CANNOTATTACHSURFACE         ", "DDERR_CANNOTDETACHSURFACE         ",
+				"DDERR_CANTCREATEDC                ", "DDERR_CANTDUPLICATE               ", "DDERR_CANTLOCKSURFACE             ", "DDERR_CANTPAGELOCK                ",
+				"DDERR_CANTPAGEUNLOCK              ", "DDERR_CLIPPERISUSINGHWND          ", "DDERR_COLORKEYNOTSET              ", "DDERR_CURRENTLYNOTAVAIL           ",
+				"DDERR_DCALREADYCREATED            ", "DDERR_DIRECTDRAWALREADYCREATED    ", "DDERR_EXCEPTION                   ", "DDERR_EXCLUSIVEMODEALREADYSET     ",
+				"DDERR_GENERIC                     ", "DDERR_HEIGHTALIGN                 ", "DDERR_HWNDALREADYSET              ", "DDERR_HWNDSUBCLASSED              ",
+				"DDERR_IMPLICITLYCREATED           ", "DDERR_INCOMPATIBLEPRIMARY         ", "DDERR_INVALIDCAPS                 ", "DDERR_INVALIDCLIPLIST             ",
+				"DDERR_INVALIDDIRECTDRAWGUID       ", "DDERR_INVALIDMODE                 ", "DDERR_INVALIDOBJECT               ", "DDERR_INVALIDPARAMS               ",
+				"DDERR_INVALIDPIXELFORMAT          ", "DDERR_INVALIDPOSITION             ", "DDERR_INVALIDRECT                 ", "DDERR_INVALIDSURFACETYPE          ",
+				"DDERR_LOCKEDSURFACES              ", "DDERR_NO3D                        ", "DDERR_NOALPHAHW                   ", "DDERR_NOBLTHW                     ",
+				"DDERR_NOCLIPLIST                  ", "DDERR_NOCLIPPERATTACHED           ", "DDERR_NOCOLORCONVHW               ", "DDERR_NOCOLORKEY                  ",
+				"DDERR_NOCOLORKEYHW                ", "DDERR_NOCOOPERATIVELEVELSET       ", "DDERR_NODC                        ", "DDERR_NODDROPSHW                  ",
+				"DDERR_NODIRECTDRAWHW              ", "DDERR_NODIRECTDRAWSUPPORT         ", "DDERR_NOEMULATION                 ", "DDERR_NOEXCLUSIVEMODE             ",
+				"DDERR_NOFLIPHW                    ", "DDERR_NOGDI                       ", "DDERR_NOHWND                      ", "DDERR_NOMIPMAPHW                  ",
+				"DDERR_NOMIRRORHW                  ", "DDERR_NOOVERLAYDEST               ", "DDERR_NOOVERLAYHW                 ", "DDERR_NOPALETTEATTACHED           ",
+				"DDERR_NOPALETTEHW                 ", "DDERR_NORASTEROPHW                ", "DDERR_NOROTATIONHW                ", "DDERR_NOSTRETCHHW                 ",
+				"DDERR_NOT4BITCOLOR                ", "DDERR_NOT4BITCOLORINDEX           ", "DDERR_NOT8BITCOLOR                ", "DDERR_NOTAOVERLAYSURFACE          ",
+				"DDERR_NOTEXTUREHW                 ", "DDERR_NOTFLIPPABLE                ", "DDERR_NOTFOUND                    ", "DDERR_NOTINITIALIZED              ",
+				"DDERR_NOTLOCKED                   ", "DDERR_NOTPAGELOCKED               ", "DDERR_NOTPALETTIZED               ", "DDERR_NOVSYNCHW                   ",
+				"DDERR_NOZBUFFERHW                 ", "DDERR_NOZOVERLAYHW                ", "DDERR_OUTOFCAPS                   ", "DDERR_OUTOFMEMORY                 ",
+				"DDERR_OUTOFVIDEOMEMORY            ", "DDERR_OVERLAYCANTCLIP             ", "DDERR_OVERLAYCOLORKEYONLYONEACTIVE", "DDERR_OVERLAYNOTVISIBLE           ",
+				"DDERR_PALETTEBUSY                 ", "DDERR_PRIMARYSURFACEALREADYEXISTS ", "DDERR_REGIONTOOSMALL              ", "DDERR_SURFACEALREADYATTACHED      ",
+				"DDERR_SURFACEALREADYDEPENDENT     ", "DDERR_SURFACEBUSY                 ", "DDERR_SURFACEISOBSCURED           ", "DDERR_SURFACELOST                 ",
+				"DDERR_SURFACENOTATTACHED          ", "DDERR_TOOBIGHEIGHT                ", "DDERR_TOOBIGSIZE                  ", "DDERR_TOOBIGWIDTH                 ",
+				"DDERR_UNSUPPORTED                 ", "DDERR_UNSUPPORTEDFORMAT           ", "DDERR_UNSUPPORTEDMASK             ", "DDERR_UNSUPPORTEDMODE             ",
+				"DDERR_VERTICALBLANKINPROGRESS     ", "DDERR_WASSTILLDRAWING             ", "DDERR_WRONGMODE                   ", "DDERR_XALIGN                      "};
 			for (int i = 0; i < sizeof(ErrorCode) / sizeof(int); i++)
 				if (ddrval == ErrorCode[i])
 					GAME_ASSERT(0, ErrorMsg[i]);
@@ -905,7 +930,7 @@ namespace game_framework {
 
 	CGameState::CGameState(CGame *g)
 	{
-		game = g; 	// 設定game的pointer
+		game = g; // 設定game的pointer
 	}
 
 	void CGameState::GotoGameState(int state)
@@ -930,7 +955,7 @@ namespace game_framework {
 		const int progress_y1 = y1 + pen_width;
 		const int progress_y2 = y2 - pen_width;
 
-		CDDraw::BltBackColor(DEFAULT_BG_COLOR);		// 將 Back Plain 塗上預設的顏色
+		CDDraw::BltBackColor(DEFAULT_BG_COLOR); // 將 Back Plain 塗上預設的顏色
 
 		// CMovingBitmap loading;						// 貼上loading圖示
 		// loading.LoadBitmap({ "RES/loading.bmp" });
@@ -940,35 +965,35 @@ namespace game_framework {
 		//
 		// 以下為CDC的用法
 		//
-		CDC *pDC = CDDraw::GetBackCDC();			// 取得 Back Plain 的 CDC 
-		CPen *pp, p(PS_NULL, 0, RGB(0, 0, 0));		// 清除pen
+		CDC *pDC = CDDraw::GetBackCDC();	   // 取得 Back Plain 的 CDC
+		CPen *pp, p(PS_NULL, 0, RGB(0, 0, 0)); // 清除pen
 		pp = pDC->SelectObject(&p);
 
-		CBrush *pb, b(RGB(155, 155, 155));				// 畫綠色 progress框
+		CBrush *pb, b(RGB(155, 155, 155)); // 畫綠色 progress框
 		pb = pDC->SelectObject(&b);
 		pDC->Rectangle(x1, y1, x2, y2);
 
-		CBrush b1(DEFAULT_BG_COLOR);				// 畫黑色 progrss中心
+		CBrush b1(DEFAULT_BG_COLOR); // 畫黑色 progrss中心
 		pDC->SelectObject(&b1);
 		pDC->Rectangle(progress_x1, progress_y1, progress_x2_end, progress_y2);
 
-		CBrush b2(RGB(255, 255, 255));					// 畫黃色 progrss進度
+		CBrush b2(RGB(255, 255, 255)); // 畫黃色 progrss進度
 		pDC->SelectObject(&b2);
 		pDC->Rectangle(progress_x1, progress_y1, progress_x2, progress_y2);
 
-		pDC->SelectObject(pp);						// 釋放 pen
-		pDC->SelectObject(pb);						// 釋放 brush
+		pDC->SelectObject(pp); // 釋放 pen
+		pDC->SelectObject(pb); // 釋放 brush
 
 		CFont *fp;
 		CTextDraw::ChangeFontLog(pDC, fp, 30, "微軟正黑體");
 
 		CTextDraw::Print(pDC, x1, (int)(SIZE_Y * 0.40), message.c_str());
 
-		CDDraw::ReleaseBackCDC();					// 放掉 Back Plain 的 CDC
+		CDDraw::ReleaseBackCDC(); // 放掉 Back Plain 的 CDC
 		//
 		// 如果是別的地方用到CDC的話，不要抄以下這行，否則螢幕會閃爍
 		//
-		CDDraw::BltBackToPrimary();					// 將 Back Plain 貼到螢幕
+		CDDraw::BltBackToPrimary(); // 將 Back Plain 貼到螢幕
 	}
 
 	void CGameState::OnDraw() // Template Method

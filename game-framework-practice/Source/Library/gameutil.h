@@ -60,7 +60,7 @@
  *      6. Support ShowInitProgress(percent) to display loading progress.
  *   2010-03-23 V4.6
  *      1. Rewrite CAudio with MCI commands to eliminate dependency with DirectMusic.
-*/
+ */
 
 /////////////////////////////////////////////////////////////////////////////
 // Header for STL (Standard Template Library)
@@ -71,37 +71,40 @@
 #include <map>
 using namespace std;
 
-namespace game_framework {
+namespace game_framework
+{
 
 	/////////////////////////////////////////////////////////////////////////////
 	// 這個class提供動態(可以移動)的圖形
 	// 每個Public Interface的用法都要懂，Implementation可以不懂
 	/////////////////////////////////////////////////////////////////////////////
 
-	class CMovingBitmap {
+	class CMovingBitmap
+	{
 	public:
 		CMovingBitmap();
-		int   Height();						// 取得圖形的高度
-		int   Left();						// 取得圖形的左上角的 x 座標
-		void  SetAnimation(int delay, bool _once);
-		void  LoadBitmap(int, COLORREF = CLR_INVALID);		// 載入圖，指定圖的編號(resource)及透明色
-		void  LoadBitmap(char*, COLORREF = CLR_INVALID);	// 載入圖，指定圖的檔名及透明色
-		void  LoadBitmap(vector<char*>, COLORREF = CLR_INVALID);	// 載入圖，指定圖的檔名及透明色
-		void  LoadBitmapByString(vector<string>, COLORREF = CLR_INVALID);	// 載入圖，指定圖的檔名及透明色
-		void  UnshowBitmap();
-		void  SetTopLeft(int, int);			// 將圖的左上角座標移至 (x,y)
-		void  ShowBitmap();					// 將圖貼到螢幕
-		void  ShowBitmap(double factor);	// 將圖貼到螢幕 factor < 1時縮小，>1時放大。注意：需要VGA卡硬體的支援，否則會很慢
-		void  SelectShowBitmap(int select);
-		int   GetSelectShowBitmap();
-		void  ToggleAnimation();
-		int   Top();						// 取得圖形的左上角的 y 座標
-		int   Width();						// 取得圖形的寬度
-		bool  IsAnimationDone();
-		bool  IsAnimation();
-		int   GetMovingBitmapFrame();
+		int Height(); // 取得圖形的高度
+		int Left();	  // 取得圖形的左上角的 x 座標
+		void SetAnimation(int delay, bool _once);
+		void LoadBitmap(int, COLORREF = CLR_INVALID);					 // 載入圖，指定圖的編號(resource)及透明色
+		void LoadBitmap(char *, COLORREF = CLR_INVALID);				 // 載入圖，指定圖的檔名及透明色
+		void LoadBitmap(vector<char *>, COLORREF = CLR_INVALID);		 // 載入圖，指定圖的檔名及透明色
+		void LoadBitmapByString(vector<string>, COLORREF = CLR_INVALID); // 載入圖，指定圖的檔名及透明色
+		void UnshowBitmap();
+		void SetTopLeft(int, int);		// 將圖的左上角座標移至 (x,y)
+		void ShowBitmap();				// 將圖貼到螢幕
+		void ShowBitmap(double factor); // 將圖貼到螢幕 factor < 1時縮小，>1時放大。注意：需要VGA卡硬體的支援，否則會很慢
+		void SelectShowBitmap(int select);
+		int GetSelectShowBitmap();
+		void ToggleAnimation();
+		int Top();	 // 取得圖形的左上角的 y 座標
+		int Width(); // 取得圖形的寬度
+		bool IsAnimationDone();
+		bool IsAnimation();
+		int GetMovingBitmapFrame();
 		string GetImageFilename();
 		COLORREF GetFilterColor();
+
 	protected:
 		int selector = 0;
 		int delayCount = 10;
@@ -112,16 +115,17 @@ namespace game_framework {
 		bool once = false;
 		vector<unsigned> SurfaceID;
 		COLORREF filter_color;
-		bool     isBitmapLoaded = false;	// whether a bitmap has been loaded
-		CRect    location;			// location of the bitmap
+		bool isBitmapLoaded = false; // whether a bitmap has been loaded
+		CRect location;				 // location of the bitmap
 	private:
 		string image_filename;
 	};
 
-	class CTextDraw {
+	class CTextDraw
+	{
 	public:
 		void static Print(CDC *pDC, int x, int y, string str);
-		void static ChangeFontLog(CDC* pDC, CFont* &fp, int size, string fontName, COLORREF color, int weight = 500);
+		void static ChangeFontLog(CDC *pDC, CFont *&fp, int size, string fontName, COLORREF color, int weight = 500);
 	};
 
 }
