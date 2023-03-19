@@ -1,3 +1,4 @@
+#include <vector>
 /*
  * mygame.h: 本檔案儲遊戲本身的class的interface
  * Copyright (C) 2002-2008 Woei-Kae Chen <wkc@csie.ntut.edu.tw>
@@ -37,7 +38,6 @@
  *      2. Replace the demonstration of animation as a new bouncing ball.
  *      3. Use ShowInitProgress(percent) to display loading progress.
  */
-#include <vector>
 
 namespace game_framework
 {
@@ -68,12 +68,9 @@ namespace game_framework
 	protected:
 		void OnShow(); // 顯示這個狀態的遊戲畫面
 	private:
-		CMovingBitmap logo;		  // csie的logo
-		CMovingBitmap background; // 背景圖
-		void draw_text();		  // 顯示文字
-		CMovingBitmap playIcon;	  // 開始鈕
-		CMovingBitmap voice;	  // 音效開關
-		CMovingBitmap music;	  // 背景音樂開關
+		CMovingBitmap logo; // csie的logo
+		// CMovingBitmap background; // 背景圖
+		void draw_text(); // 顯示文字
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -95,22 +92,39 @@ namespace game_framework
 		void OnMouseMove(UINT nFlags, CPoint point);   // 處理滑鼠的動作
 		void OnRButtonDown(UINT nFlags, CPoint point); // 處理滑鼠的動作
 		void OnRButtonUp(UINT nFlags, CPoint point);   // 處理滑鼠的動作
+
 	protected:
-		void OnMove(); // 移動遊戲元素
-		void OnShow(); // 顯示這個狀態的遊戲畫面
+		void OnMove();	   // 移動遊戲元素
+		void OnShow();	   // 顯示這個狀態的遊戲畫面
+		void setByLevel(); // 顯示不同關卡的畫面
+
 	private:
+		int level = -1;	   // 遊戲關卡
+		int prelevel = -2; // 上一關的關卡
+		int nowLevel = 1;
 		CMovingBitmap background; // 背景圖
-		CMovingBitmap playIcon;	  // 開始鈕
-		int level = 0;			  // 遊戲關卡
-		int prelevel = 0;		  // 上一關的關卡
-		void showByLevel();		  // 顯示不同關卡的畫面
+
+		// menu
+		CMovingBitmap menu_play_text; // 開始鈕
+		CMovingBitmap menu_voice;	  // 音效開關
+		CMovingBitmap menu_music;	  // 背景音樂開關
+
+		// level sheet
+		CMovingBitmap level_select_text; // 選擇關卡的圖片
+		CMovingBitmap level_to_menu;
+		CMovingBitmap levels[70];
+
+		// in the level
 		vector<CMovingBitmap> walls;
 		vector<CMovingBitmap> floors;
 		vector<CMovingBitmap> goals;
 		vector<CMovingBitmap> boxes;
+
 		CMovingBitmap player;
-		int walls_amount;
-		int boxes_amount;
+
+		CMovingBitmap foot_to_level;
+		CMovingBitmap foot_undo;
+		CMovingBitmap foot_restart;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -131,5 +145,4 @@ namespace game_framework
 	private:
 		int counter; // 倒數之計數器
 	};
-
 }

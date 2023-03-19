@@ -153,8 +153,7 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT &cs)
 	cs.style = WS_SYSMENU | WS_MINIMIZEBOX;
 	cs.x = (::GetSystemMetrics(SM_CXSCREEN) - cs.cx) / 2;
 	cs.y = (::GetSystemMetrics(SM_CYSCREEN) - cs.cy) / 2;
-	// cs.x = 600;
-	// cs.y = 900;
+
 	//  Set priority level
 	AfxGetApp()->SetThreadPriority(THREAD_PRIORITY_HIGHEST);
 	return CFrameWnd::PreCreateWindow(cs);
@@ -267,7 +266,6 @@ void CMainFrame::OnPaint()
 	GetWindowRect(WindowRect);
 
 	MoveWindow(WindowRect.left, WindowRect.top, SIZE_X, SIZE_Y + extra_height);
-	// MoveWindow(WindowRect.left, WindowRect.top, 600, 900 + extra_height);
 }
 
 void CMainFrame::OnButtonFullscreen()
