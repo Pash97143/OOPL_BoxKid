@@ -9,7 +9,7 @@
 
 using namespace game_framework;
 
-// ¹CÀ¸¿ïÃö
+// éŠæˆ²é¸é—œ
 
 // void CGameStateRun::setByLevel()
 // {

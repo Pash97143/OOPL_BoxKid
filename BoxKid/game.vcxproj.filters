@@ -54,9 +54,6 @@
     <ClCompile Include="Source\Game\mygame_run.cpp">
       <Filter>MyGame</Filter>
     </ClCompile>
-    <!-- <ClCompile Include="Source\Game\active_stack.cpp">
-      <Filter>MyGame</Filter>
-    </ClCompile> -->
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Library\audio.h">
