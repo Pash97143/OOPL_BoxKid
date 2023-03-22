@@ -122,6 +122,8 @@ namespace game_framework
 
 		CMovingBitmap player;
 
+		CMovingBitmap foot_control;
+
 		CMovingBitmap foot_to_level;
 		CMovingBitmap foot_undo;
 		CMovingBitmap foot_restart;
