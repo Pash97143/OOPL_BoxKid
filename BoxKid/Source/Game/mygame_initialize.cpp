@@ -9,7 +9,7 @@
 
 using namespace game_framework;
 /////////////////////////////////////////////////////////////////////////////
-// ³o­Óclass¬°¹CÀ¸ªº¹CÀ¸¶}ÀYµe­±ª«¥ó
+// é€™å€‹classç‚ºéŠæˆ²çš„éŠæˆ²é–‹é ­ç•«é¢ç‰©ä»¶
 /////////////////////////////////////////////////////////////////////////////
 
 CGameStateInit::CGameStateInit(CGame *g) : CGameState(g)
@@ -17,24 +17,19 @@ CGameStateInit::CGameStateInit(CGame *g) : CGameState(g)
 }
 
 void CGameStateInit::OnInit()
-{ //
-	// ·í¹Ï«Ü¦h®É¡AOnInit¸ü¤J©Ò¦³ªº¹Ï­nªá«Ü¦h®É¶¡¡C¬°Á×§Kª±¹CÀ¸ªº¤H
-	//     µ¥ªº¤£­@·Ð¡A¹CÀ¸·|¥X²{¡uLoading ...¡v¡AÅã¥ÜLoadingªº¶i«×¡C
+{
 	//
-	ShowInitProgress(0, "Start Initialize..."); // ¤@¶}©lªºloading¶i«×¬°0%
+	// ç•¶åœ–å¾ˆå¤šæ™‚ï¼ŒOnInitè¼‰å…¥æ‰€æœ‰çš„åœ–è¦èŠ±å¾ˆå¤šæ™‚é–“ã€‚ç‚ºé¿å…çŽ©éŠæˆ²çš„äºº
+	//     ç­‰çš„ä¸è€ç…©ï¼ŒéŠæˆ²æœƒå‡ºç¾ã€ŒLoading ...ã€ï¼Œé¡¯ç¤ºLoadingçš„é€²åº¦ã€‚
 	//
-	Sleep(200);
-	background.LoadBitmap("resources/bg_main.bmp", RGB(0, 0, 0));
-	background.SetTopLeft(0, 0);
-
-	playIcon.LoadBitmap("resources/play.bmp", RGB(0, 0, 0));
-	playIcon.SetTopLeft(190, 450);
-	Sleep(200);
+	ShowInitProgress(0, "Start Initialize..."); // ä¸€é–‹å§‹çš„loadingé€²åº¦ç‚º0%
 	//
-	// Sleep(1000); // ©ñºC¡A¥H«K¬Ý²M·¡¶i«×¡A¹ê»Ú¹CÀ¸½Ð§R°£¦¹Sleep
+	// é–‹å§‹è¼‰å…¥è³‡æ–™
+	//
+	Sleep(200); // æ”¾æ…¢ï¼Œä»¥ä¾¿çœ‹æ¸…æ¥šé€²åº¦ï¼Œå¯¦éš›éŠæˆ²è«‹åˆªé™¤æ­¤Sleep
 
 	//
-	// ¦¹OnInit°Ê§@·|±µ¨ìCGameStaterRun::OnInit()¡A©Ò¥H¶i«×ÁÙ¨S¨ì100%
+	// æ­¤OnInitå‹•ä½œæœƒæŽ¥åˆ°CGameStaterRun::OnInit()ï¼Œæ‰€ä»¥é€²åº¦é‚„æ²’åˆ°100%
 	//
 }
 
@@ -44,21 +39,14 @@ void CGameStateInit::OnBeginState()
 
 void CGameStateInit::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
+	GotoGameState(GAME_STATE_RUN); // åˆ‡æ›è‡³GAME_STATE_RUN
 }
 
 void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
 {
-	if (nFlags == MK_LBUTTON)
-	{
-		if (point.x >= 190 && point.x <= 190 + 168 && point.y >= 450 && point.y <= 450 + 73)
-		{
-			GotoGameState(GAME_STATE_RUN); // ¤Á´«¦ÜGAME_STATE_RUN
-		}
-	}
+	GotoGameState(GAME_STATE_RUN); // åˆ‡æ›è‡³GAME_STATE_RUN
 }
 
 void CGameStateInit::OnShow()
 {
-	background.ShowBitmap();
-	playIcon.ShowBitmap();
 }
