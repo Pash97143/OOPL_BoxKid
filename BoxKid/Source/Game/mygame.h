@@ -127,7 +127,25 @@ namespace game_framework
 		CMovingBitmap foot_to_level;
 		CMovingBitmap foot_undo;
 		CMovingBitmap foot_restart;
-	};
+
+		vector<int> walls_amount = {20, 22, 24, 30, 25};
+		vector<int> floors_amount = {8, 19, 21, 23, 21};
+		vector<int> boxes_amount = {1, 1, 2, 2, 2};
+		vector<int> goals_amount = {1, 1, 2, 2, 2};
+
+
+/*
+0:empty
+1:wall
+2:floor
+3:box
+4:goal
+5:box on goals
+6:player
+*/
+		vector<vector<vector<int>>> walls_like = {{{0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 2, 2, 3, 2, 4, 1, 0}, {0, 1, 2, 2, 1, 1, 1, 1, 0}, {0, 1, 2, 6, 1, 0, 0, 0, 0}, {0, 1, 1, 1, 1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0}},
+												  {{0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 2, 2, 6, 2, 2, 1, 0}, {0, 1, 2, 2, 2, 2, 2, 1, 0}, {0, 1, 2, 2, 2, 3, 4, 1, 0}, {0, 1, 2, 2, 2, 2, 2, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 0}}};
+	}; 
 
 	/////////////////////////////////////////////////////////////////////////////
 	// 這個class為遊戲的結束狀態(Game Over)
