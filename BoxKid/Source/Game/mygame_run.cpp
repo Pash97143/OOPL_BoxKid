@@ -121,21 +121,21 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
     {
         if (nChar == VK_LEFT)
         {
-            for (int i = 0; i < walls_amount[level-1]; i++)
+            for (int i = 0; i < walls_amount[level - 1]; i++)
             {
                 if (player.GetTop() == walls[i].GetTop() && player.GetLeft() == walls[i].GetLeft() + 60)
                     return;
             }
-            for (int i = 0; i < boxes_amount[level-1]; i++)
+            for (int i = 0; i < boxes_amount[level - 1]; i++)
             {
                 if (player.GetTop() == boxes[i].GetTop() && player.GetLeft() == boxes[i].GetLeft() + 60)
                 {
-                    for (int j = 0; j < walls_amount[level-1]; j++)
+                    for (int j = 0; j < walls_amount[level - 1]; j++)
                     {
                         if (boxes[i].GetTop() == walls[j].GetTop() && boxes[i].GetLeft() == walls[j].GetLeft() + 60)
                             return;
                     }
-                    for (int j = 0; j < boxes_amount[level-1]; j++)
+                    for (int j = 0; j < boxes_amount[level - 1]; j++)
                     {
                         if (boxes[i].GetTop() == boxes[j].GetTop() && boxes[i].GetLeft() == boxes[j].GetLeft() + 60)
                             return;
@@ -151,21 +151,21 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
         }
         else if (nChar == VK_UP)
         {
-            for (int i = 0; i < walls_amount[level-1]; i++)
+            for (int i = 0; i < walls_amount[level - 1]; i++)
             {
                 if (player.GetTop() == walls[i].GetTop() + 60 && player.GetLeft() == walls[i].GetLeft())
                     return;
             }
-            for (int i = 0; i < boxes_amount[level-1]; i++)
+            for (int i = 0; i < boxes_amount[level - 1]; i++)
             {
                 if (player.GetTop() == boxes[i].GetTop() + 60 && player.GetLeft() == boxes[i].GetLeft())
                 {
-                    for (int j = 0; j < walls_amount[level-1]; j++)
+                    for (int j = 0; j < walls_amount[level - 1]; j++)
                     {
                         if (boxes[i].GetTop() == walls[j].GetTop() + 60 && boxes[i].GetLeft() == walls[j].GetLeft())
                             return;
                     }
-                    for (int j = 0; j < boxes_amount[level-1]; j++)
+                    for (int j = 0; j < boxes_amount[level - 1]; j++)
                     {
                         if (boxes[i].GetTop() == boxes[j].GetTop() + 60 && boxes[i].GetLeft() == boxes[j].GetLeft())
                             return;
@@ -181,21 +181,21 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
         }
         else if (nChar == VK_RIGHT)
         {
-            for (int i = 0; i < walls_amount[level-1]; i++)
+            for (int i = 0; i < walls_amount[level - 1]; i++)
             {
                 if (player.GetTop() == walls[i].GetTop() && player.GetLeft() + 60 == walls[i].GetLeft())
                     return;
             }
-            for (int i = 0; i < boxes_amount[level-1]; i++)
+            for (int i = 0; i < boxes_amount[level - 1]; i++)
             {
                 if (player.GetTop() == boxes[i].GetTop() && player.GetLeft() + 60 == boxes[i].GetLeft())
                 {
-                    for (int j = 0; j < walls_amount[level-1]; j++)
+                    for (int j = 0; j < walls_amount[level - 1]; j++)
                     {
                         if (boxes[i].GetTop() == walls[j].GetTop() && boxes[i].GetLeft() == walls[j].GetLeft() - 60)
                             return;
                     }
-                    for (int j = 0; j < boxes_amount[level-1]; j++)
+                    for (int j = 0; j < boxes_amount[level - 1]; j++)
                     {
                         if (boxes[i].GetTop() == boxes[j].GetTop() && boxes[i].GetLeft() == boxes[j].GetLeft() - 60)
                             return;
@@ -212,21 +212,21 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
         }
         else if (nChar == VK_DOWN)
         {
-            for (int i = 0; i < walls_amount[level-1]; i++)
+            for (int i = 0; i < walls_amount[level - 1]; i++)
             {
                 if (player.GetTop() + 60 == walls[i].GetTop() && player.GetLeft() == walls[i].GetLeft())
                     return;
             }
-            for (int i = 0; i < boxes_amount[level-1]; i++)
+            for (int i = 0; i < boxes_amount[level - 1]; i++)
             {
                 if (player.GetTop() + 60 == boxes[i].GetTop() && player.GetLeft() == boxes[i].GetLeft())
                 {
-                    for (int j = 0; j < walls_amount[level-1]; j++)
+                    for (int j = 0; j < walls_amount[level - 1]; j++)
                     {
                         if (boxes[i].GetTop() == walls[j].GetTop() - 60 && boxes[i].GetLeft() == walls[j].GetLeft())
                             return;
                     }
-                    for (int j = 0; j < boxes_amount[level-1]; j++)
+                    for (int j = 0; j < boxes_amount[level - 1]; j++)
                     {
                         if (boxes[i].GetTop() == boxes[j].GetTop() - 60 && boxes[i].GetLeft() == boxes[j].GetLeft())
                             return;
@@ -451,8 +451,7 @@ void CGameStateRun::setByLevel()
         player.LoadBitmapByString({"resources/player9.bmp", "resources/player9.bmp", "resources/player9.bmp", "resources/player9.bmp"}, RGB(163, 73, 164));
         player.SetFrameIndexOfBitmap(3);
 
-
-        for (int i = 0; i < walls_amount[level-1]; i++)
+        for (int i = 0; i < walls_amount[level - 1]; i++)
         {
             CMovingBitmap wall;
             wall.LoadBitmap("resources/gobj_wall.bmp", RGB(163, 73, 164));
@@ -470,179 +469,64 @@ void CGameStateRun::setByLevel()
             goal.LoadBitmap("resources/gobj_goal.bmp", RGB(163, 73, 164));
             goals.push_back(goal);
         }
-        for (int i = 0; i < boxes_amount[level-1]; i++)
+        for (int i = 0; i < boxes_amount[level - 1]; i++)
         {
             CMovingBitmap box;
             box.LoadBitmapByString({"resources/gobj_box0.bmp", "resources/gobj_box1.bmp"}, RGB(163, 73, 164));
             boxes.push_back(box);
         }
 
-            player.SetTopLeft(180, 480);
+        player.SetTopLeft(180, 480);
 
-            //------
-            Sleep(500);
-            //-------
+        //------
+        Sleep(500);
+        //-------
 
-            // boxes[0].SetTopLeft(240, 360);
-            int walls_count = 0;
-            int floors_count = 0;
-            int boxes_count = 0;
-            int goals_count = 0;
-            for (int i = 0; i < 9; i++){
-                for (int j = 0; j < 7; j++){
-                    if(walls_like[level-1][j][i] == 1){
-                        walls[walls_count].SetTopLeft(0 + 60 * i, 240 + 60 * j);
-                        walls_count++;
-                    }
-                    else if(walls_like[level-1][j][i] == 2){
-                        floors[floors_count].SetTopLeft(0 + 60 * i, 240 + 60 * j);
-                        floors_count++;
-                    }
-                    else if(walls_like[level-1][j][i] == 3){
-                        floors[floors_count].SetTopLeft(0 + 60 * i, 240 + 60 * j);
-                        floors_count++;
-                        boxes[boxes_count].SetTopLeft(0 + 60 * i, 240 + 60 * j);
-                        boxes_count++;
-                    }
-                    else if(walls_like[level-1][j][i] == 4){
-                        goals[goals_count].SetTopLeft(0 + 60 * i, 240 + 60 * j);
-                        goals_count++;
-                    }
-                    else if(walls_like[level-1][j][i] == 5){
-                        boxes[boxes_count].SetTopLeft(0 + 60 * i, 240 + 60 * j);
-                        boxes_count++;
-                        goals[goals_count].SetTopLeft(0 + 60 * i, 240 + 60 * j);
-                        goals_count++;
-                    }
-                    else if(walls_like[level-1][j][i] == 6){
-                        player.SetTopLeft(0 + 60 * i, 240 + 60 * j);
-                        floors[floors_count].SetTopLeft(0 + 60 * i, 240 + 60 * j);
-                        floors_count++;
-                    }
+        // boxes[0].SetTopLeft(240, 360);
+        int walls_count = 0;
+        int floors_count = 0;
+        int boxes_count = 0;
+        int goals_count = 0;
+        for (int i = 0; i < 9; i++)
+        {
+            for (int j = 0; j < 7; j++)
+            {
+                if (walls_like[level - 1][j][i] == 1)
+                {
+                    walls[walls_count].SetTopLeft(0 + 60 * i, 240 + 60 * j);
+                    walls_count++;
+                }
+                else if (walls_like[level - 1][j][i] == 2)
+                {
+                    floors[floors_count].SetTopLeft(0 + 60 * i, 240 + 60 * j);
+                    floors_count++;
+                }
+                else if (walls_like[level - 1][j][i] == 3)
+                {
+                    floors[floors_count].SetTopLeft(0 + 60 * i, 240 + 60 * j);
+                    floors_count++;
+                    boxes[boxes_count].SetTopLeft(0 + 60 * i, 240 + 60 * j);
+                    boxes_count++;
+                }
+                else if (walls_like[level - 1][j][i] == 4)
+                {
+                    goals[goals_count].SetTopLeft(0 + 60 * i, 240 + 60 * j);
+                    goals_count++;
+                }
+                else if (walls_like[level - 1][j][i] == 5)
+                {
+                    boxes[boxes_count].SetTopLeft(0 + 60 * i, 240 + 60 * j);
+                    boxes_count++;
+                    goals[goals_count].SetTopLeft(0 + 60 * i, 240 + 60 * j);
+                    goals_count++;
+                }
+                else if (walls_like[level - 1][j][i] == 6)
+                {
+                    player.SetTopLeft(0 + 60 * i, 240 + 60 * j);
+                    floors[floors_count].SetTopLeft(0 + 60 * i, 240 + 60 * j);
+                    floors_count++;
                 }
             }
-
-            // for (int i = 0; i < 7; i++)
-            // {
-            //     walls[i].SetTopLeft(60 + i * 60, 300);
-            // }
-            // walls[7].SetTopLeft(60, 360);
-            // walls[8].SetTopLeft(60, 420);
-            // walls[9].SetTopLeft(60, 480);
-            // walls[10].SetTopLeft(60, 540);
-            // walls[11].SetTopLeft(120, 540);
-            // walls[12].SetTopLeft(180, 540);
-            // walls[13].SetTopLeft(240, 540);
-            // walls[14].SetTopLeft(240, 480);
-            // walls[15].SetTopLeft(240, 420);
-            // walls[16].SetTopLeft(300, 420);
-            // walls[17].SetTopLeft(360, 420);
-            // walls[18].SetTopLeft(420, 420);
-            // walls[19].SetTopLeft(420, 360);
-
-            // floors[0].SetTopLeft(120, 360);
-            // floors[1].SetTopLeft(180, 360);
-            // floors[2].SetTopLeft(240, 360);
-            // floors[3].SetTopLeft(300, 360);
-            // floors[4].SetTopLeft(120, 420);
-            // floors[5].SetTopLeft(180, 420);
-            // floors[6].SetTopLeft(120, 480);
-            // floors[7].SetTopLeft(180, 480);
-
-            // goals[0].SetTopLeft(360, 360);
-        
-        // else if (level == 2)
-        // {
-        //     player.SetTopLeft(240, 360);
-
-        //     //------
-        //     Sleep(500);
-        //     //-------
-
-        //     for (int i = 0; i < 7; i++)
-        //     {
-        //         walls[i].SetTopLeft(60 + i * 60, 300);
-        //     }
-        //     walls[7].SetTopLeft(60, 360);
-        //     walls[8].SetTopLeft(420, 360);
-        //     walls[9].SetTopLeft(60, 420);
-        //     walls[10].SetTopLeft(420, 420);
-        //     walls[11].SetTopLeft(60, 480);
-        //     walls[12].SetTopLeft(420, 480);
-        //     walls[13].SetTopLeft(60, 540);
-        //     walls[14].SetTopLeft(420, 540);
-
-        //     for (int i = 0; i < 7; i++)
-        //     {
-        //         walls[i + 15].SetTopLeft(60 + i * 60, 600);
-        //     }
-
-        //     for (int i = 0; i < 4; i++)
-        //     {
-        //         for (int j = 0; j < 5; j++)
-        //         {
-        //             floors[i * 5 + j].SetTopLeft(120 + j * 60, 360 + i * 60);
-        //         }
-        //     }
-
-        //     boxes[0].SetTopLeft(300, 480);
-        //     goals[0].SetTopLeft(360, 480);
-        // }
-        // else if (level == 3)
-        // {
-        //     player.SetTopLeft(120, 540);
-
-        //     for(int i = 0; i < 6; i++)
-        //     {
-        //         walls[i].SetTopLeft(60, 300 + 60 * i);
-        //     }
-        //     for(int i = 0; i < 4; i++){
-        //         walls[i + 6].SetTopLeft(120 + i * 60, 600);
-        //     }
-        //     for(int i = 0; i < 3; i++){
-        //         walls[i + 10].SetTopLeft(300 + 60 * i, 540);
-        //     }
-        //     for(int i = 0; i < 5; i++){
-        //         walls[i + 13].SetTopLeft(420, 480 - 60 * i);
-        //     }
-        //     for(int i = 0; i < 4; i++){
-        //         walls[i + 18].SetTopLeft(360 - 60 * i, 240);
-        //     }
-        //     for(int i = 0; i < 2; i++){
-        //         walls[i + 22].SetTopLeft(120 + 60 * i, 300);
-        //     }
-
-        //     for(int i = 0; i < 3; i++){
-        //         for(int j = 0; j < 5; j++){
-        //             floors[i * 5 + j].SetTopLeft(120 + 60 * j, 360 + 60 * i);
-        //         }
-        //     }
-        //     for(int i = 0; i < 3; i++){
-        //         floors[15 + i].SetTopLeft(240 + 60 * i, 300);
-        //     }
-        //     for(int i = 0; i  < 3; i++){
-        //         floors[18 + i].SetTopLeft(120 + 60 * i, 540);
-        //     }
-
-        //     boxes[0].SetTopLeft(300, 300);
-        //     boxes[1].SetTopLeft(240, 480);
-        //     goals[0].SetTopLeft(240, 300);
-        //     goals[1].SetTopLeft(300, 480);
-        // }   
-        /*else if (level == 4){
-            player.SetTopLeft(120, 360);
-            boxes[0].SetTopLeft(240, 480);
-            boxes[1].SetTopLeft(360, 480);
-            goals[0].SetTopLeft(60, 480);
-            goals[1].SetTopLeft(360, 300);
-
-            for (int i = 0; i < 2; i++){
-                for (int j = 0; j < 3; j++){
-                    walls[3 * i + j].SetTopLeft(60 + 60 * i + 60 * j, 300 + 60 * i);
-                }
-            }
-            wall[6].SetTopLeft()
-        }*/
+        }
     }
-
 }

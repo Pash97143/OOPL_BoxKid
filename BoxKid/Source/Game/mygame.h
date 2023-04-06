@@ -116,11 +116,6 @@ namespace game_framework
 		CMovingBitmap level_to_menu;
 		CMovingBitmap levels[70];
 
-		vector<int> walls_amount = {20, 22}; // 關卡的牆壁數量
-		vector<int> floors_amount = {8, 19}; // 關卡的地板數量
-		vector<int> goals_amount = {1, 1};	 // 關卡的目標數量
-		vector<int> boxes_amount = {1, 1};	 // 關卡的箱子數量
-
 		// in the level
 		vector<CMovingBitmap> walls;
 		vector<CMovingBitmap> floors;
@@ -144,19 +139,18 @@ namespace game_framework
 		vector<int> boxes_amount = {1, 1, 2, 2, 2};
 		vector<int> goals_amount = {1, 1, 2, 2, 2};
 
-
-/*
-0:empty
-1:wall
-2:floor
-3:box
-4:goal
-5:box on goals
-6:player
-*/
+		/*
+		0:empty
+		1:wall
+		2:floor
+		3:box
+		4:goal
+		5:box on goals
+		6:player
+		*/
 		vector<vector<vector<int>>> walls_like = {{{0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 2, 2, 3, 2, 4, 1, 0}, {0, 1, 2, 2, 1, 1, 1, 1, 0}, {0, 1, 2, 6, 1, 0, 0, 0, 0}, {0, 1, 1, 1, 1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0}},
 												  {{0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 2, 2, 6, 2, 2, 1, 0}, {0, 1, 2, 2, 2, 2, 2, 1, 0}, {0, 1, 2, 2, 2, 3, 4, 1, 0}, {0, 1, 2, 2, 2, 2, 2, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 0}}};
-	}; 
+	};
 
 	/////////////////////////////////////////////////////////////////////////////
 	// 這個class為遊戲的結束狀態(Game Over)
