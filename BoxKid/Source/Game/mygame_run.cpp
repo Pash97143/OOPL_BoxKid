@@ -32,9 +32,8 @@ void CGameStateRun::OnBeginState()
 
 void CGameStateRun::OnMove() // 移動遊戲元素
 {
-    if (level >= 1)
+    if (level >= 1 && change_level_flag == 0)
     {
-
         for (unsigned i = 0; i < boxes.size(); i++)
         {
             for (auto goal : goals)
@@ -49,30 +48,31 @@ void CGameStateRun::OnMove() // 移動遊戲元素
         /////////////////
         // 放最下面判斷 //
         /////////////////
-        int bc = boxes.size(), c = 0;
-        for (unsigned i = 0; i < boxes.size(); i++)
+        int c = 0;
+        for (auto box : boxes)
         {
-            if (boxes[i].GetFrameIndexOfBitmap() == 1)
+            for (auto goal : goals)
             {
-                c++;
+                if (box.GetTop() == goal.GetTop() && box.GetLeft() == goal.GetLeft())
+                {
+                    c++;
+                }
             }
         }
         //
         // 跳關畫面
         //
-        if (c == bc)
+        if (c == goals_amount[level - 1])
         {
-            if (level == highestLevel)
-            {
-                highestLevel++;
-            }
+            TRACE("level %d clear", level);
+            change_level();
         }
     }
 }
 
 void CGameStateRun::OnInit() // 遊戲的初值及圖形設定
 {
-    background.LoadBitmapByString({"resources/bg_main.bmp", "resources/bg_level_sheet.bmp", "resources/bg_level.bmp"}, RGB(163, 73, 164));
+    background.LoadBitmapByString({"resources/bg_main.bmp", "resources/bg_level_sheet.bmp", "resources/bg_level.bmp", "resources/bg_next_level.bmp"}, RGB(163, 73, 164));
     background.SetTopLeft(0, 0);
     for (int i = 0; i < 70; i++)
     {
@@ -88,6 +88,30 @@ void CGameStateRun::OnInit() // 遊戲的初值及圖形設定
             levels[i * 5 + j].SetTopLeft(30 + 100 * j, 210 + 100 * i);
         }
     }
+
+    //
+    middle_to_level.LoadBitmapByString({"resources/middle_to_level.bmp"}, RGB(163, 73, 164));
+    middle_to_level.SetTopLeft(90, 485);
+    middle_next.LoadBitmapByString({"resources/middle_next.bmp"}, RGB(163, 73, 164));
+    middle_next.SetTopLeft(218, 465);
+    middle_restart.LoadBitmapByString({"resources/middle_restart.bmp"}, RGB(163, 73, 164));
+    middle_restart.SetTopLeft(381, 485);
+
+    //
+    //(41,835)
+    foot_control.LoadBitmapByString({"resources/foot_control0.bmp", "resources/foot_control1.bmp", "resources/foot_control2.bmp"}, RGB(163, 73, 164));
+    foot_control.SetTopLeft(41, 835);
+
+    //(136,835)
+
+    foot_to_level.LoadBitmapByString({"resources/foot_to_level0.bmp"}, RGB(163, 73, 164));
+    foot_to_level.SetTopLeft(231, 830);
+
+    foot_undo.LoadBitmapByString({"resources/foot_undo.bmp"}, RGB(163, 73, 164));
+    foot_undo.SetTopLeft(336, 835);
+
+    foot_restart.LoadBitmapByString({"resources/foot_restart.bmp"}, RGB(163, 73, 164));
+    foot_restart.SetTopLeft(431, 835);
     Sleep(1000);
 }
 
@@ -95,123 +119,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
     if (level >= 1)
     {
-        /*
-         if (nChar == VK_LEFT)
-         {
-             for (auto wall : walls)
-             {
-                 if (player.GetTop() == wall.GetTop() && player.GetLeft() == wall.GetLeft() + 60)
-                     return;
-             }
-             for (auto box1 : boxes)
-             {
-                 if (player.GetTop() == box1.GetTop() && player.GetLeft() == box1.GetLeft() + 60)
-                 {
-                     for (auto wall : walls)
-                     {
-                         if (box1.GetTop() == wall.GetTop() && box1.GetLeft() == wall.GetLeft() + 60)
-                             return;
-                     }
-                     for (auto box2 : boxes)
-                     {
-                         if (box1.GetTop() == box2.GetTop() && box1.GetLeft() == box2.GetLeft() + 60)
-                             return;
-                     }
-                     box1.SetTopLeft(box1.GetLeft() - 60, box1.GetTop());
-                 }
-             }
-             Sleep(150);
-             player.SetTopLeft(player.GetLeft() - 60, player.GetTop());
-             player.SetFrameIndexOfBitmap(0);
-         }
-         else if (nChar == VK_UP)
-         {
-             for (auto wall : walls)
-             {
-                 if (player.GetTop() == wall.GetTop() + 60 && player.GetLeft() == wall.GetLeft())
-                     return;
-             }
-             for (auto box1 : boxes)
-             {
-                 if (player.GetTop() == box1.GetTop() + 60 && player.GetLeft() == box1.GetLeft())
-                 {
-                     for (auto wall : walls)
-                     {
-                         if (box1.GetTop() == wall.GetTop() + 60 && box1.GetLeft() == wall.GetLeft())
-                             return;
-                     }
-                     for (auto box2 : boxes)
-                     {
-                         if (box1.GetTop() == box2.GetTop() + 60 && box1.GetLeft() == box2.GetLeft())
-                             return;
-                     }
-                     box1.SetTopLeft(box1.GetLeft(), box1.GetTop() - 60);
-                 }
-             }
-             Sleep(150);
-             player.SetTopLeft(player.GetLeft(), player.GetTop() - 60);
-             player.SetFrameIndexOfBitmap(1);
-         }
-         else if (nChar == VK_RIGHT)
-         {
-             for (auto wall : walls)
-             {
-                 if (player.GetTop() == wall.GetTop() && player.GetLeft() + 60 == wall.GetLeft())
-                     return;
-             }
-             for (auto box1 : boxes)
-             {
-                 if (player.GetTop() == box1.GetTop() && player.GetLeft() + 60 == box1.GetLeft())
-                 {
-                     for (auto wall : walls)
-                     {
-                         if (box1.GetTop() == wall.GetTop() && box1.GetLeft() + 60 == wall.GetLeft())
-                             return;
-                     }
-                     for (auto box2 : boxes)
-                     {
-                         if (box1.GetTop() == box2.GetTop() && box2.GetLeft() == box1.GetLeft() + 60)
-                             return;
-                     }
-                     // background.SetFrameIndexOfBitmap(0);
-                     // box1.SetFrameIndexOfBitmap(1);
-                     // box1.SetTopLeft(box1.GetLeft() + 60, box1.GetTop());
-                     box1.SetTopLeft(box1.GetLeft() + 60, box1.GetTop());
-                 }
-             }
-             Sleep(150);
-             player.SetTopLeft(player.GetLeft() + 60, player.GetTop());
-             player.SetFrameIndexOfBitmap(2);
-         }
-         else if (nChar == VK_DOWN)
-         {
-             for (auto wall : walls)
-             {
-                 if (player.GetTop() + 60 == wall.GetTop() && player.GetLeft() == wall.GetLeft())
-                     return;
-             }
-             for (auto box1 : boxes)
-             {
-                 if (player.GetTop() + 60 == box1.GetTop() && player.GetLeft() == box1.GetLeft())
-                 {
-                     for (auto wall : walls)
-                     {
-                         if (box1.GetTop() + 60 == wall.GetTop() && box1.GetLeft() == wall.GetLeft())
-                             return;
-                     }
-                     for (auto box2 : boxes)
-                     {
-                         if (box2.GetTop() + 60 == box1.GetTop() && box1.GetLeft() == box2.GetLeft())
-                             return;
-                     }
-                     box1.SetTopLeft(box1.GetLeft(), box1.GetTop() + 60);
-                 }
-             }
-             Sleep(150);
-             player.SetTopLeft(player.GetLeft(), player.GetTop() + 60);
-             player.SetFrameIndexOfBitmap(3);
-         }
- */
+
         int walls_amount = walls.size();
         int boxes_amount = boxes.size();
 
@@ -345,7 +253,30 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point) // 處理滑鼠的動作
 {
-    if (level == -1)
+    if (change_level_flag)
+    {
+        if (point.x >= 90 && point.x <= 90 + 68 && point.y >= 485 && point.y <= 485 + 68)
+        {
+            level = 0;
+            change_level_flag = false;
+            setByLevel();
+            return;
+        }
+        else if (point.x >= 218 && point.x <= 218 + 103 && point.y >= 465 && point.y <= 465 + 103)
+        {
+            level += 1;
+            change_level_flag = false;
+            setByLevel();
+            return;
+        }
+        else if (point.x >= 381 && point.x <= 381 + 68 && point.y >= 485 && point.y <= 485 + 68)
+        {
+            change_level_flag = false;
+            setByLevel();
+            return;
+        }
+    }
+    else if (level == -1)
     {
         if (point.x >= 190 && point.x <= 186 + 168 && point.y >= 450 && point.y <= 450 + 73)
         {
@@ -364,6 +295,7 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point) // 處理滑鼠的�
                     // levels[i * 5 + j].SetFrameIndexOfBitmap(2);
                     // levels[i * 5 + j].ShowBitmap();
                     level = i * 5 + j + 1;
+                    setByLevel();
                 }
             }
         }
@@ -371,6 +303,7 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point) // 處理滑鼠的�
         if (point.x >= 30 && point.x < 30 + 72 && point.y >= 810 && point.y < 810 + 72)
         {
             level = -1;
+            setByLevel();
         }
     }
     else if (level > 0)
@@ -378,6 +311,7 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point) // 處理滑鼠的�
         if (point.x >= 231 && point.x < 231 + 78 && point.y >= 830 && point.y < 830 + 78)
         {
             level = 0;
+            setByLevel();
         }
         else if (point.x >= 41 && point.x < 41 + 68 && point.y >= 835 && point.y < 835 + 68)
         {
@@ -420,7 +354,14 @@ void CGameStateRun::OnShow()
 
     Sleep(100);
 
-    if (level == 0)
+    if (change_level_flag == 1)
+    {
+        background.ShowBitmap();
+        middle_restart.ShowBitmap();
+        middle_next.ShowBitmap();
+        middle_to_level.ShowBitmap();
+    }
+    else if (level == 0)
     {
         background.ShowBitmap();
         for (int i = 0; i < 30; i++)
@@ -464,7 +405,15 @@ void CGameStateRun::OnShow()
         player.ShowBitmap();
     }
 }
-
+void CGameStateRun::change_level()
+{
+    change_level_flag = true;
+    if (level == highestLevel)
+    {
+        highestLevel++;
+    }
+    background.SetFrameIndexOfBitmap(3);
+}
 void CGameStateRun::setByLevel()
 {
     prelevel = level;
@@ -495,25 +444,13 @@ void CGameStateRun::setByLevel()
     {
         background.SetFrameIndexOfBitmap(2);
 
-        //(41,835)
-        foot_control.LoadBitmapByString({"resources/foot_control0.bmp", "resources/foot_control1.bmp", "resources/foot_control2.bmp"}, RGB(163, 73, 164));
-        foot_control.SetTopLeft(41, 835);
-
-        //(136,835)
-
-        foot_to_level.LoadBitmapByString({"resources/foot_to_level0.bmp"}, RGB(163, 73, 164));
-        foot_to_level.SetTopLeft(231, 830);
-
-        foot_undo.LoadBitmapByString({"resources/foot_undo.bmp"}, RGB(163, 73, 164));
-        foot_undo.SetTopLeft(336, 835);
-
-        foot_restart.LoadBitmapByString({"resources/foot_restart.bmp"}, RGB(163, 73, 164));
-        foot_restart.SetTopLeft(431, 835);
-
         walls.clear();
         floors.clear();
         goals.clear();
         boxes.clear();
+        //
+        // stack clear here
+        //
 
         if (level == 1)
         {
