@@ -94,16 +94,18 @@ namespace game_framework
 		void OnRButtonUp(UINT nFlags, CPoint point);   // 處理滑鼠的動作
 
 	protected:
-		void OnMove();	   // 移動遊戲元素
-		void OnShow();	   // 顯示這個狀態的遊戲畫面
-		void setByLevel(); // 顯示不同關卡的畫面
+		void OnMove();		 // 移動遊戲元素
+		void OnShow();		 // 顯示這個狀態的遊戲畫面
+		void setByLevel();	 // 顯示不同關卡的畫面
+		void change_level(); // 切換關卡
 
 	private:
 		int level = -1;	   // 遊戲關卡
 		int prelevel = -2; // 上一關的關卡
 		int highestLevel = 1;
-		CMovingBitmap background; // 背景圖
+		bool change_level_flag = false;
 
+		CMovingBitmap background; // 背景圖
 		// menu
 		CMovingBitmap menu_play_text; // 開始鈕
 		CMovingBitmap menu_voice;	  // 音效開關
@@ -114,6 +116,11 @@ namespace game_framework
 		CMovingBitmap level_to_menu;
 		CMovingBitmap levels[70];
 
+		vector<int> walls_amount = {20, 22}; // 關卡的牆壁數量
+		vector<int> floors_amount = {8, 19}; // 關卡的地板數量
+		vector<int> goals_amount = {1, 1};	 // 關卡的目標數量
+		vector<int> boxes_amount = {1, 1};	 // 關卡的箱子數量
+
 		// in the level
 		vector<CMovingBitmap> walls;
 		vector<CMovingBitmap> floors;
@@ -122,8 +129,12 @@ namespace game_framework
 
 		CMovingBitmap player;
 
-		CMovingBitmap foot_control;
+		CMovingBitmap middle_to_level;
+		CMovingBitmap middle_next;
+		CMovingBitmap middle_restart;
 
+		CMovingBitmap foot_control;
+		CMovingBitmap foot_music;
 		CMovingBitmap foot_to_level;
 		CMovingBitmap foot_undo;
 		CMovingBitmap foot_restart;
