@@ -36,12 +36,18 @@ void CGameStateRun::OnMove() // 移動遊戲元素
     {
         for (unsigned i = 0; i < boxes.size(); i++)
         {
+            bool goal_flag = 0;
             for (auto goal : goals)
             {
                 if (boxes[i].GetTop() == goal.GetTop() && boxes[i].GetLeft() == goal.GetLeft())
                 {
                     boxes[i].SetFrameIndexOfBitmap(1);
+                    goal_flag = 1;
                 }
+            }
+            if (goal_flag == 0)
+            {
+                boxes[i].SetFrameIndexOfBitmap(0);
             }
         }
 
