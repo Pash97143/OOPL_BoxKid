@@ -1,4 +1,5 @@
 #include <vector>
+#include <utility>
 /*
  * mygame.h: 本檔案儲遊戲本身的class的interface
  * Copyright (C) 2002-2008 Woei-Kae Chen <wkc@csie.ntut.edu.tw>
@@ -98,6 +99,8 @@ namespace game_framework
 		void OnShow();		 // 顯示這個狀態的遊戲畫面
 		void setByLevel();	 // 顯示不同關卡的畫面
 		void change_level(); // 切換關卡
+		void addToUndo();	 // 將目前的狀態加入undos
+		void undo();		 // 回到上一步
 
 	private:
 		int level = -1;	   // 遊戲關卡
@@ -138,6 +141,9 @@ namespace game_framework
 		vector<int> floors_amount = {8, 19, 19, 21, 18};
 		vector<int> boxes_amount = {1, 1, 2, 2, 2};
 		vector<int> goals_amount = {1, 1, 2, 2, 2};
+
+		vector<pair<int, int>> player_pos;
+		vector<vector<pair<int, int>>> boxes_pos;
 
 		/*
 		0:empty
