@@ -6,6 +6,8 @@
 #include "../Library/gameutil.h"
 #include "../Library/gamecore.h"
 #include "mygame.h"
+#include <string>
+#include <fstream>
 
 using namespace std;
 using namespace game_framework;
@@ -151,7 +153,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
                 }
             }
 
-            Sleep(150);
+            //Sleep(150);
             player.SetTopLeft(player.GetLeft() - 60, player.GetTop());
             player.SetFrameIndexOfBitmap(0);
         }
@@ -181,7 +183,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
                 }
             }
 
-            Sleep(150);
+            //Sleep(150);
             player.SetTopLeft(player.GetLeft(), player.GetTop() - 60);
             player.SetFrameIndexOfBitmap(1);
         }
@@ -212,7 +214,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
                 }
             }
 
-            Sleep(150);
+           // Sleep(150);
             player.SetTopLeft(player.GetLeft() + 60, player.GetTop());
             player.SetFrameIndexOfBitmap(2);
         }
@@ -241,10 +243,26 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
                     boxes[i].SetTopLeft(boxes[i].GetLeft(), boxes[i].GetTop() + 60);
                 }
             }
-
-            Sleep(150);
-            player.SetTopLeft(player.GetLeft(), player.GetTop() + 60);
-            player.SetFrameIndexOfBitmap(3);
+            for (int i = 0; i < 3; i++){
+                TRACE("%d\n", player.GetTop());
+                player.SetFrameIndexOfBitmap(i);
+                player.SetTopLeft(player.GetLeft(), player.GetTop() + 20);
+                Sleep(1000);
+                
+                // player.ToggleAnimation();
+                // player.SetAnimation(10, 1);   
+            }
+            player.SetTopLeft(player.GetLeft(), player.GetTop() + 20);
+            // player.SetTopLeft(player.GetLeft(), player.GetTop() + 20);
+            // player.ToggleAnimation();
+            // player.SetAnimation(100, 1);
+            //Sleep(150);
+            // player.SetTopLeft(player.GetLeft(), player.GetTop() + 20);
+            // player.SetFrameIndexOfBitmap(1);
+            // player.SetTopLeft(player.GetLeft(), player.GetTop() + 20);
+            // player.SetFrameIndexOfBitmap(2);
+            // player.SetTopLeft(player.GetLeft(), player.GetTop() + 20);
+            // player.SetFrameIndexOfBitmap(3);
         }
     }
 }
@@ -454,7 +472,7 @@ void CGameStateRun::setByLevel()
         // stack clear here
         //
 
-        player.LoadBitmapByString({"resources/player9.bmp", "resources/player9.bmp", "resources/player9.bmp", "resources/player9.bmp"}, RGB(163, 73, 164));
+        player.LoadBitmapByString({"resources/player9.bmp", "resources/player10.bmp", "resources/player11.bmp", "resources/player9.bmp"}, RGB(163, 73, 164));
         player.SetFrameIndexOfBitmap(3);
 
         for (int i = 0; i < walls_amount[level - 1]; i++)
@@ -482,54 +500,76 @@ void CGameStateRun::setByLevel()
             boxes.push_back(box);
         }
 
-        player.SetTopLeft(180, 480);
-
         //------
         Sleep(500);
         //-------
 
-        // boxes[0].SetTopLeft(240, 360);
+        // boxes[0].SetTopLeft180, 360);
         int walls_count = 0;
         int floors_count = 0;
         int boxes_count = 0;
         int goals_count = 0;
-        for (int i = 0; i < 9; i++)
+		TRACE("%d\n", level);
+    	vector<vector<char>> walls_like = {};
+
+        string line;
+        string filename;
+        filename = "./Source/level/level" + to_string(level) + ".txt";
+        ifstream inputFile(filename);
+
+        while (getline(inputFile, line)) {
+            vector<char> temp = {};
+            for(unsigned int i = 0; i < (line.length()); i++){
+                if((line[i] != ',' ) && (line[i] != ' ')){
+                    temp.push_back(line[i]);
+                }
+            }
+            walls_like.push_back(temp);
+        }
+        inputFile.close();
+		TRACE("%d\n", walls_like.size());
+		TRACE("%d\n", walls_like[0].size());
+
+        for (unsigned int i = 0; i < walls_like[0].size(); i++)
         {
-            for (int j = 0; j < 7; j++)
+            for (unsigned int j = 0; j < walls_like.size(); j++)
             {
-                if (walls_like[level - 1][j][i] == 1)
+                if (walls_like[j][i] == '1')
                 {
-                    walls[walls_count].SetTopLeft(0 + 60 * i, 240 + 60 * j);
+                    walls[walls_count].SetTopLeft(0 + 60 * i,180 + 60 * j);
                     walls_count++;
+                    // TRACE("%d\n", walls_count);
+
                 }
-                else if (walls_like[level - 1][j][i] == 2)
+                else if (walls_like[j][i] == '2')
                 {
-                    floors[floors_count].SetTopLeft(0 + 60 * i, 240 + 60 * j);
+                    floors[floors_count].SetTopLeft(0 + 60 * i,180 + 60 * j);
                     floors_count++;
+                    // TRACE("%d\n", floors_count);
                 }
-                else if (walls_like[level - 1][j][i] == 3)
+                else if (walls_like[j][i] == '3')
                 {
-                    floors[floors_count].SetTopLeft(0 + 60 * i, 240 + 60 * j);
+                    floors[floors_count].SetTopLeft(0 + 60 * i,180 + 60 * j);
                     floors_count++;
-                    boxes[boxes_count].SetTopLeft(0 + 60 * i, 240 + 60 * j);
+                    boxes[boxes_count].SetTopLeft(0 + 60 * i,180 + 60 * j);
                     boxes_count++;
                 }
-                else if (walls_like[level - 1][j][i] == 4)
+                else if (walls_like[j][i] == '4')
                 {
-                    goals[goals_count].SetTopLeft(0 + 60 * i, 240 + 60 * j);
+                    goals[goals_count].SetTopLeft(0 + 60 * i,180 + 60 * j);
                     goals_count++;
                 }
-                else if (walls_like[level - 1][j][i] == 5)
+                else if (walls_like[j][i] == '5')
                 {
-                    boxes[boxes_count].SetTopLeft(0 + 60 * i, 240 + 60 * j);
+                    boxes[boxes_count].SetTopLeft(0 + 60 * i,180 + 60 * j);
                     boxes_count++;
-                    goals[goals_count].SetTopLeft(0 + 60 * i, 240 + 60 * j);
+                    goals[goals_count].SetTopLeft(0 + 60 * i,180 + 60 * j);
                     goals_count++;
                 }
-                else if (walls_like[level - 1][j][i] == 6)
+                else if (walls_like[j][i] == '6')
                 {
-                    player.SetTopLeft(0 + 60 * i, 240 + 60 * j);
-                    floors[floors_count].SetTopLeft(0 + 60 * i, 240 + 60 * j);
+                    player.SetTopLeft(0 + 60 * i,180 + 60 * j);
+                    floors[floors_count].SetTopLeft(0 + 60 * i,180 + 60 * j);
                     floors_count++;
                 }
             }
