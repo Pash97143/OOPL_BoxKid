@@ -8,6 +8,8 @@
 #include "mygame.h"
 #include <string>
 #include <fstream>
+#include <vector>
+#include <utility>
 
 using namespace std;
 using namespace game_framework;
@@ -72,7 +74,7 @@ void CGameStateRun::OnMove() // 移動遊戲元素
         //
         if (c == goals_amount[level - 1])
         {
-            TRACE("level %d clear", level);
+            TRACE("level %d clear\n", level);
             change_level();
         }
     }
@@ -120,7 +122,9 @@ void CGameStateRun::OnInit() // 遊戲的初值及圖形設定
 
     foot_restart.LoadBitmapByString({"resources/foot_restart.bmp"}, RGB(163, 73, 164));
     foot_restart.SetTopLeft(431, 835);
-    Sleep(1000);
+    
+    player.LoadBitmapByString({"resources/player0.bmp", "resources/player1.bmp", "resources/player2.bmp", "resources/player3.bmp", "resources/player4.bmp", "resources/player5.bmp", "resources/player6.bmp", "resources/player7.bmp", "resources/player8.bmp", "resources/player9.bmp", "resources/player10.bmp", "resources/player11.bmp"}, RGB(163, 73, 164));
+    Sleep(500);
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -148,12 +152,15 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
                         if (boxes[i].GetTop() == boxes[j].GetTop() && boxes[i].GetLeft() == boxes[j].GetLeft() + 60)
                             return;
                     }
-
+                    addToUndo();
                     boxes[i].SetTopLeft(boxes[i].GetLeft() - 60, boxes[i].GetTop());
+                    Sleep(150);
+                    player.SetTopLeft(player.GetLeft() - 60, player.GetTop());
+                    player.SetFrameIndexOfBitmap(0);
+                    return;
                 }
             }
-
-            //Sleep(150);
+            addToUndo();
             player.SetTopLeft(player.GetLeft() - 60, player.GetTop());
             player.SetFrameIndexOfBitmap(0);
         }
@@ -178,12 +185,15 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
                         if (boxes[i].GetTop() == boxes[j].GetTop() + 60 && boxes[i].GetLeft() == boxes[j].GetLeft())
                             return;
                     }
-
+                    addToUndo();
                     boxes[i].SetTopLeft(boxes[i].GetLeft(), boxes[i].GetTop() - 60);
+                    player.SetTopLeft(player.GetLeft(), player.GetTop() - 60);
+                    player.SetFrameIndexOfBitmap(1);
+                    return;
                 }
             }
-
-            //Sleep(150);
+            
+            addToUndo();
             player.SetTopLeft(player.GetLeft(), player.GetTop() - 60);
             player.SetFrameIndexOfBitmap(1);
         }
@@ -208,13 +218,15 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
                         if (boxes[i].GetTop() == boxes[j].GetTop() && boxes[i].GetLeft() == boxes[j].GetLeft() - 60)
                             return;
                     }
-
+                    addToUndo();
                     boxes[i].SetTopLeft(boxes[i].GetLeft() + 60, boxes[i].GetTop());
-                    // AS_boxes[i].push(boxes[i].GetLeft(), boxes[i].GetTop());
+                    player.SetTopLeft(player.GetLeft() + 60, player.GetTop());
+                    player.SetFrameIndexOfBitmap(2);
+                    return;
                 }
             }
 
-           // Sleep(150);
+            addToUndo();
             player.SetTopLeft(player.GetLeft() + 60, player.GetTop());
             player.SetFrameIndexOfBitmap(2);
         }
@@ -239,10 +251,15 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
                         if (boxes[i].GetTop() == boxes[j].GetTop() - 60 && boxes[i].GetLeft() == boxes[j].GetLeft())
                             return;
                     }
-
+                    addToUndo();
                     boxes[i].SetTopLeft(boxes[i].GetLeft(), boxes[i].GetTop() + 60);
+                    player.SetTopLeft(player.GetLeft(), player.GetTop() + 60);
+                    player.SetFrameIndexOfBitmap(3);
+                    return;
                 }
             }
+
+            addToUndo();
 
             player.SetTopLeft(player.GetLeft(), player.GetTop() + 60);
             player.SetFrameIndexOfBitmap(3);
@@ -323,7 +340,7 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point) // 處理滑鼠的�
         }
         else if (point.x >= 336 && point.x < 336 + 68 && point.y >= 835 && point.y < 835 + 68)
         {
-            ;
+            undo();
         }
         else if (point.x >= 431 && point.x < 431 + 68 && point.y >= 835 && point.y < 835 + 68)
         {
@@ -408,6 +425,7 @@ void CGameStateRun::OnShow()
         player.ShowBitmap();
     }
 }
+
 void CGameStateRun::change_level()
 {
     change_level_flag = true;
@@ -417,6 +435,7 @@ void CGameStateRun::change_level()
     }
     background.SetFrameIndexOfBitmap(3);
 }
+
 void CGameStateRun::setByLevel()
 {
     prelevel = level;
@@ -453,9 +472,18 @@ void CGameStateRun::setByLevel()
         boxes.clear();
         //
         // stack clear here
-        //
 
-        player.LoadBitmapByString({"resources/player9.bmp", "resources/player10.bmp", "resources/player11.bmp", "resources/player9.bmp"}, RGB(163, 73, 164));
+        player_pos.clear();
+        for (auto box : boxes_pos)
+        {
+            box.clear();
+        }
+        boxes_pos.clear();
+        //
+        TRACE("b: %d, f: %d, g: %d, w: %d\n", boxes.size(), floors.size(), goals.size(), walls.size());
+        TRACE("bp: %d\n", boxes_pos.size());
+        player.LoadBitmapByString({"resources/player9.bmp", "resources/player9.bmp", "resources/player9.bmp", "resources/player9.bmp"}, RGB(163, 73, 164));
+
         player.SetFrameIndexOfBitmap(3);
 
         for (int i = 0; i < walls_amount[level - 1]; i++)
@@ -481,6 +509,9 @@ void CGameStateRun::setByLevel()
             CMovingBitmap box;
             box.LoadBitmapByString({"resources/gobj_box0.bmp", "resources/gobj_box1.bmp"}, RGB(163, 73, 164));
             boxes.push_back(box);
+
+            std::vector<std::pair<int, int>> vec;
+            boxes_pos.push_back(vec);
         }
 
         //------
@@ -557,5 +588,54 @@ void CGameStateRun::setByLevel()
                 }
             }
         }
+
+        TRACE("b: %d, f: %d, g: %d, w: %d\n", boxes.size(), floors.size(), goals.size(), walls.size());
+        TRACE("bp: %d\n", boxes_pos.size());
     }
+}
+
+void CGameStateRun::addToUndo()
+{
+    TRACE("now is ok    \n");
+    if (player_pos.size() < 20)
+    {
+        TRACE("undo <= 20 !!\n");
+        player_pos.push_back(std::make_pair(player.GetLeft(), player.GetTop()));
+        for (int i = 0; i < boxes_amount[level - 1]; i++)
+        {
+            boxes_pos[i].push_back(std::make_pair(boxes[i].GetLeft(), boxes[i].GetTop()));
+        }
+        TRACE("player: %d!, box: %d\n", player_pos.size(), boxes_pos[0].size());
+    }
+    else
+    {
+        TRACE("undo > 20 !!\n");
+        player_pos.erase(player_pos.begin());
+        player_pos.push_back(std::make_pair(player.GetLeft(), player.GetTop()));
+        for (int i = 0; i < boxes_amount[level - 1]; i++)
+        {
+            boxes_pos[i].erase(boxes_pos[i].begin());
+            boxes_pos[i].push_back(std::make_pair(boxes[i].GetLeft(), boxes[i].GetTop()));
+        }
+        TRACE("player: %d!, box: %d\n", player_pos.size(), boxes_pos[0].size());
+    }
+}
+
+void CGameStateRun::undo()
+{
+    if (player_pos.empty())
+    {
+        TRACE("cannot undo!!!\n");
+        return;
+    }
+
+    TRACE("undo!!!\n");
+    player.SetTopLeft(player_pos.back().first, player_pos.back().second);
+    player_pos.pop_back();
+    for (int i = 0; i < boxes_amount[level - 1]; i++)
+    {
+        boxes[i].SetTopLeft(boxes_pos[i].back().first, boxes_pos[i].back().second);
+        boxes_pos[i].pop_back();
+    }
+    TRACE("player: %d!, box: %d\n", player_pos.size(), boxes_pos[0].size());
 }
