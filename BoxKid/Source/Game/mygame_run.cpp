@@ -10,6 +10,7 @@
 #include <fstream>
 #include <vector>
 #include <utility>
+#include <string>
 
 using namespace std;
 using namespace game_framework;
@@ -122,7 +123,7 @@ void CGameStateRun::OnInit() // 遊戲的初值及圖形設定
 
     foot_restart.LoadBitmapByString({"resources/foot_restart.bmp"}, RGB(163, 73, 164));
     foot_restart.SetTopLeft(431, 835);
-    
+
     player.LoadBitmapByString({"resources/player0.bmp", "resources/player1.bmp", "resources/player2.bmp", "resources/player3.bmp", "resources/player4.bmp", "resources/player5.bmp", "resources/player6.bmp", "resources/player7.bmp", "resources/player8.bmp", "resources/player9.bmp", "resources/player10.bmp", "resources/player11.bmp"}, RGB(163, 73, 164));
     Sleep(500);
 }
@@ -188,14 +189,14 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
                     addToUndo();
                     boxes[i].SetTopLeft(boxes[i].GetLeft(), boxes[i].GetTop() - 60);
                     player.SetTopLeft(player.GetLeft(), player.GetTop() - 60);
-                    player.SetFrameIndexOfBitmap(1);
+                    player.SetFrameIndexOfBitmap(3);
                     return;
                 }
             }
             
             addToUndo();
             player.SetTopLeft(player.GetLeft(), player.GetTop() - 60);
-            player.SetFrameIndexOfBitmap(1);
+            player.SetFrameIndexOfBitmap(3);
         }
         else if (nChar == VK_RIGHT)
         {
@@ -221,14 +222,14 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
                     addToUndo();
                     boxes[i].SetTopLeft(boxes[i].GetLeft() + 60, boxes[i].GetTop());
                     player.SetTopLeft(player.GetLeft() + 60, player.GetTop());
-                    player.SetFrameIndexOfBitmap(2);
+                    player.SetFrameIndexOfBitmap(6);
                     return;
                 }
             }
 
             addToUndo();
             player.SetTopLeft(player.GetLeft() + 60, player.GetTop());
-            player.SetFrameIndexOfBitmap(2);
+            player.SetFrameIndexOfBitmap(6);
         }
         else if (nChar == VK_DOWN)
         {
@@ -254,7 +255,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
                     addToUndo();
                     boxes[i].SetTopLeft(boxes[i].GetLeft(), boxes[i].GetTop() + 60);
                     player.SetTopLeft(player.GetLeft(), player.GetTop() + 60);
-                    player.SetFrameIndexOfBitmap(3);
+                    player.SetFrameIndexOfBitmap(9);
                     return;
                 }
             }
@@ -262,7 +263,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
             addToUndo();
 
             player.SetTopLeft(player.GetLeft(), player.GetTop() + 60);
-            player.SetFrameIndexOfBitmap(3);
+            player.SetFrameIndexOfBitmap(9);
         }
     }
 }
@@ -312,8 +313,6 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point) // 處理滑鼠的�
             {
                 if ((i * 5 + j + 1) <= highestLevel && point.x >= 30 + 100 * j && point.x <= 30 + 100 * j + 70 && point.y >= 210 + 100 * i && point.y <= 210 + 100 * i + 70)
                 {
-                    // levels[i * 5 + j].SetFrameIndexOfBitmap(2);
-                    // levels[i * 5 + j].ShowBitmap();
                     level = i * 5 + j + 1;
                     setByLevel();
                 }
@@ -389,6 +388,7 @@ void CGameStateRun::OnShow()
             levels[i].ShowBitmap();
             level_select_text.ShowBitmap();
             level_to_menu.ShowBitmap();
+            draw_text();
         }
     }
     else if (level == -1)
@@ -482,7 +482,6 @@ void CGameStateRun::setByLevel()
         //
         TRACE("b: %d, f: %d, g: %d, w: %d\n", boxes.size(), floors.size(), goals.size(), walls.size());
         TRACE("bp: %d\n", boxes_pos.size());
-        player.LoadBitmapByString({"resources/player9.bmp", "resources/player9.bmp", "resources/player9.bmp", "resources/player9.bmp"}, RGB(163, 73, 164));
 
         player.SetFrameIndexOfBitmap(3);
 
@@ -638,4 +637,34 @@ void CGameStateRun::undo()
         boxes_pos[i].pop_back();
     }
     TRACE("player: %d!, box: %d\n", player_pos.size(), boxes_pos[0].size());
+}
+
+void CGameStateRun::draw_text()
+{
+    CDC *pDC = CDDraw::GetBackCDC();
+    // CFont *fp;
+
+    /* Print title */
+
+    for (int i = 0; i < 6; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
+            if (i * 5 + j + 1 <= highestLevel)
+            {
+                string s;
+                s = std::to_string(i * 5 + j + 1);
+                CTextDraw::ChangeFontLog(pDC, 32, "Cooper Black", RGB(255, 255, 255));
+                if (i * 5 + j + 1 < 10)
+                {
+                    CTextDraw::Print(pDC, 53 + 100 * j, 217 + 100 * i, s);
+                }
+                else
+                {
+                    CTextDraw::Print(pDC, 40 + 100 * j, 217 + 100 * i, s);
+                }
+            }
+        }
+    }
+    CDDraw::ReleaseBackCDC();
 }

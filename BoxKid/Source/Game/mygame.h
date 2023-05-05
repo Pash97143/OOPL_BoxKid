@@ -101,6 +101,7 @@ namespace game_framework
 		void change_level(); // 切換關卡
 		void addToUndo();	 // 將目前的狀態加入undos
 		void undo();		 // 回到上一步
+		void draw_text();	 // 顯示文字
 
 	private:
 		int level = -1;	   // 遊戲關卡
@@ -113,6 +114,8 @@ namespace game_framework
 		CMovingBitmap menu_play_text; // 開始鈕
 		CMovingBitmap menu_voice;	  // 音效開關
 		CMovingBitmap menu_music;	  // 背景音樂開關
+		CAudio voice;				  // 音效
+		CAudio music;				  // 背景音樂
 
 		// level sheet
 		CMovingBitmap level_select_text; // 選擇關卡的圖片
