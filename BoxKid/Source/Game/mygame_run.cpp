@@ -243,26 +243,9 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
                     boxes[i].SetTopLeft(boxes[i].GetLeft(), boxes[i].GetTop() + 60);
                 }
             }
-            for (int i = 0; i < 3; i++){
-                TRACE("%d\n", player.GetTop());
-                player.SetFrameIndexOfBitmap(i);
-                player.SetTopLeft(player.GetLeft(), player.GetTop() + 20);
-                Sleep(1000);
-                
-                // player.ToggleAnimation();
-                // player.SetAnimation(10, 1);   
-            }
-            player.SetTopLeft(player.GetLeft(), player.GetTop() + 20);
-            // player.SetTopLeft(player.GetLeft(), player.GetTop() + 20);
-            // player.ToggleAnimation();
-            // player.SetAnimation(100, 1);
-            //Sleep(150);
-            // player.SetTopLeft(player.GetLeft(), player.GetTop() + 20);
-            // player.SetFrameIndexOfBitmap(1);
-            // player.SetTopLeft(player.GetLeft(), player.GetTop() + 20);
-            // player.SetFrameIndexOfBitmap(2);
-            // player.SetTopLeft(player.GetLeft(), player.GetTop() + 20);
-            // player.SetFrameIndexOfBitmap(3);
+
+            player.SetTopLeft(player.GetLeft(), player.GetTop() + 60);
+            player.SetFrameIndexOfBitmap(3);
         }
     }
 }
