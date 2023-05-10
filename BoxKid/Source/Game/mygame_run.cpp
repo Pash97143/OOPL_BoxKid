@@ -14,6 +14,7 @@
 
 using namespace std;
 using namespace game_framework;
+CAudio *audio = CAudio::Instance(); // 背景音樂
 
 /////////////////////////////////////////////////////////////////////////////
 // 這個class為遊戲的遊戲執行物件，主要的遊戲程式都在這裡
@@ -75,6 +76,7 @@ void CGameStateRun::OnMove() // 移動遊戲元素
         //
         if (c == goals_amount[level - 1])
         {
+            Sleep(500);
             TRACE("level %d clear\n", level);
             change_level();
         }
@@ -83,6 +85,9 @@ void CGameStateRun::OnMove() // 移動遊戲元素
 
 void CGameStateRun::OnInit() // 遊戲的初值及圖形設定
 {
+    audio->Load(1, "resources/music.wav");
+    audio->Load(2, "resources/sound.wav");
+    audio->Play(1, true);
     background.LoadBitmapByString({"resources/bg_main.bmp", "resources/bg_level_sheet.bmp", "resources/bg_level.bmp", "resources/bg_next_level.bmp"}, RGB(163, 73, 164));
     background.SetTopLeft(0, 0);
     for (int i = 0; i < 70; i++)
@@ -114,6 +119,8 @@ void CGameStateRun::OnInit() // 遊戲的初值及圖形設定
     foot_control.SetTopLeft(41, 835);
 
     //(136,835)
+    foot_music.LoadBitmapByString({"resources/foot_music0.bmp", "resources/foot_music1.bmp"}, RGB(163, 73, 164));
+    foot_music.SetTopLeft(136, 835);
 
     foot_to_level.LoadBitmapByString({"resources/foot_to_level0.bmp"}, RGB(163, 73, 164));
     foot_to_level.SetTopLeft(231, 830);
@@ -155,15 +162,16 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
                     }
                     addToUndo();
                     boxes[i].SetTopLeft(boxes[i].GetLeft() - 60, boxes[i].GetTop());
-                    Sleep(150);
                     player.SetTopLeft(player.GetLeft() - 60, player.GetTop());
                     player.SetFrameIndexOfBitmap(0);
+                    Sleep(150);
                     return;
                 }
             }
             addToUndo();
             player.SetTopLeft(player.GetLeft() - 60, player.GetTop());
             player.SetFrameIndexOfBitmap(0);
+            Sleep(150);
         }
         else if (nChar == VK_UP)
         {
@@ -190,13 +198,15 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
                     boxes[i].SetTopLeft(boxes[i].GetLeft(), boxes[i].GetTop() - 60);
                     player.SetTopLeft(player.GetLeft(), player.GetTop() - 60);
                     player.SetFrameIndexOfBitmap(3);
+                    Sleep(150);
                     return;
                 }
             }
-            
+
             addToUndo();
             player.SetTopLeft(player.GetLeft(), player.GetTop() - 60);
             player.SetFrameIndexOfBitmap(3);
+            Sleep(150);
         }
         else if (nChar == VK_RIGHT)
         {
@@ -223,6 +233,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
                     boxes[i].SetTopLeft(boxes[i].GetLeft() + 60, boxes[i].GetTop());
                     player.SetTopLeft(player.GetLeft() + 60, player.GetTop());
                     player.SetFrameIndexOfBitmap(6);
+                    Sleep(150);
                     return;
                 }
             }
@@ -230,6 +241,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
             addToUndo();
             player.SetTopLeft(player.GetLeft() + 60, player.GetTop());
             player.SetFrameIndexOfBitmap(6);
+            Sleep(150);
         }
         else if (nChar == VK_DOWN)
         {
@@ -256,6 +268,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
                     boxes[i].SetTopLeft(boxes[i].GetLeft(), boxes[i].GetTop() + 60);
                     player.SetTopLeft(player.GetLeft(), player.GetTop() + 60);
                     player.SetFrameIndexOfBitmap(9);
+                    Sleep(150);
                     return;
                 }
             }
@@ -264,6 +277,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 
             player.SetTopLeft(player.GetLeft(), player.GetTop() + 60);
             player.SetFrameIndexOfBitmap(9);
+            Sleep(150);
         }
     }
 }
@@ -278,6 +292,7 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point) // 處理滑鼠的�
     {
         if (point.x >= 90 && point.x <= 90 + 68 && point.y >= 485 && point.y <= 485 + 68)
         {
+            sound_it();
             level = 0;
             change_level_flag = false;
             setByLevel();
@@ -285,6 +300,7 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point) // 處理滑鼠的�
         }
         else if (point.x >= 218 && point.x <= 218 + 103 && point.y >= 465 && point.y <= 465 + 103)
         {
+            sound_it();
             level += 1;
             change_level_flag = false;
             setByLevel();
@@ -292,6 +308,7 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point) // 處理滑鼠的�
         }
         else if (point.x >= 381 && point.x <= 381 + 68 && point.y >= 485 && point.y <= 485 + 68)
         {
+            sound_it();
             change_level_flag = false;
             setByLevel();
             return;
@@ -301,18 +318,51 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point) // 處理滑鼠的�
     {
         if (point.x >= 190 && point.x <= 186 + 168 && point.y >= 450 && point.y <= 450 + 73)
         {
+            sound_it();
             level = 0;
+        }
+        else if (point.x >= 190 && point.x <= 190 + 68 && point.y >= 575 && point.y <= 575 + 72)
+        {
+            sound_it();
+            if (music_flag == true)
+            {
+                audio->Stop(1);
+                music_flag = false;
+                menu_music.SetFrameIndexOfBitmap(1);
+                foot_music.SetFrameIndexOfBitmap(1);
+            }
+            else
+            {
+                audio->Play(1, true);
+                music_flag = true;
+                menu_music.SetFrameIndexOfBitmap(0);
+                foot_music.SetFrameIndexOfBitmap(0);
+            }
+        }
+        else if (point.x >= 275 && point.x <= 275 + 68 && point.y >= 575 && point.y <= 575 + 72)
+        {
+            sound_it();
+            if (sound_flag == true)
+            {
+                sound_flag = false;
+                menu_sound.SetFrameIndexOfBitmap(1);
+            }
+            else
+            {
+                sound_flag = true;
+                menu_sound.SetFrameIndexOfBitmap(0);
+            }
         }
     }
     else if (level == 0)
     {
-
         for (int i = 0; i < 6; i++)
         {
             for (int j = 0; j < 5; j++)
             {
                 if ((i * 5 + j + 1) <= highestLevel && point.x >= 30 + 100 * j && point.x <= 30 + 100 * j + 70 && point.y >= 210 + 100 * i && point.y <= 210 + 100 * i + 70)
                 {
+                    sound_it();
                     level = i * 5 + j + 1;
                     setByLevel();
                 }
@@ -321,28 +371,50 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point) // 處理滑鼠的�
         // Sleep(450);
         if (point.x >= 30 && point.x < 30 + 72 && point.y >= 810 && point.y < 810 + 72)
         {
+            sound_it();
             level = -1;
             setByLevel();
         }
     }
     else if (level > 0)
     {
-        if (point.x >= 231 && point.x < 231 + 78 && point.y >= 830 && point.y < 830 + 78)
+        if (point.x >= 41 && point.x < 41 + 68 && point.y >= 835 && point.y < 835 + 68)
         {
+            sound_it();
+            foot_control.SetFrameIndexOfBitmap((foot_control.GetFrameIndexOfBitmap() + 1) % 3);
+        }
+        else if (point.x >= 136 && point.x < 136 + 68 && point.y >= 835 && point.y < 835 + 68) // 136 835
+        {
+            sound_it();
+            if (music_flag == true)
+            {
+                audio->Stop(1);
+                music_flag = false;
+                menu_music.SetFrameIndexOfBitmap(1);
+                foot_music.SetFrameIndexOfBitmap(1);
+            }
+            else
+            {
+                audio->Play(1, true);
+                music_flag = true;
+                menu_music.SetFrameIndexOfBitmap(0);
+                foot_music.SetFrameIndexOfBitmap(0);
+            }
+        }
+        else if (point.x >= 231 && point.x < 231 + 78 && point.y >= 830 && point.y < 830 + 78)
+        {
+            sound_it();
             level = 0;
             setByLevel();
         }
-        else if (point.x >= 41 && point.x < 41 + 68 && point.y >= 835 && point.y < 835 + 68)
-        {
-            // int index = (foot_control.GetFrameIndexOfBitmap() + 1) % 3;
-            foot_control.SetFrameIndexOfBitmap((foot_control.GetFrameIndexOfBitmap() + 1) % 3);
-        }
         else if (point.x >= 336 && point.x < 336 + 68 && point.y >= 835 && point.y < 835 + 68)
         {
+            sound_it();
             undo();
         }
         else if (point.x >= 431 && point.x < 431 + 68 && point.y >= 835 && point.y < 835 + 68)
         {
+            sound_it();
             setByLevel();
         }
     }
@@ -388,20 +460,22 @@ void CGameStateRun::OnShow()
             levels[i].ShowBitmap();
             level_select_text.ShowBitmap();
             level_to_menu.ShowBitmap();
-            draw_text();
+            draw_levels_text();
         }
     }
     else if (level == -1)
     {
         background.ShowBitmap();
         menu_play_text.ShowBitmap();
+        menu_music.ShowBitmap();
+        menu_sound.ShowBitmap();
     }
     else if (level >= 1)
     {
         background.ShowBitmap();
 
         foot_control.ShowBitmap();
-
+        foot_music.ShowBitmap();
         foot_to_level.ShowBitmap();
         foot_undo.ShowBitmap();
         foot_restart.ShowBitmap();
@@ -423,6 +497,8 @@ void CGameStateRun::OnShow()
             box.ShowBitmap();
         }
         player.ShowBitmap();
+
+        draw_level(level);
     }
 }
 
@@ -446,6 +522,10 @@ void CGameStateRun::setByLevel()
             background.SetFrameIndexOfBitmap(0);
             menu_play_text.LoadBitmap("resources/menu_play_text0.bmp", RGB(163, 73, 164));
             menu_play_text.SetTopLeft(186, 450);
+            menu_music.LoadBitmapByString({"resources/menu_music0.bmp", "resources/menu_music1.bmp"}, RGB(163, 73, 164));
+            menu_music.SetTopLeft(190, 575);
+            menu_sound.LoadBitmapByString({"resources/menu_sound0.bmp", "resources/menu_sound1.bmp"}, RGB(163, 73, 164));
+            menu_sound.SetTopLeft(275, 575);
         }
         else if (level == 0)
         {
@@ -472,7 +552,6 @@ void CGameStateRun::setByLevel()
         boxes.clear();
         //
         // stack clear here
-
         player_pos.clear();
         for (auto box : boxes_pos)
         {
@@ -522,26 +601,29 @@ void CGameStateRun::setByLevel()
         int floors_count = 0;
         int boxes_count = 0;
         int goals_count = 0;
-		TRACE("%d\n", level);
-    	vector<vector<char>> walls_like = {};
+        TRACE("%d\n", level);
+        vector<vector<char>> walls_like = {};
 
         string line;
         string filename;
         filename = "./Source/level/level" + to_string(level) + ".txt";
         ifstream inputFile(filename);
 
-        while (getline(inputFile, line)) {
+        while (getline(inputFile, line))
+        {
             vector<char> temp = {};
-            for(unsigned int i = 0; i < (line.length()); i++){
-                if((line[i] != ',' ) && (line[i] != ' ')){
+            for (unsigned int i = 0; i < (line.length()); i++)
+            {
+                if ((line[i] != ',') && (line[i] != ' '))
+                {
                     temp.push_back(line[i]);
                 }
             }
             walls_like.push_back(temp);
         }
         inputFile.close();
-		TRACE("%d\n", walls_like.size());
-		TRACE("%d\n", walls_like[0].size());
+        TRACE("%d\n", walls_like.size());
+        TRACE("%d\n", walls_like[0].size());
 
         for (unsigned int i = 0; i < walls_like[0].size(); i++)
         {
@@ -549,40 +631,39 @@ void CGameStateRun::setByLevel()
             {
                 if (walls_like[j][i] == '1')
                 {
-                    walls[walls_count].SetTopLeft(0 + 60 * i,180 + 60 * j);
+                    walls[walls_count].SetTopLeft(0 + 60 * i, 180 + 60 * j);
                     walls_count++;
                     // TRACE("%d\n", walls_count);
-
                 }
                 else if (walls_like[j][i] == '2')
                 {
-                    floors[floors_count].SetTopLeft(0 + 60 * i,180 + 60 * j);
+                    floors[floors_count].SetTopLeft(0 + 60 * i, 180 + 60 * j);
                     floors_count++;
                     // TRACE("%d\n", floors_count);
                 }
                 else if (walls_like[j][i] == '3')
                 {
-                    floors[floors_count].SetTopLeft(0 + 60 * i,180 + 60 * j);
+                    floors[floors_count].SetTopLeft(0 + 60 * i, 180 + 60 * j);
                     floors_count++;
-                    boxes[boxes_count].SetTopLeft(0 + 60 * i,180 + 60 * j);
+                    boxes[boxes_count].SetTopLeft(0 + 60 * i, 180 + 60 * j);
                     boxes_count++;
                 }
                 else if (walls_like[j][i] == '4')
                 {
-                    goals[goals_count].SetTopLeft(0 + 60 * i,180 + 60 * j);
+                    goals[goals_count].SetTopLeft(0 + 60 * i, 180 + 60 * j);
                     goals_count++;
                 }
                 else if (walls_like[j][i] == '5')
                 {
-                    boxes[boxes_count].SetTopLeft(0 + 60 * i,180 + 60 * j);
+                    boxes[boxes_count].SetTopLeft(0 + 60 * i, 180 + 60 * j);
                     boxes_count++;
-                    goals[goals_count].SetTopLeft(0 + 60 * i,180 + 60 * j);
+                    goals[goals_count].SetTopLeft(0 + 60 * i, 180 + 60 * j);
                     goals_count++;
                 }
                 else if (walls_like[j][i] == '6')
                 {
-                    player.SetTopLeft(0 + 60 * i,180 + 60 * j);
-                    floors[floors_count].SetTopLeft(0 + 60 * i,180 + 60 * j);
+                    player.SetTopLeft(0 + 60 * i, 180 + 60 * j);
+                    floors[floors_count].SetTopLeft(0 + 60 * i, 180 + 60 * j);
                     floors_count++;
                 }
             }
@@ -639,7 +720,7 @@ void CGameStateRun::undo()
     TRACE("player: %d!, box: %d\n", player_pos.size(), boxes_pos[0].size());
 }
 
-void CGameStateRun::draw_text()
+void CGameStateRun::draw_levels_text()
 {
     CDC *pDC = CDDraw::GetBackCDC();
     // CFont *fp;
@@ -654,17 +735,47 @@ void CGameStateRun::draw_text()
             {
                 string s;
                 s = std::to_string(i * 5 + j + 1);
-                CTextDraw::ChangeFontLog(pDC, 32, "Cooper Black", RGB(255, 255, 255));
+                CTextDraw::ChangeFontLog(pDC, 34, "Forte", RGB(255, 255, 255));
                 if (i * 5 + j + 1 < 10)
                 {
-                    CTextDraw::Print(pDC, 53 + 100 * j, 217 + 100 * i, s);
+                    CTextDraw::Print(pDC, 54 + 100 * j, 217 + 100 * i, s);
                 }
                 else
                 {
-                    CTextDraw::Print(pDC, 40 + 100 * j, 217 + 100 * i, s);
+                    CTextDraw::Print(pDC, 46 + 100 * j, 217 + 100 * i, s);
                 }
             }
         }
     }
     CDDraw::ReleaseBackCDC();
+}
+
+void CGameStateRun::draw_level(int n)
+{
+    CDC *pDC = CDDraw::GetBackCDC();
+    // CFont *fp;
+
+    /* Print title */
+
+    string s = "LEVEL ";
+    s += std::to_string(n);
+    CTextDraw::ChangeFontLog(pDC, 38, "Forte", RGB(255, 255, 255));
+    if (n < 10)
+    {
+        CTextDraw::Print(pDC, 190, 70, s);
+    }
+    else
+    {
+        CTextDraw::Print(pDC, 180, 70, s);
+    }
+
+    CDDraw::ReleaseBackCDC();
+}
+
+void CGameStateRun::sound_it()
+{
+    if (sound_flag == true)
+    {
+        audio->Play(2, 0);
+    }
 }

@@ -95,13 +95,15 @@ namespace game_framework
 		void OnRButtonUp(UINT nFlags, CPoint point);   // 處理滑鼠的動作
 
 	protected:
-		void OnMove();		 // 移動遊戲元素
-		void OnShow();		 // 顯示這個狀態的遊戲畫面
-		void setByLevel();	 // 顯示不同關卡的畫面
-		void change_level(); // 切換關卡
-		void addToUndo();	 // 將目前的狀態加入undos
-		void undo();		 // 回到上一步
-		void draw_text();	 // 顯示文字
+		void OnMove();			 // 移動遊戲元素
+		void OnShow();			 // 顯示這個狀態的遊戲畫面
+		void setByLevel();		 // 顯示不同關卡的畫面
+		void change_level();	 // 切換關卡
+		void addToUndo();		 // 將目前的狀態加入undos
+		void undo();			 // 回到上一步
+		void draw_levels_text(); // 顯示文字
+		void draw_level(int n);	 // 顯示關卡
+		void sound_it();		 // 播放音效
 
 	private:
 		int level = -1;	   // 遊戲關卡
@@ -112,10 +114,11 @@ namespace game_framework
 		CMovingBitmap background; // 背景圖
 		// menu
 		CMovingBitmap menu_play_text; // 開始鈕
-		CMovingBitmap menu_voice;	  // 音效開關
+		CMovingBitmap menu_sound;	  // 音效開關
 		CMovingBitmap menu_music;	  // 背景音樂開關
-		CAudio voice;				  // 音效
-		CAudio music;				  // 背景音樂
+
+		bool music_flag = true; // 背景音樂開關
+		bool sound_flag = true; // 音效開關
 
 		// level sheet
 		CMovingBitmap level_select_text; // 選擇關卡的圖片
@@ -140,11 +143,134 @@ namespace game_framework
 		CMovingBitmap foot_undo;
 		CMovingBitmap foot_restart;
 
-
-		vector<int> walls_amount = {20,22,24,30,25,25,25,29,23,26,23,27,26,23,27,26,23,27,26,27,21,27,23,24,26,30,27,27,23,24,};
-		vector<int> floors_amount = {8,19,19,21,18,17,18,19,14,17,15,17,16,13,21,18,13,17,19,17,12,17,15,16,17,21,17,17,13,17,};
-		vector<int> boxes_amount = {1,1,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,};
-		vector<int> goals_amount = {1,1,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,};
+		vector<int> walls_amount = {
+			20,
+			22,
+			24,
+			30,
+			25,
+			25,
+			25,
+			29,
+			23,
+			26,
+			23,
+			27,
+			26,
+			23,
+			27,
+			26,
+			23,
+			27,
+			26,
+			27,
+			21,
+			27,
+			23,
+			24,
+			26,
+			30,
+			27,
+			27,
+			23,
+			24,
+		};
+		vector<int> floors_amount = {
+			8,
+			19,
+			19,
+			21,
+			18,
+			17,
+			18,
+			19,
+			14,
+			17,
+			15,
+			17,
+			16,
+			13,
+			21,
+			18,
+			13,
+			17,
+			19,
+			17,
+			12,
+			17,
+			15,
+			16,
+			17,
+			21,
+			17,
+			17,
+			13,
+			17,
+		};
+		vector<int> boxes_amount = {
+			1,
+			1,
+			2,
+			2,
+			2,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			2,
+		};
+		vector<int> goals_amount = {
+			1,
+			1,
+			2,
+			2,
+			2,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			2,
+		};
 
 		vector<pair<int, int>> player_pos;
 		vector<vector<pair<int, int>>> boxes_pos;
