@@ -134,7 +134,7 @@ void CGameStateRun::OnInit() // 遊戲的初值及圖形設定
     for (int i = 0; i < 3; i++)
     {
         CMovingBitmap page;
-        page.LoadBitmapByString({"resources/not_page.bmp", "resources/on_page.bmp"}, RGB(255, 255, 255));
+        page.LoadBitmapByString({"resources/levels_page0.bmp", "resources/levels_page1.bmp"}, RGB(255, 255, 255));
         turnPage.push_back(page);
         turnPage[i].SetTopLeft(220 + 40 * i, 810);
     }
