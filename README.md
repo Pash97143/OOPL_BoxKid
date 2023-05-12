@@ -1,6 +1,4 @@
-OOPL<br>
-git test<br>
-git test 2nd<br>
-start BoxKid<br>
-123<br>
-456<br>
+OOPL BoxKid game project<br>
+
+open the "BoxKid" folder and use visual studio 2017 to execute game.sln file<br>
+
