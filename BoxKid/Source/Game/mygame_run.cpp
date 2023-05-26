@@ -132,8 +132,8 @@ void CGameStateRun::OnInit() // 遊戲的初值及圖形設定
     {
         CMovingBitmap page;
         page.LoadBitmapByString({"resources/levels_page0.bmp", "resources/levels_page1.bmp"}, RGB(255, 255, 255));
-        turnPages.push_back(page);
-        turnPages[i].SetTopLeft(207 + 40 * i, 810);
+        turnPage.push_back(page);
+        turnPage[i].SetTopLeft(207 + 40 * i, 810);
     }
 
     // 載入關卡底下功能按鈕
@@ -630,7 +630,7 @@ void CGameStateRun::setPage(int n)
     background.SetFrameIndexOfBitmap(n + 1);
     page = n;
 }
-``
+
 void CGameStateRun::setByLevel()
 {
     prelevel = level;
@@ -653,7 +653,7 @@ void CGameStateRun::setByLevel()
             {
                 if (i == 0)
                 {
-                    turnPages[i].SetFrameIndexOfBitmap(1);
+                    turnPage[i].SetFrameIndexOfBitmap(1);
                 }
             }
         }

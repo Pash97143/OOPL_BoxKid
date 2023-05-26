@@ -133,7 +133,7 @@ namespace game_framework
 		vector<CMovingBitmap> floors;
 		vector<CMovingBitmap> goals;
 		vector<CMovingBitmap> boxes;
-		vector<CMovingBitmap> turnPages;
+		vector<CMovingBitmap> turnPage;
 
 		CMovingBitmap player;
 
