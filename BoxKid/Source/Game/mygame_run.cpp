@@ -609,7 +609,7 @@ void CGameStateRun::setPage(int n)
     background.SetFrameIndexOfBitmap(n + 1);
     page = n;
 }
-
+``
 void CGameStateRun::setByLevel()
 {
     prelevel = level;
