@@ -144,7 +144,6 @@ namespace game_framework
 		CMovingBitmap foot_undo;
 		CMovingBitmap foot_restart;
 		CMovingBitmap control_bar;
-		// 控制區
 
 		vector<int> walls_amount = {
 			20,
