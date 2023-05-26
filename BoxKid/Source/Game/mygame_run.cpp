@@ -91,7 +91,8 @@ void CGameStateRun::OnInit() // 遊戲的初值及圖形設定
     audio->Play(1, true);
     
     //載入所有背景
-    background.LoadBitmapByString({"resources/bg_main.bmp", "resources/bg_level_sheet.bmp", "resources/bg_level.bmp", "resources/bg_next_level.bmp"}, RGB(163, 73, 164));
+       
+    background.LoadBitmapByString({"resources/bg_main.bmp", "resources/bg_level_sheet.bmp", "resources/bg_level_sheet.bmp", "resources/bg_level_sheet.bmp", "resources/bg_level.bmp", "resources/bg_next_level.bmp"}, RGB(163, 73, 164));
     background.SetTopLeft(0, 0);
 
     //載入主畫面PLAY按鈕
@@ -112,14 +113,6 @@ void CGameStateRun::OnInit() // 遊戲的初值及圖形設定
         CMovingBitmap level;
         level.LoadBitmapByString({"resources/level0.bmp", "resources/level1.bmp", "resources/level2.bmp"}, RGB(163, 73, 164));
         levels[i] = level;
-    }
-
-    for (int i = 0; i < 6; i++)
-    {
-        for (int j = 0; j < 5; j++)
-        {
-            levels[i * 5 + j].SetTopLeft(30 + 100 * j, 210 + 100 * i);
-        }
     }
 
     //選關畫面SELECT LEVEL 字樣
@@ -404,8 +397,9 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point) // 處理滑鼠的�
                 if ((i * 5 + j + 1) <= highestLevel && point.x >= 30 + 100 * j && point.x <= 30 + 100 * j + 70 && point.y >= 210 + 100 * i && point.y <= 210 + 100 * i + 70)
                 {
                     sound_it();
-                    level = i * 5 + j + 1;
+                    level = page * 30 + i * 5 + j + 1;
                     setByLevel();
+                    TRACE("\nhere my level is %d\n", level);
                 }
             }
         }
@@ -415,6 +409,22 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point) // 處理滑鼠的�
             sound_it();
             level = -1;
             setByLevel();
+        }
+
+        if (point.x >= 220 && point.x < 220 + 27 && point.y >= 810 && point.y < 810 + 30)
+        {
+            setPage(0);
+            TRACE("\nhere my highestlevel is %d\n", highestLevel);
+        }
+        if (point.x >= 260 && point.x < 260 + 27 && point.y >= 810 && point.y < 810 + 30)
+        {
+            setPage(1);
+            TRACE("\nhere my highestlevel is %d\n", highestLevel);
+        }
+        if (point.x >= 300 && point.x < 300 + 27 && point.y >= 810 && point.y < 810 + 30)
+        {
+            setPage(2);
+            TRACE("\nhere my highestlevel is %d\n", highestLevel);
         }
     }
     else if (level > 0)
@@ -496,17 +506,51 @@ void CGameStateRun::OnShow()
     else if (level == 0)
     {
         background.ShowBitmap();
-        for (int i = 0; i < 30; i++)
-        {
-            levels[i].ShowBitmap();
-            level_select_text.ShowBitmap();
-            level_to_menu.ShowBitmap();
-            draw_levels_text();
+        level_select_text.ShowBitmap();
+        level_to_menu.ShowBitmap();
+        
+        if(page == 0 || page == 1){
+        
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    levels[page * 30 + i * 5 + j].SetTopLeft(30 + 100 * j, 210 + 100 * i);
+                }
+            }
+
+            for(int i = 30 * page; i <  30 * page + 30; i++)
+            {
+                levels[i].ShowBitmap();
+                draw_levels_text();
+            }
         }
+        else if(page == 2){
+
+            for (int i = 0; i < 2; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    levels[page * 30 + i * 5 + j].SetTopLeft(30 + 100 * j, 210 + 100 * i);
+                }
+            }
+
+            for(int i = 30 * page; i <  30 * page + 10; i++)
+            {
+                levels[i].ShowBitmap();
+                draw_levels_text();
+            }
+        }
+
         for (int i = 0; i < 3; i++){
 
-            if(i == 0){
+            if(i == page)
+            {
                 turnPage[i].SetFrameIndexOfBitmap(1);
+            }
+            else
+            {
+                turnPage[i].SetFrameIndexOfBitmap(0);
             }
             turnPage[i].ShowBitmap();
         }
@@ -557,7 +601,13 @@ void CGameStateRun::change_level()
     {
         highestLevel++;
     }
-    background.SetFrameIndexOfBitmap(3);
+    background.SetFrameIndexOfBitmap(5);
+}
+
+void CGameStateRun::setPage(int n)
+{
+    background.SetFrameIndexOfBitmap(n + 1);
+    page = n;
 }
 
 void CGameStateRun::setByLevel()
@@ -572,6 +622,7 @@ void CGameStateRun::setByLevel()
         }
         else if (level == 0)
         {
+            TRACE("\nhere my highestlevel is %d\n", highestLevel);
             for (int i = 0; i < highestLevel; i++)
             {
                 levels[i].SetFrameIndexOfBitmap(1);
@@ -581,7 +632,7 @@ void CGameStateRun::setByLevel()
     }
     else if (level >= 1)
     {
-        background.SetFrameIndexOfBitmap(2);
+        background.SetFrameIndexOfBitmap(4);
 
         walls.clear();
         floors.clear();
@@ -769,12 +820,12 @@ void CGameStateRun::draw_levels_text()
     {
         for (int j = 0; j < 5; j++)
         {
-            if (i * 5 + j + 1 <= highestLevel)
+            if (30 * page + i * 5 + j + 1 <= highestLevel)
             {
                 string s;
-                s = std::to_string(i * 5 + j + 1);
+                s = std::to_string(30 * page + i * 5 + j + 1);
                 CTextDraw::ChangeFontLog(pDC, 34, "Forte", RGB(255, 255, 255));
-                if (i * 5 + j + 1 < 10)
+                if (30 * page + i * 5 + j + 1 < 10)
                 {
                     CTextDraw::Print(pDC, 54 + 100 * j, 217 + 100 * i, s);
                 }
