@@ -105,9 +105,12 @@ namespace game_framework
 		void draw_level(int n);	 // 顯示關卡
 		void sound_it();		 // 播放音效
 
+		void setPage(int n);
+
 	private:
 		int level = -1;	   // 遊戲關卡
 		int prelevel = -2; // 上一關的關卡
+		int page = 0;
 		int highestLevel = 70;
 		bool change_level_flag = false;
 
