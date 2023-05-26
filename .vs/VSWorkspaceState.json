@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\BoxKid"
+    "\\BoxKid",
+    "\\BoxKid\\Source"
   ],
   "SelectedNode": "\\BoxKid\\game.sln",
   "PreviewInSolutionExplorer": false

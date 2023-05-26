@@ -30,6 +30,8 @@ CGameStateRun::~CGameStateRun()
     floors.clear();
     goals.clear();
     boxes.clear();
+    player_pos.clear();
+    boxes_pos.clear();
 }
 
 void CGameStateRun::OnBeginState()
@@ -85,28 +87,28 @@ void CGameStateRun::OnMove() // 移動遊戲元素
 
 void CGameStateRun::OnInit() // 遊戲的初值及圖形設定
 {
-    
+
     audio->Load(1, "resources/music.wav");
     audio->Load(2, "resources/sound.wav");
     audio->Play(1, true);
-    
-    //載入所有背景
+
+    // 載入所有背景
     background.LoadBitmapByString({"resources/bg_main.bmp", "resources/bg_level_sheet.bmp", "resources/bg_level.bmp", "resources/bg_next_level.bmp"}, RGB(163, 73, 164));
     background.SetTopLeft(0, 0);
 
-    //載入主畫面PLAY按鈕
+    // 載入主畫面PLAY按鈕
     menu_play_text.LoadBitmapByString({"resources/menu_play_text0.bmp"}, RGB(163, 73, 164));
     menu_play_text.SetTopLeft(186, 450);
 
-    //載入主畫面背景音樂按鈕
+    // 載入主畫面背景音樂按鈕
     menu_music.LoadBitmapByString({"resources/menu_music0.bmp", "resources/menu_music1.bmp"}, RGB(163, 73, 164));
     menu_music.SetTopLeft(190, 575);
 
-    //載入主畫面按鍵音樂按鈕
+    // 載入主畫面按鍵音樂按鈕
     menu_sound.LoadBitmapByString({"resources/menu_sound0.bmp", "resources/menu_sound1.bmp"}, RGB(163, 73, 164));
     menu_sound.SetTopLeft(275, 575);
 
-    //選關畫面設置
+    // 選關畫面設置
     for (int i = 0; i < 70; i++)
     {
         CMovingBitmap level;
@@ -122,56 +124,58 @@ void CGameStateRun::OnInit() // 遊戲的初值及圖形設定
         }
     }
 
-    //選關畫面SELECT LEVEL 字樣
+    // 選關畫面SELECT LEVEL 字樣
     level_select_text.LoadBitmap("resources/level_select_text.bmp", RGB(163, 73, 164));
     level_select_text.SetTopLeft(100, 85);
-    
-    //選關畫面回主畫面按鈕
+
+    // 選關畫面回主畫面按鈕
     level_to_menu.LoadBitmapByString({"resources/level_to_menu0.bmp"}, RGB(163, 73, 164));
     level_to_menu.SetTopLeft(30, 810);
 
-    //載入關卡頁面切換按鈕
+    // 載入關卡頁面切換按鈕
     for (int i = 0; i < 3; i++)
     {
         CMovingBitmap page;
         page.LoadBitmapByString({"resources/levels_page0.bmp", "resources/levels_page1.bmp"}, RGB(255, 255, 255));
-        turnPage.push_back(page);
-        turnPage[i].SetTopLeft(220 + 40 * i, 810);
+        turnPages.push_back(page);
+        turnPages[i].SetTopLeft(207 + 40 * i, 810);
     }
 
-    //載入關卡底下功能按鈕
+    // 載入關卡底下功能按鈕
     foot_control.LoadBitmapByString({"resources/foot_control0.bmp", "resources/foot_control1.bmp", "resources/foot_control2.bmp"}, RGB(163, 73, 164));
     foot_control.SetTopLeft(41, 835);
 
-    //載入關卡底下音樂按鈕
+    // 載入關卡底下音樂按鈕
     foot_music.LoadBitmapByString({"resources/foot_music0.bmp", "resources/foot_music1.bmp"}, RGB(163, 73, 164));
     foot_music.SetTopLeft(136, 835);
 
-    //載入關卡底下回到選關畫面按鈕
+    // 載入關卡底下回到選關畫面按鈕
     foot_to_level.LoadBitmapByString({"resources/foot_to_level0.bmp"}, RGB(163, 73, 164));
     foot_to_level.SetTopLeft(231, 830);
 
-    //載入關卡底下回上一步按鈕
+    // 載入關卡底下回上一步按鈕
     foot_undo.LoadBitmapByString({"resources/foot_undo.bmp"}, RGB(163, 73, 164));
     foot_undo.SetTopLeft(336, 835);
 
-    //載入關卡底下重新開始按鈕
+    // 載入關卡底下重新開始按鈕
     foot_restart.LoadBitmapByString({"resources/foot_restart.bmp"}, RGB(163, 73, 164));
     foot_restart.SetTopLeft(431, 835);
 
-    //載入過關後跳回選關畫面按鈕
+    control_bar.LoadBitmapByString({"resources/control_bar0.bmp", "resources/control_bar1.bmp"}, RGB(163, 73, 164));
+
+    // 載入過關後跳回選關畫面按鈕
     middle_to_level.LoadBitmapByString({"resources/middle_to_level.bmp"}, RGB(163, 73, 164));
     middle_to_level.SetTopLeft(90, 485);
 
-    //載入過關後跳下一關按鈕
+    // 載入過關後跳下一關按鈕
     middle_next.LoadBitmapByString({"resources/middle_next.bmp"}, RGB(163, 73, 164));
     middle_next.SetTopLeft(218, 465);
 
-    //載入過關後跳重新遊玩按鈕
+    // 載入過關後跳重新遊玩按鈕
     middle_restart.LoadBitmapByString({"resources/middle_restart.bmp"}, RGB(163, 73, 164));
     middle_restart.SetTopLeft(381, 485);
 
-    //載入主人物
+    // 載入主人物
     player.LoadBitmapByString({"resources/player0.bmp", "resources/player1.bmp", "resources/player2.bmp", "resources/player3.bmp", "resources/player4.bmp", "resources/player5.bmp", "resources/player6.bmp", "resources/player7.bmp", "resources/player8.bmp", "resources/player9.bmp", "resources/player10.bmp", "resources/player11.bmp"}, RGB(163, 73, 164));
     Sleep(500);
 }
@@ -423,6 +427,20 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point) // 處理滑鼠的�
         {
             sound_it();
             foot_control.SetFrameIndexOfBitmap((foot_control.GetFrameIndexOfBitmap() + 1) % 3);
+            if (foot_control.GetFrameIndexOfBitmap() == 0)
+            {
+                control_bar.SetFrameIndexOfBitmap(0);
+            }
+            else if (foot_control.GetFrameIndexOfBitmap() == 1)
+            {
+                control_bar.SetFrameIndexOfBitmap(1);
+                control_bar.SetTopLeft(30, 710);
+            }
+            else if (foot_control.GetFrameIndexOfBitmap() == 2)
+            {
+                control_bar.SetFrameIndexOfBitmap(1);
+                control_bar.SetTopLeft(360, 710);
+            }
         }
         else if (point.x >= 136 && point.x < 136 + 68 && point.y >= 835 && point.y < 835 + 68) // 136 835
         {
@@ -503,12 +521,9 @@ void CGameStateRun::OnShow()
             level_to_menu.ShowBitmap();
             draw_levels_text();
         }
-        for (int i = 0; i < 3; i++){
-
-            if(i == 0){
-                turnPage[i].SetFrameIndexOfBitmap(1);
-            }
-            turnPage[i].ShowBitmap();
+        for (int i = 0; i < 3; i++)
+        {
+            turnPages[i].ShowBitmap();
         }
     }
     else if (level == -1)
@@ -527,6 +542,7 @@ void CGameStateRun::OnShow()
         foot_to_level.ShowBitmap();
         foot_undo.ShowBitmap();
         foot_restart.ShowBitmap();
+        control_bar.ShowBitmap();
 
         for (auto wall : walls)
         {
@@ -568,7 +584,6 @@ void CGameStateRun::setByLevel()
         if (level == -1)
         {
             background.SetFrameIndexOfBitmap(0);
-
         }
         else if (level == 0)
         {
@@ -577,6 +592,14 @@ void CGameStateRun::setByLevel()
                 levels[i].SetFrameIndexOfBitmap(1);
             }
             background.SetFrameIndexOfBitmap(1);
+
+            for (int i = 0; i < 3; i++)
+            {
+                if (i == 0)
+                {
+                    turnPages[i].SetFrameIndexOfBitmap(1);
+                }
+            }
         }
     }
     else if (level >= 1)
@@ -628,7 +651,6 @@ void CGameStateRun::setByLevel()
             std::vector<std::pair<int, int>> vec;
             boxes_pos.push_back(vec);
         }
-
 
         //------
         Sleep(500);

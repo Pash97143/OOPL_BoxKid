@@ -1,5 +1,5 @@
-#include <vector>
 #include <utility>
+#include <vector>
 /*
  * mygame.h: 本檔案儲遊戲本身的class的interface
  * Copyright (C) 2002-2008 Woei-Kae Chen <wkc@csie.ntut.edu.tw>
@@ -108,7 +108,7 @@ namespace game_framework
 	private:
 		int level = -1;	   // 遊戲關卡
 		int prelevel = -2; // 上一關的關卡
-		int highestLevel = 1;
+		int highestLevel = 70;
 		bool change_level_flag = false;
 
 		CMovingBitmap background; // 背景圖
@@ -130,7 +130,7 @@ namespace game_framework
 		vector<CMovingBitmap> floors;
 		vector<CMovingBitmap> goals;
 		vector<CMovingBitmap> boxes;
-		vector<CMovingBitmap> turnPage;
+		vector<CMovingBitmap> turnPages;
 
 		CMovingBitmap player;
 
@@ -143,6 +143,8 @@ namespace game_framework
 		CMovingBitmap foot_to_level;
 		CMovingBitmap foot_undo;
 		CMovingBitmap foot_restart;
+		CMovingBitmap control_bar;
+		// 控制區
 
 		vector<int> walls_amount = {
 			20,
@@ -295,4 +297,4 @@ namespace game_framework
 	private:
 		int counter; // 倒數之計數器
 	};
-}
+} // namespace game_framework
