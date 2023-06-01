@@ -91,9 +91,9 @@ void CGameStateRun::OnInit() // 遊戲的初值及圖形設定
     audio->Load(1, "resources/music.wav");
     audio->Load(2, "resources/sound.wav");
     audio->Play(1, true);
-    
-    //載入所有背景
-       
+
+    // 載入所有背景
+
     background.LoadBitmapByString({"resources/bg_main.bmp", "resources/bg_level_sheet.bmp", "resources/bg_level_sheet.bmp", "resources/bg_level_sheet.bmp", "resources/bg_level.bmp", "resources/bg_next_level.bmp"}, RGB(163, 73, 164));
 
     background.SetTopLeft(0, 0);
@@ -118,7 +118,7 @@ void CGameStateRun::OnInit() // 遊戲的初值及圖形設定
         levels[i] = level;
     }
 
-    //選關畫面SELECT LEVEL 字樣
+    // 選關畫面SELECT LEVEL 字樣
 
     level_select_text.LoadBitmap("resources/level_select_text.bmp", RGB(163, 73, 164));
     level_select_text.SetTopLeft(100, 85);
@@ -181,143 +181,19 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
     {
         if (nChar == VK_LEFT)
         {
-            for (int i = 0; i < walls_amount[level - 1]; i++)
-            {
-                if (player.GetTop() == walls[i].GetTop() && player.GetLeft() == walls[i].GetLeft() + 60)
-                    return;
-            }
-            for (int i = 0; i < boxes_amount[level - 1]; i++)
-            {
-                if (player.GetTop() == boxes[i].GetTop() && player.GetLeft() == boxes[i].GetLeft() + 60)
-                {
-                    for (int j = 0; j < walls_amount[level - 1]; j++)
-                    {
-                        if (boxes[i].GetTop() == walls[j].GetTop() && boxes[i].GetLeft() == walls[j].GetLeft() + 60)
-                            return;
-                    }
-                    for (int j = 0; j < boxes_amount[level - 1]; j++)
-                    {
-                        if (boxes[i].GetTop() == boxes[j].GetTop() && boxes[i].GetLeft() == boxes[j].GetLeft() + 60)
-                            return;
-                    }
-                    addToUndo();
-                    boxes[i].SetTopLeft(boxes[i].GetLeft() - 60, boxes[i].GetTop());
-                    player.SetTopLeft(player.GetLeft() - 60, player.GetTop());
-                    player.SetFrameIndexOfBitmap(0);
-                    Sleep(150);
-                    return;
-                }
-            }
-            addToUndo();
-            player.SetTopLeft(player.GetLeft() - 60, player.GetTop());
-            player.SetFrameIndexOfBitmap(0);
-            Sleep(150);
+            moveLeft();
         }
         else if (nChar == VK_UP)
         {
-            for (int i = 0; i < walls_amount[level - 1]; i++)
-            {
-                if (player.GetTop() == walls[i].GetTop() + 60 && player.GetLeft() == walls[i].GetLeft())
-                    return;
-            }
-            for (int i = 0; i < boxes_amount[level - 1]; i++)
-            {
-                if (player.GetTop() == boxes[i].GetTop() + 60 && player.GetLeft() == boxes[i].GetLeft())
-                {
-                    for (int j = 0; j < walls_amount[level - 1]; j++)
-                    {
-                        if (boxes[i].GetTop() == walls[j].GetTop() + 60 && boxes[i].GetLeft() == walls[j].GetLeft())
-                            return;
-                    }
-                    for (int j = 0; j < boxes_amount[level - 1]; j++)
-                    {
-                        if (boxes[i].GetTop() == boxes[j].GetTop() + 60 && boxes[i].GetLeft() == boxes[j].GetLeft())
-                            return;
-                    }
-                    addToUndo();
-                    boxes[i].SetTopLeft(boxes[i].GetLeft(), boxes[i].GetTop() - 60);
-                    player.SetTopLeft(player.GetLeft(), player.GetTop() - 60);
-                    player.SetFrameIndexOfBitmap(3);
-                    Sleep(150);
-                    return;
-                }
-            }
-
-            addToUndo();
-            player.SetTopLeft(player.GetLeft(), player.GetTop() - 60);
-            player.SetFrameIndexOfBitmap(3);
-            Sleep(150);
+            moveUp();
         }
         else if (nChar == VK_RIGHT)
         {
-            for (int i = 0; i < walls_amount[level - 1]; i++)
-            {
-                if (player.GetTop() == walls[i].GetTop() && player.GetLeft() + 60 == walls[i].GetLeft())
-                    return;
-            }
-            for (int i = 0; i < boxes_amount[level - 1]; i++)
-            {
-                if (player.GetTop() == boxes[i].GetTop() && player.GetLeft() + 60 == boxes[i].GetLeft())
-                {
-                    for (int j = 0; j < walls_amount[level - 1]; j++)
-                    {
-                        if (boxes[i].GetTop() == walls[j].GetTop() && boxes[i].GetLeft() == walls[j].GetLeft() - 60)
-                            return;
-                    }
-                    for (int j = 0; j < boxes_amount[level - 1]; j++)
-                    {
-                        if (boxes[i].GetTop() == boxes[j].GetTop() && boxes[i].GetLeft() == boxes[j].GetLeft() - 60)
-                            return;
-                    }
-                    addToUndo();
-                    boxes[i].SetTopLeft(boxes[i].GetLeft() + 60, boxes[i].GetTop());
-                    player.SetTopLeft(player.GetLeft() + 60, player.GetTop());
-                    player.SetFrameIndexOfBitmap(6);
-                    Sleep(150);
-                    return;
-                }
-            }
-
-            addToUndo();
-            player.SetTopLeft(player.GetLeft() + 60, player.GetTop());
-            player.SetFrameIndexOfBitmap(6);
-            Sleep(150);
+            moveRight();
         }
         else if (nChar == VK_DOWN)
         {
-            for (int i = 0; i < walls_amount[level - 1]; i++)
-            {
-                if (player.GetTop() + 60 == walls[i].GetTop() && player.GetLeft() == walls[i].GetLeft())
-                    return;
-            }
-            for (int i = 0; i < boxes_amount[level - 1]; i++)
-            {
-                if (player.GetTop() + 60 == boxes[i].GetTop() && player.GetLeft() == boxes[i].GetLeft())
-                {
-                    for (int j = 0; j < walls_amount[level - 1]; j++)
-                    {
-                        if (boxes[i].GetTop() == walls[j].GetTop() - 60 && boxes[i].GetLeft() == walls[j].GetLeft())
-                            return;
-                    }
-                    for (int j = 0; j < boxes_amount[level - 1]; j++)
-                    {
-                        if (boxes[i].GetTop() == boxes[j].GetTop() - 60 && boxes[i].GetLeft() == boxes[j].GetLeft())
-                            return;
-                    }
-                    addToUndo();
-                    boxes[i].SetTopLeft(boxes[i].GetLeft(), boxes[i].GetTop() + 60);
-                    player.SetTopLeft(player.GetLeft(), player.GetTop() + 60);
-                    player.SetFrameIndexOfBitmap(9);
-                    Sleep(150);
-                    return;
-                }
-            }
-
-            addToUndo();
-
-            player.SetTopLeft(player.GetLeft(), player.GetTop() + 60);
-            player.SetFrameIndexOfBitmap(9);
-            Sleep(150);
+            moveDown();
         }
     }
 }
@@ -488,6 +364,45 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point) // 處理滑鼠的�
             sound_it();
             setByLevel();
         }
+
+        if (foot_control.GetFrameIndexOfBitmap() == 1) // 30 710
+        {
+            if (point.x >= 30 && point.x <= 30 + 35 && point.y >= 710 + 30 && point.y <= 710 + 30 + 40)
+            {
+                moveLeft();
+            }
+            else if (point.x >= 30 + 30 && point.x <= 30 + 30 + 40 && point.y >= 710 && point.y <= 710 + 35)
+            {
+                moveUp();
+            }
+            else if (point.x >= 30 + 65 && point.x <= 30 + 65 + 35 && point.y >= 710 + 30 && point.y <= 710 + 30 + 40)
+            {
+                moveRight();
+            }
+            else if (point.x >= 30 + 30 && point.x <= 30 + 30 + 40 && point.y >= 710 + 65 && point.y <= 710 + 65 + 35)
+            {
+                moveDown();
+            }
+        }
+        else if (foot_control.GetFrameIndexOfBitmap() == 2) // 360 710
+        {
+            if (point.x >= 360 && point.x <= 360 + 35 && point.y >= 710 + 30 && point.y <= 710 + 30 + 40)
+            {
+                moveLeft();
+            }
+            else if (point.x >= 360 + 30 && point.x <= 360 + 30 + 40 && point.y >= 710 && point.y <= 710 + 35)
+            {
+                moveUp();
+            }
+            else if (point.x >= 360 + 65 && point.x <= 360 + 65 + 35 && point.y >= 710 + 30 && point.y <= 710 + 30 + 40)
+            {
+                moveRight();
+            }
+            else if (point.x >= 360 + 30 && point.x <= 360 + 30 + 40 && point.y >= 710 + 65 && point.y <= 710 + 65 + 35)
+            {
+                moveDown();
+            }
+        }
     }
 }
 
@@ -528,9 +443,10 @@ void CGameStateRun::OnShow()
         background.ShowBitmap();
         level_select_text.ShowBitmap();
         level_to_menu.ShowBitmap();
-        
-        if(page == 0 || page == 1){
-        
+
+        if (page == 0 || page == 1)
+        {
+
             for (int i = 0; i < 6; i++)
             {
                 for (int j = 0; j < 5; j++)
@@ -539,13 +455,14 @@ void CGameStateRun::OnShow()
                 }
             }
 
-            for(int i = 30 * page; i <  30 * page + 30; i++)
+            for (int i = 30 * page; i < 30 * page + 30; i++)
             {
                 levels[i].ShowBitmap();
                 draw_levels_text();
             }
         }
-        else if(page == 2){
+        else if (page == 2)
+        {
 
             for (int i = 0; i < 2; i++)
             {
@@ -555,16 +472,17 @@ void CGameStateRun::OnShow()
                 }
             }
 
-            for(int i = 30 * page; i <  30 * page + 10; i++)
+            for (int i = 30 * page; i < 30 * page + 10; i++)
             {
                 levels[i].ShowBitmap();
                 draw_levels_text();
             }
         }
 
-        for (int i = 0; i < 3; i++){
+        for (int i = 0; i < 3; i++)
+        {
 
-            if(i == page)
+            if (i == page)
             {
                 turnPage[i].SetFrameIndexOfBitmap(1);
             }
@@ -894,4 +812,140 @@ void CGameStateRun::sound_it()
     {
         audio->Play(2, 0);
     }
+}
+
+void CGameStateRun::moveLeft()
+{
+    for (int i = 0; i < walls_amount[level - 1]; i++)
+    {
+        if (player.GetTop() == walls[i].GetTop() && player.GetLeft() == walls[i].GetLeft() + 60)
+            return;
+    }
+    for (int i = 0; i < boxes_amount[level - 1]; i++)
+    {
+        if (player.GetTop() == boxes[i].GetTop() && player.GetLeft() == boxes[i].GetLeft() + 60)
+        {
+            for (int j = 0; j < walls_amount[level - 1]; j++)
+            {
+                if (boxes[i].GetTop() == walls[j].GetTop() && boxes[i].GetLeft() == walls[j].GetLeft() + 60)
+                    return;
+            }
+            for (int j = 0; j < boxes_amount[level - 1]; j++)
+            {
+                if (boxes[i].GetTop() == boxes[j].GetTop() && boxes[i].GetLeft() == boxes[j].GetLeft() + 60)
+                    return;
+            }
+            addToUndo();
+            boxes[i].SetTopLeft(boxes[i].GetLeft() - 60, boxes[i].GetTop());
+            player.SetTopLeft(player.GetLeft() - 60, player.GetTop());
+            player.SetFrameIndexOfBitmap(0);
+            return;
+        }
+    }
+    addToUndo();
+    player.SetTopLeft(player.GetLeft() - 60, player.GetTop());
+    player.SetFrameIndexOfBitmap(0);
+}
+
+void CGameStateRun::moveUp()
+{
+    for (int i = 0; i < walls_amount[level - 1]; i++)
+    {
+        if (player.GetTop() == walls[i].GetTop() + 60 && player.GetLeft() == walls[i].GetLeft())
+            return;
+    }
+    for (int i = 0; i < boxes_amount[level - 1]; i++)
+    {
+        if (player.GetTop() == boxes[i].GetTop() + 60 && player.GetLeft() == boxes[i].GetLeft())
+        {
+            for (int j = 0; j < walls_amount[level - 1]; j++)
+            {
+                if (boxes[i].GetTop() == walls[j].GetTop() + 60 && boxes[i].GetLeft() == walls[j].GetLeft())
+                    return;
+            }
+            for (int j = 0; j < boxes_amount[level - 1]; j++)
+            {
+                if (boxes[i].GetTop() == boxes[j].GetTop() + 60 && boxes[i].GetLeft() == boxes[j].GetLeft())
+                    return;
+            }
+            addToUndo();
+            boxes[i].SetTopLeft(boxes[i].GetLeft(), boxes[i].GetTop() - 60);
+            player.SetTopLeft(player.GetLeft(), player.GetTop() - 60);
+            player.SetFrameIndexOfBitmap(3);
+            return;
+        }
+    }
+
+    addToUndo();
+    player.SetTopLeft(player.GetLeft(), player.GetTop() - 60);
+    player.SetFrameIndexOfBitmap(3);
+}
+
+void CGameStateRun::moveRight()
+{
+    for (int i = 0; i < walls_amount[level - 1]; i++)
+    {
+        if (player.GetTop() == walls[i].GetTop() && player.GetLeft() + 60 == walls[i].GetLeft())
+            return;
+    }
+    for (int i = 0; i < boxes_amount[level - 1]; i++)
+    {
+        if (player.GetTop() == boxes[i].GetTop() && player.GetLeft() + 60 == boxes[i].GetLeft())
+        {
+            for (int j = 0; j < walls_amount[level - 1]; j++)
+            {
+                if (boxes[i].GetTop() == walls[j].GetTop() && boxes[i].GetLeft() == walls[j].GetLeft() - 60)
+                    return;
+            }
+            for (int j = 0; j < boxes_amount[level - 1]; j++)
+            {
+                if (boxes[i].GetTop() == boxes[j].GetTop() && boxes[i].GetLeft() == boxes[j].GetLeft() - 60)
+                    return;
+            }
+            addToUndo();
+            boxes[i].SetTopLeft(boxes[i].GetLeft() + 60, boxes[i].GetTop());
+            player.SetTopLeft(player.GetLeft() + 60, player.GetTop());
+            player.SetFrameIndexOfBitmap(6);
+            return;
+        }
+    }
+
+    addToUndo();
+    player.SetTopLeft(player.GetLeft() + 60, player.GetTop());
+    player.SetFrameIndexOfBitmap(6);
+}
+
+void CGameStateRun::moveDown()
+{
+    for (int i = 0; i < walls_amount[level - 1]; i++)
+    {
+        if (player.GetTop() + 60 == walls[i].GetTop() && player.GetLeft() == walls[i].GetLeft())
+            return;
+    }
+    for (int i = 0; i < boxes_amount[level - 1]; i++)
+    {
+        if (player.GetTop() + 60 == boxes[i].GetTop() && player.GetLeft() == boxes[i].GetLeft())
+        {
+            for (int j = 0; j < walls_amount[level - 1]; j++)
+            {
+                if (boxes[i].GetTop() == walls[j].GetTop() - 60 && boxes[i].GetLeft() == walls[j].GetLeft())
+                    return;
+            }
+            for (int j = 0; j < boxes_amount[level - 1]; j++)
+            {
+                if (boxes[i].GetTop() == boxes[j].GetTop() - 60 && boxes[i].GetLeft() == boxes[j].GetLeft())
+                    return;
+            }
+            addToUndo();
+            boxes[i].SetTopLeft(boxes[i].GetLeft(), boxes[i].GetTop() + 60);
+            player.SetTopLeft(player.GetLeft(), player.GetTop() + 60);
+            player.SetFrameIndexOfBitmap(9);
+            return;
+        }
+    }
+
+    addToUndo();
+
+    player.SetTopLeft(player.GetLeft(), player.GetTop() + 60);
+    player.SetFrameIndexOfBitmap(9);
 }

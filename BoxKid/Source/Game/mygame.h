@@ -105,7 +105,12 @@ namespace game_framework
 		void draw_level(int n);	 // 顯示關卡
 		void sound_it();		 // 播放音效
 
-		void setPage(int n);
+		void setPage(int n); // 設定目前的頁數
+
+		void moveLeft();  // 向左移動
+		void moveUp();	  // 向上移動
+		void moveRight(); // 向右移動
+		void moveDown();  // 向下移動
 
 	private:
 		int level = -1;	   // 遊戲關卡
@@ -148,134 +153,10 @@ namespace game_framework
 		CMovingBitmap foot_restart;
 		CMovingBitmap control_bar;
 
-		vector<int> walls_amount = {
-			20,
-			22,
-			24,
-			30,
-			25,
-			25,
-			25,
-			29,
-			23,
-			26,
-			23,
-			27,
-			26,
-			23,
-			27,
-			26,
-			23,
-			27,
-			26,
-			27,
-			21,
-			27,
-			23,
-			24,
-			26,
-			30,
-			27,
-			27,
-			23,
-			24,
-		};
-		vector<int> floors_amount = {
-			8,
-			19,
-			19,
-			21,
-			18,
-			17,
-			18,
-			19,
-			14,
-			17,
-			15,
-			17,
-			16,
-			13,
-			21,
-			18,
-			13,
-			17,
-			19,
-			17,
-			12,
-			17,
-			15,
-			16,
-			17,
-			21,
-			17,
-			17,
-			13,
-			17,
-		};
-		vector<int> boxes_amount = {
-			1,
-			1,
-			2,
-			2,
-			2,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			2,
-		};
-		vector<int> goals_amount = {
-			1,
-			1,
-			2,
-			2,
-			2,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			2,
-		};
+		vector<int> walls_amount = {20, 22, 24, 30, 25, 25, 25, 29, 23, 26, 23, 27, 26, 23, 27, 26, 23, 27, 26, 27, 21, 27, 23, 24, 26, 30, 27, 27, 23, 24};
+		vector<int> floors_amount = {8, 19, 19, 21, 18, 17, 18, 19, 14, 17, 15, 17, 16, 13, 21, 18, 13, 17, 19, 17, 12, 17, 15, 16, 17, 21, 17, 17, 13, 17};
+		vector<int> boxes_amount = {1, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2};
+		vector<int> goals_amount = {1, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2};
 
 		vector<pair<int, int>> player_pos;
 		vector<vector<pair<int, int>>> boxes_pos;
