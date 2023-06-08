@@ -215,6 +215,18 @@ namespace game_framework
 			isAnimation = true;
 		isOnce = once;
 		delayCount = delay;
+		frameIndex = 0;
+		animeEnd = surfaceID.size() - 1;
+	}
+	void CMovingBitmap::SetAnimation(int delay, bool once, int begin, int end)
+	{
+		if (!once)
+			isAnimation = true;
+		isOnce = once;
+		delayCount = delay;
+		frameIndex = begin;
+		animeBegin = begin;
+		animeEnd = end;
 	}
 
 	//! 顯示圖片。
@@ -359,15 +371,15 @@ namespace game_framework
 		{
 			frameIndex += 1;
 			last_time = clock();
-			if (frameIndex == surfaceID.size() && animationCount > 0)
+			if (frameIndex == animeEnd && animationCount > 0)
 			{
 				animationCount -= 1;
 			}
-			if (frameIndex == surfaceID.size() && (isOnce || animationCount == 0))
+			if (frameIndex == animeEnd && (isOnce || animationCount == 0))
 			{
 				isAnimation = false;
 				isAnimationDone = true;
-				frameIndex = surfaceID.size() - 1;
+				frameIndex = animeBegin;
 				return;
 			}
 			frameIndex = frameIndex % surfaceID.size();

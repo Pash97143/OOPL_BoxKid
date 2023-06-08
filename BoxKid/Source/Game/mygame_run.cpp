@@ -836,15 +836,17 @@ void CGameStateRun::moveLeft()
                     return;
             }
             addToUndo();
+            player.ToggleAnimation();
+            player.SetAnimation(20, 1, 0, 2);
             boxes[i].SetTopLeft(boxes[i].GetLeft() - 60, boxes[i].GetTop());
             player.SetTopLeft(player.GetLeft() - 60, player.GetTop());
-            player.SetFrameIndexOfBitmap(0);
             return;
         }
     }
     addToUndo();
+    player.ToggleAnimation();
+    player.SetAnimation(20, 1, 0, 2);
     player.SetTopLeft(player.GetLeft() - 60, player.GetTop());
-    player.SetFrameIndexOfBitmap(0);
 }
 
 void CGameStateRun::moveUp()
@@ -868,17 +870,20 @@ void CGameStateRun::moveUp()
                 if (boxes[i].GetTop() == boxes[j].GetTop() + 60 && boxes[i].GetLeft() == boxes[j].GetLeft())
                     return;
             }
-            addToUndo();
+
+            player.ToggleAnimation();
+            player.SetAnimation(20, 1, 3, 5);
             boxes[i].SetTopLeft(boxes[i].GetLeft(), boxes[i].GetTop() - 60);
             player.SetTopLeft(player.GetLeft(), player.GetTop() - 60);
-            player.SetFrameIndexOfBitmap(3);
+
             return;
         }
     }
 
     addToUndo();
+    player.ToggleAnimation();
+    player.SetAnimation(20, 1, 3, 5);
     player.SetTopLeft(player.GetLeft(), player.GetTop() - 60);
-    player.SetFrameIndexOfBitmap(3);
 }
 
 void CGameStateRun::moveRight()
@@ -903,16 +908,18 @@ void CGameStateRun::moveRight()
                     return;
             }
             addToUndo();
+            player.ToggleAnimation();
+            player.SetAnimation(20, 1, 6, 8);
             boxes[i].SetTopLeft(boxes[i].GetLeft() + 60, boxes[i].GetTop());
             player.SetTopLeft(player.GetLeft() + 60, player.GetTop());
-            player.SetFrameIndexOfBitmap(6);
             return;
         }
     }
 
     addToUndo();
+    player.ToggleAnimation();
+    player.SetAnimation(20, 1, 6, 8);
     player.SetTopLeft(player.GetLeft() + 60, player.GetTop());
-    player.SetFrameIndexOfBitmap(6);
 }
 
 void CGameStateRun::moveDown()
@@ -937,15 +944,16 @@ void CGameStateRun::moveDown()
                     return;
             }
             addToUndo();
+            player.ToggleAnimation();
+            player.SetAnimation(20, 1, 9, 11);
             boxes[i].SetTopLeft(boxes[i].GetLeft(), boxes[i].GetTop() + 60);
             player.SetTopLeft(player.GetLeft(), player.GetTop() + 60);
-            player.SetFrameIndexOfBitmap(9);
             return;
         }
     }
 
     addToUndo();
-
+    player.ToggleAnimation();
+    player.SetAnimation(20, 1, 9, 11);
     player.SetTopLeft(player.GetLeft(), player.GetTop() + 60);
-    player.SetFrameIndexOfBitmap(9);
 }

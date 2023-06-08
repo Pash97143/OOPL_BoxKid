@@ -96,7 +96,8 @@ namespace game_framework
 		void UnshowBitmap();
 
 		/* Setter */
-		void SetAnimation(int delay, bool _once);
+		void SetAnimation(int delay, bool _once);					  // 設定動畫的參數
+		void SetAnimation(int delay, bool _once, int begin, int end); // 設定動畫的參數
 		void SetFrameIndexOfBitmap(int frame);
 		void SetTopLeft(int, int); // 將圖的左上角座標移至 (x,y)
 
@@ -135,6 +136,10 @@ namespace game_framework
 		bool isAnimation = false;
 		//! 儲存物件動畫是否已結束
 		bool isAnimationDone = true;
+		//! 儲存物件動畫的起始幀
+		int animeBegin = 0;
+		//! 儲存物件動畫的結束幀
+		int animeEnd = 0;
 		//! 儲存圖片是否已讀取
 		bool isBitmapLoaded = false; // whether a bitmap has been loaded
 		//! 儲存物件動畫是否為單次動畫
