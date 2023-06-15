@@ -130,9 +130,9 @@ void CGameStateRun::OnInit() // 遊戲的初值及圖形設定
     // 載入關卡頁面切換按鈕
     for (int i = 0; i < 3; i++)
     {
-        CMovingBitmap page;
-        page.LoadBitmapByString({"resources/levels_page0.bmp", "resources/levels_page1.bmp"}, RGB(255, 255, 255));
-        turnPage.push_back(page);
+        CMovingBitmap pageDot;
+        pageDot.LoadBitmapByString({"resources/levels_page0.bmp", "resources/levels_page1.bmp"}, RGB(255, 255, 255));
+        turnPage.push_back(pageDot);
         turnPage[i].SetTopLeft(207 + 40 * i, 810);
     }
 
@@ -177,7 +177,15 @@ void CGameStateRun::OnInit() // 遊戲的初值及圖形設定
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-    if (level >= 1)
+    if (level == -1)
+    {
+        // CTRL + J
+        if (nChar == 0x4A && GetKeyState(VK_CONTROL) < 0)
+        {
+            highestLevel = 70;
+        }
+    }
+    else if (level >= 1)
     {
         if (nChar == VK_LEFT)
         {
@@ -272,6 +280,7 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point) // 處理滑鼠的�
     }
     else if (level == 0)
     {
+        mousePoint = point;
         for (int i = 0; i < 6; i++)
         {
             for (int j = 0; j < 5; j++)
@@ -408,6 +417,19 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point) // 處理滑鼠的�
 
 void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point) // 處理滑鼠的動作
 {
+    if (level == 0)
+    {
+        if ((page == 0 || page == 1) && mousePoint.x > point.x + 25)
+        {
+            setPage(page + 1);
+            TRACE("\nhere my page is %d\n", page);
+        }
+        else if ((page == 1 || page == 2) && mousePoint.x < point.x - 25)
+        {
+            setPage(page - 1);
+            TRACE("\nhere my page is %d\n", page);
+        }
+    }
 }
 
 void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point) // 處理滑鼠的動作
@@ -424,6 +446,7 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point) // 處理滑鼠的動
 
 void CGameStateRun::OnShow()
 {
+    // TRACE("\nhere my highestlevel is %d\n", highestLevel);
     if (level != prelevel)
     {
         setByLevel();

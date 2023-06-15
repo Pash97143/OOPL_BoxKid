@@ -72,6 +72,7 @@ namespace game_framework
 		CMovingBitmap logo; // csie的logo
 		// CMovingBitmap background; // 背景圖
 		void draw_text(); // 顯示文字
+		void goRun();	  // 切換到遊戲畫面
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -116,8 +117,10 @@ namespace game_framework
 		int level = -1;	   // 遊戲關卡
 		int prelevel = -2; // 上一關的關卡
 		int page = 0;
-		int highestLevel = 70;
+		int highestLevel = 1;
 		bool change_level_flag = false;
+
+		CPoint mousePoint; // 滑鼠的位置
 
 		CMovingBitmap background; // 背景圖
 		// menu
@@ -132,13 +135,13 @@ namespace game_framework
 		CMovingBitmap level_select_text; // 選擇關卡的圖片
 		CMovingBitmap level_to_menu;
 		CMovingBitmap levels[70];
+		vector<CMovingBitmap> turnPage;
 
 		// in the level
 		vector<CMovingBitmap> walls;
 		vector<CMovingBitmap> floors;
 		vector<CMovingBitmap> goals;
 		vector<CMovingBitmap> boxes;
-		vector<CMovingBitmap> turnPage;
 
 		CMovingBitmap player;
 
@@ -153,10 +156,10 @@ namespace game_framework
 		CMovingBitmap foot_restart;
 		CMovingBitmap control_bar;
 
-		vector<int> walls_amount = {20, 22, 24, 30, 25, 25, 25, 29, 23, 26, 23, 27, 26, 23, 27, 26, 23, 27, 26, 27, 21, 27, 23, 24, 26, 30, 27, 27, 23, 24};
-		vector<int> floors_amount = {8, 19, 19, 21, 18, 17, 18, 19, 14, 17, 15, 17, 16, 13, 21, 18, 13, 17, 19, 17, 12, 17, 15, 16, 17, 21, 17, 17, 13, 17};
-		vector<int> boxes_amount = {1, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2};
-		vector<int> goals_amount = {1, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2};
+		vector<int> walls_amount = {20, 22, 24, 30, 25, 25, 25, 29, 23, 26, 23, 27, 26, 23, 27, 26, 23, 27, 26, 27, 21, 27, 23, 24, 26, 30, 27, 27, 23, 24, 26, 23, 26, 26, 26, 28, 26, 30, 29, 25, 26, 23};
+		vector<int> floors_amount = {8, 19, 19, 21, 18, 17, 18, 19, 14, 17, 15, 17, 16, 13, 21, 18, 13, 17, 19, 17, 12, 17, 15, 16, 17, 21, 17, 17, 13, 17, 16, 13, 16, 15, 16, 17, 17, 22, 18, 17, 17, 14};
+		vector<int> boxes_amount = {1, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 3, 3, 3, 3, 4, 3, 3, 3, 4, 3, 3, 4};
+		vector<int> goals_amount = {1, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 3, 3, 3, 3, 4, 3, 3, 3, 4, 3, 3, 4};
 
 		vector<pair<int, int>> player_pos;
 		vector<vector<pair<int, int>>> boxes_pos;
