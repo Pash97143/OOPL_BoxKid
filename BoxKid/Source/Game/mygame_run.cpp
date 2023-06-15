@@ -78,8 +78,7 @@ void CGameStateRun::OnMove() // 移動遊戲元素
         //
         if (c == goals_amount[level - 1])
         {
-            Sleep(500);
-            // TRACE("level %d clear\n", level);
+            // Sleep(100);
             if (level < 42)
             {
                 change_level();
@@ -298,7 +297,6 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point) // 處理滑鼠的�
                     sound_it();
                     level = page * 30 + i * 5 + j + 1;
                     setByLevel();
-                    TRACE("\nhere my level is %d\n", level);
                 }
             }
         }
@@ -313,18 +311,11 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point) // 處理滑鼠的�
         if (point.x >= 220 && point.x < 220 + 27 && point.y >= 810 && point.y < 810 + 30)
         {
             setPage(0);
-            // TRACE("\nhere my highestlevel is %d\n", highestLevel);
         }
         if (point.x >= 260 && point.x < 260 + 27 && point.y >= 810 && point.y < 810 + 30)
         {
             setPage(1);
-            // TRACE("\nhere my highestlevel is %d\n", highestLevel);
         }
-        // if (point.x >= 300 && point.x < 300 + 27 && point.y >= 810 && point.y < 810 + 30)
-        // {
-        //     setPage(2);
-        //     TRACE("\nhere my highestlevel is %d\n", highestLevel);
-        // }
     }
     else if (level > 0)
     {
@@ -430,12 +421,10 @@ void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point) // 處理滑鼠的動
         if (page == 0 && mousePoint.x > point.x + 25)
         {
             setPage(page + 1);
-            TRACE("\nhere my page is %d\n", page);
         }
         else if (page == 1 && mousePoint.x < point.x - 25)
         {
             setPage(page - 1);
-            TRACE("\nhere my page is %d\n", page);
         }
     }
 }
@@ -454,7 +443,6 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point) // 處理滑鼠的動
 
 void CGameStateRun::OnShow()
 {
-    // TRACE("\nhere my highestlevel is %d\n", highestLevel);
     if (level != prelevel)
     {
         setByLevel();
@@ -590,7 +578,6 @@ void CGameStateRun::setByLevel()
         }
         else if (level == 0)
         {
-            TRACE("\nhere my highestlevel is %d\n", highestLevel);
             for (int i = 0; i < highestLevel; i++)
             {
                 levels[i].SetFrameIndexOfBitmap(1);
@@ -623,10 +610,8 @@ void CGameStateRun::setByLevel()
         }
         boxes_pos.clear();
         //
-        TRACE("b: %d, f: %d, g: %d, w: %d\n", boxes.size(), floors.size(), goals.size(), walls.size());
-        TRACE("bp: %d\n", boxes_pos.size());
 
-        player.SetFrameIndexOfBitmap(3);
+        player.SetFrameIndexOfBitmap(9);
 
         for (int i = 0; i < walls_amount[level - 1]; i++)
         {
@@ -665,7 +650,6 @@ void CGameStateRun::setByLevel()
         int floors_count = 0;
         int boxes_count = 0;
         int goals_count = 0;
-        TRACE("%d\n", level);
         vector<vector<char>> walls_like = {};
 
         string line;
@@ -686,8 +670,6 @@ void CGameStateRun::setByLevel()
             walls_like.push_back(temp);
         }
         inputFile.close();
-        TRACE("%d\n", walls_like.size());
-        TRACE("%d\n", walls_like[0].size());
 
         for (unsigned int i = 0; i < walls_like[0].size(); i++)
         {
@@ -697,13 +679,11 @@ void CGameStateRun::setByLevel()
                 {
                     walls[walls_count].SetTopLeft(0 + 60 * i, 180 + 60 * j);
                     walls_count++;
-                    // TRACE("%d\n", walls_count);
                 }
                 else if (walls_like[j][i] == '2')
                 {
                     floors[floors_count].SetTopLeft(0 + 60 * i, 180 + 60 * j);
                     floors_count++;
-                    // TRACE("%d\n", floors_count);
                 }
                 else if (walls_like[j][i] == '3')
                 {
@@ -732,28 +712,21 @@ void CGameStateRun::setByLevel()
                 }
             }
         }
-
-        TRACE("b: %d, f: %d, g: %d, w: %d\n", boxes.size(), floors.size(), goals.size(), walls.size());
-        TRACE("bp: %d\n", boxes_pos.size());
     }
 }
 
 void CGameStateRun::addToUndo()
 {
-    TRACE("now is ok    \n");
     if (player_pos.size() < 20)
     {
-        TRACE("undo <= 20 !!\n");
         player_pos.push_back(std::make_pair(player.GetLeft(), player.GetTop()));
         for (int i = 0; i < boxes_amount[level - 1]; i++)
         {
             boxes_pos[i].push_back(std::make_pair(boxes[i].GetLeft(), boxes[i].GetTop()));
         }
-        TRACE("player: %d!, box: %d\n", player_pos.size(), boxes_pos[0].size());
     }
     else
     {
-        TRACE("undo > 20 !!\n");
         player_pos.erase(player_pos.begin());
         player_pos.push_back(std::make_pair(player.GetLeft(), player.GetTop()));
         for (int i = 0; i < boxes_amount[level - 1]; i++)
@@ -761,7 +734,6 @@ void CGameStateRun::addToUndo()
             boxes_pos[i].erase(boxes_pos[i].begin());
             boxes_pos[i].push_back(std::make_pair(boxes[i].GetLeft(), boxes[i].GetTop()));
         }
-        TRACE("player: %d!, box: %d\n", player_pos.size(), boxes_pos[0].size());
     }
 }
 
@@ -769,11 +741,9 @@ void CGameStateRun::undo()
 {
     if (player_pos.empty())
     {
-        TRACE("cannot undo!!!\n");
         return;
     }
 
-    TRACE("undo!!!\n");
     player.SetTopLeft(player_pos.back().first, player_pos.back().second);
     player_pos.pop_back();
     for (int i = 0; i < boxes_amount[level - 1]; i++)
@@ -781,7 +751,6 @@ void CGameStateRun::undo()
         boxes[i].SetTopLeft(boxes_pos[i].back().first, boxes_pos[i].back().second);
         boxes_pos[i].pop_back();
     }
-    TRACE("player: %d!, box: %d\n", player_pos.size(), boxes_pos[0].size());
 }
 
 void CGameStateRun::draw_levels_text()
