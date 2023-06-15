@@ -134,7 +134,7 @@ namespace game_framework
 		// level sheet
 		CMovingBitmap level_select_text; // 選擇關卡的圖片
 		CMovingBitmap level_to_menu;
-		CMovingBitmap levels[70];
+		CMovingBitmap levels[42];
 		vector<CMovingBitmap> turnPage;
 
 		// in the level
