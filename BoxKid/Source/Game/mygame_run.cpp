@@ -288,19 +288,6 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point) // 處理滑鼠的�
     else if (level == 0)
     {
         mousePoint = point;
-        for (int i = 0; i < 6; i++)
-        {
-            for (int j = 0; j < 5; j++)
-            {
-                if ((i * 5 + j + 1) <= highestLevel && point.x >= 30 + 100 * j && point.x <= 30 + 100 * j + 70 && point.y >= 210 + 100 * i && point.y <= 210 + 100 * i + 70)
-                {
-                    sound_it();
-                    level = page * 30 + i * 5 + j + 1;
-                    setByLevel();
-                }
-            }
-        }
-        // Sleep(450);
         if (point.x >= 30 && point.x < 30 + 72 && point.y >= 810 && point.y < 810 + 72)
         {
             sound_it();
@@ -418,13 +405,58 @@ void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point) // 處理滑鼠的動
 {
     if (level == 0)
     {
-        if (page == 0 && mousePoint.x > point.x + 25)
+        if (page == 0 && mousePoint.x > point.x + 40)
         {
             setPage(page + 1);
         }
-        else if (page == 1 && mousePoint.x < point.x - 25)
+        else if (page == 1 && mousePoint.x < point.x - 40)
         {
             setPage(page - 1);
+        }
+        else
+        {
+            if (page == 0)
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    for (int j = 0; j < 5; j++)
+                    {
+                        if ((i * 5 + j + 1) <= highestLevel && mousePoint.x >= 30 + 100 * j && mousePoint.x <= 30 + 100 * j + 70 && mousePoint.y >= 210 + 100 * i && mousePoint.y <= 210 + 100 * i + 70)
+                        {
+                            sound_it();
+                            level = i * 5 + j + 1;
+                            setByLevel();
+                        }
+                    }
+                }
+            }
+            else if (page == 1)
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    for (int j = 0; j < 5; j++)
+                    {
+                        if ((i * 5 + j + 1) <= highestLevel && mousePoint.x >= 30 + 100 * j && mousePoint.x <= 30 + 100 * j + 70 && mousePoint.y >= 210 + 100 * i && mousePoint.y <= 210 + 100 * i + 70)
+                        {
+                            sound_it();
+                            level = 30 + i * 5 + j + 1;
+                            setByLevel();
+                        }
+                    }
+                }
+                if (41 <= highestLevel && mousePoint.x >= 30 && mousePoint.x <= 30 + 70 && mousePoint.y >= 410 && mousePoint.y <= 410 + 70)
+                {
+                    sound_it();
+                    level = 41;
+                    setByLevel();
+                }
+                if (42 <= highestLevel && mousePoint.x >= 130 && mousePoint.x <= 130 + 70 && mousePoint.y >= 410 && mousePoint.y <= 410 + 70)
+                {
+                    sound_it();
+                    level = 42;
+                    setByLevel();
+                }
+            }
         }
     }
 }
